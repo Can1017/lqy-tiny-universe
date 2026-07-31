@@ -47,14 +47,14 @@
       return relative;
     };
     experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description)}</p><em>点击返回正面</em></span></span></button>`).join('');
-    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span>${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}`;
+    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span>${items.map((item, index) => `<button type="button" data-index="${index}" style="--point-angle:${index * (360 / items.length)}deg"><i></i><span>${html(item.year)}</span></button>`).join('')}`;
     const updateExperience = () => {
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
         const relative = relativePosition(index);
         card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
         if (relative !== 0) card.classList.remove('flipped');
       });
-      experienceTimeline.style.setProperty('--timeline-angle', `${-42 + activeExperience * (84 / Math.max(items.length - 1, 1))}deg`);
+      experienceTimeline.style.setProperty('--timeline-angle', `${activeExperience * (360 / items.length)}deg`);
       experienceTimeline.querySelectorAll('button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
     };
     const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; updateExperience(); };
@@ -107,7 +107,7 @@
       if (page.cover) {
         visualBook.innerHTML = `<article class="book-cover-page"><p>PORTFOLIO / 2026</p><h3>${page.title.replace('\n', '<br>')}</h3><span>LI QIAOYING</span><i>01</i></article>`;
       } else {
-        visualBook.innerHTML = `<article class="book-spread"><div class="book-photo-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"></div><div class="book-text-page"><p>PAGE / ${String(bookPage).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div class="book-rule"></div><p class="book-note">${html(page.note)}</p><div class="book-video-slot"><b>▶</b><span>VIDEO SLOT<br />替换为作品视频链接</span></div></div></article>`;
+        visualBook.innerHTML = `<article class="book-spread"><div class="book-text-page"><p>PAGE / ${String(bookPage).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div class="book-rule"></div><p class="book-note">${html(page.note)}</p></div><div class="book-media-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><div class="book-video-slot"><b>▶</b><span>VIDEO SLOT<br />替换为作品视频链接</span></div></div></article>`;
       }
       bookDots.innerHTML = pages.map((_, index) => `<button class="${index === bookPage ? 'active' : ''}" type="button" aria-label="第 ${index + 1} 页" data-page="${index}"></button>`).join('');
       bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => { const target = Number(dot.dataset.page); bookDirection = target > bookPage ? 'next' : 'prev'; bookPage = target; showBook(); }));
