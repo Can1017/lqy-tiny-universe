@@ -47,15 +47,17 @@
       return relative;
     };
     experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description)}</p><em>点击返回正面</em></span></span></button>`).join('');
-    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span><span class="timeline-track">${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}</span>`;
+    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span><button class="timeline-current" type="button" aria-label="当前经历年份"></button><span class="timeline-track">${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}</span>`;
     const updateExperience = () => {
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
         const relative = relativePosition(index);
         card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
         if (relative !== 0) card.classList.remove('flipped');
       });
-      experienceTimeline.style.setProperty('--timeline-rotation', `${-activeExperience * 22}deg`);
-      experienceTimeline.querySelectorAll('button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
+      experienceTimeline.style.setProperty('--timeline-rotation', '0deg');
+      const currentYear = experienceTimeline.querySelector('.timeline-current');
+      currentYear.textContent = items[activeExperience].year;
+      experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
     };
     const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; updateExperience(); };
     experienceStage.querySelectorAll('[data-index]').forEach((card) => card.addEventListener('click', () => {
@@ -63,7 +65,7 @@
       if (index === activeExperience) card.classList.toggle('flipped');
       else { activeExperience = index; updateExperience(); }
     }));
-    experienceTimeline.querySelectorAll('button').forEach((tick) => tick.addEventListener('click', () => { activeExperience = Number(tick.dataset.index); updateExperience(); }));
+    experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick) => tick.addEventListener('click', () => { activeExperience = Number(tick.dataset.index); updateExperience(); }));
     experiencePrev.addEventListener('click', () => moveExperience(-1));
     experienceNext.addEventListener('click', () => moveExperience(1));
     updateExperience();

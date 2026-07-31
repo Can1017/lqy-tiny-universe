@@ -30,3 +30,7 @@
 /* Give the card fan room to finish before the dial begins. */
 .experience-section{min-height:1010px}.experience-nav{margin-top:104px}.experience-timeline .timeline-track button:nth-of-type(4){top:148px}
 @media(max-width:760px){.experience-section{min-height:855px}.experience-nav{margin-top:56px}.experience-timeline .timeline-track button:nth-of-type(4){top:116px}}
+
+/* The selected year is deliberately pinned over the needle; only background
+   ticks live on the arc. This prevents the current year drifting with cards. */
+.experience-timeline button.timeline-current{background:transparent;border:0!important;bottom:auto!important;color:var(--blue);font:600 11px var(--mono);height:26px!important;left:50%!important;padding:0 0 0 13px!important;position:absolute;right:auto!important;top:3px!important;transform:translateX(-50%)!important;width:76px!important;z-index:8}.experience-timeline .timeline-current:before{background:var(--blue);border-radius:50%;content:"";height:9px;left:5px;position:absolute;top:8px;width:9px}.experience-timeline .timeline-track button.active{opacity:0;pointer-events:none}
