@@ -32,7 +32,7 @@
   const skillLines = $('#skill-lines');
   if (skillLines) skillLines.innerHTML = data.skills.map((skill, index) => `<article><span>0${index + 1}</span><b>${html(skill.title)}</b><p>${html(skill.text)}</p></article>`).join('');
 
-  // 扇形时间轴：卡片会随年份被重新排开，鼠标滚轮和上下按钮都可切换。
+  // 扇形时间轴：点其他卡片切换位置，点当前卡片翻到背面。
   const experienceStage = $('#experience-stage');
   const experienceTimeline = $('#experience-timeline');
   const experiencePrev = $('#experience-prev');
@@ -40,24 +40,33 @@
   if (experienceStage && experienceTimeline && experiencePrev && experienceNext) {
     const items = data.experience?.length ? data.experience : data.education.map((item, index) => ({ ...item, year: item.time, subtitle: '教育经历', image: data.gallery[index]?.image || data.profilePhoto }));
     let activeExperience = 0;
-    const renderExperience = () => {
-      experienceStage.innerHTML = items.map((item, index) => {
-        const position = (index - activeExperience + items.length) % items.length;
-        return `<button class="experience-card position-${position} ${position === 0 ? 'active' : ''}" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><img src="${html(item.image)}" alt="${html(item.title)}"><div><small>${html(item.year)} / ${html(item.subtitle)}</small><h3>${html(item.title)}</h3><p>${html(item.description)}</p></div></button>`;
-      }).join('');
-      experienceTimeline.innerHTML = items.map((item, index) => `<button class="${index === activeExperience ? 'active' : ''}" type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('');
-      experienceStage.querySelectorAll('[data-index]').forEach((card) => card.addEventListener('click', () => { activeExperience = Number(card.dataset.index); renderExperience(); }));
-      experienceTimeline.querySelectorAll('[data-index]').forEach((tick) => tick.addEventListener('click', () => { activeExperience = Number(tick.dataset.index); renderExperience(); }));
+    const relativePosition = (index) => {
+      let relative = index - activeExperience;
+      if (relative > items.length / 2) relative -= items.length;
+      if (relative < -items.length / 2) relative += items.length;
+      return relative;
     };
-    const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; renderExperience(); };
+    experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description)}</p><em>点击返回正面</em></span></span></button>`).join('');
+    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span>${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}`;
+    const updateExperience = () => {
+      experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
+        const relative = relativePosition(index);
+        card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
+        if (relative !== 0) card.classList.remove('flipped');
+      });
+      experienceTimeline.style.setProperty('--timeline-angle', `${-42 + activeExperience * (84 / Math.max(items.length - 1, 1))}deg`);
+      experienceTimeline.querySelectorAll('button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
+    };
+    const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; updateExperience(); };
+    experienceStage.querySelectorAll('[data-index]').forEach((card) => card.addEventListener('click', () => {
+      const index = Number(card.dataset.index);
+      if (index === activeExperience) card.classList.toggle('flipped');
+      else { activeExperience = index; updateExperience(); }
+    }));
+    experienceTimeline.querySelectorAll('button').forEach((tick) => tick.addEventListener('click', () => { activeExperience = Number(tick.dataset.index); updateExperience(); }));
     experiencePrev.addEventListener('click', () => moveExperience(-1));
     experienceNext.addEventListener('click', () => moveExperience(1));
-    let lastWheel = 0;
-    experienceStage.addEventListener('wheel', (event) => {
-      if (Math.abs(event.deltaY) < 8 || Date.now() - lastWheel < 540) return;
-      event.preventDefault(); lastWheel = Date.now(); moveExperience(event.deltaY > 0 ? 1 : -1);
-    }, { passive: false });
-    renderExperience();
+    updateExperience();
   }
 
   // 文案作品：像翻开一张安静的稿纸，而不是悬浮卡片。
@@ -98,7 +107,7 @@
       if (page.cover) {
         visualBook.innerHTML = `<article class="book-cover-page"><p>PORTFOLIO / 2026</p><h3>${page.title.replace('\n', '<br>')}</h3><span>LI QIAOYING</span><i>01</i></article>`;
       } else {
-        visualBook.innerHTML = `<article class="book-spread"><div class="book-photo-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><span>${html(page.category)}</span></div><div class="book-text-page"><p>PAGE / ${String(bookPage).padStart(2, '0')}</p><h3>${html(page.title)}</h3><div class="book-rule"></div><p class="book-note">${html(page.note)}</p><div class="book-video-slot"><b>▶</b><span>VIDEO SLOT<br />替换为作品视频链接</span></div><small>IMAGE &amp; COPY EDITABLE IN<br />content/site-content.js</small></div></article>`;
+        visualBook.innerHTML = `<article class="book-spread"><div class="book-photo-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"></div><div class="book-text-page"><p>PAGE / ${String(bookPage).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div class="book-rule"></div><p class="book-note">${html(page.note)}</p><div class="book-video-slot"><b>▶</b><span>VIDEO SLOT<br />替换为作品视频链接</span></div></div></article>`;
       }
       bookDots.innerHTML = pages.map((_, index) => `<button class="${index === bookPage ? 'active' : ''}" type="button" aria-label="第 ${index + 1} 页" data-page="${index}"></button>`).join('');
       bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => { const target = Number(dot.dataset.page); bookDirection = target > bookPage ? 'next' : 'prev'; bookPage = target; showBook(); }));
