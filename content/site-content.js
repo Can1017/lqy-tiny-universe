@@ -3,7 +3,8 @@
  * 图片路径可以是本地路径（例如 assets/images/profile.jpg）或网络图片链接。
  */
 window.portfolioContent = {
-  profilePhoto: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=85',
+  // 替换为 assets/images/profile.jpg 后，首页将自动显示你的蓝底证件照。
+  profilePhoto: 'assets/images/profile-placeholder.svg',
   education: [
     { time: '2022 — 2026', title: '会计学 · 本科', description: '打下扎实的商业理解、数据敏感度与项目执行基础。' },
     { time: '2024 — 2026', title: '智能媒体技术 · 微专业', description: '系统学习短视频制作、新媒体传播与数字内容创作。' }
