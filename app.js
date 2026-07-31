@@ -16,8 +16,12 @@
     navToggle.setAttribute('aria-expanded', String(opened));
   });
   document.querySelectorAll('.main-nav a').forEach((link) => link.addEventListener('click', () => nav?.classList.remove('open')));
-  const navLinks = [...document.querySelectorAll('.main-nav a')];
-  if ('IntersectionObserver' in window) {
+    const navLinks = [...document.querySelectorAll('.main-nav a')];
+    const siteHeader = $('.site-header');
+    const syncHeaderTransparency = () => siteHeader?.classList.toggle('is-scrolled', window.scrollY > 24);
+    window.addEventListener('scroll', syncHeaderTransparency, { passive: true });
+    syncHeaderTransparency();
+    if ('IntersectionObserver' in window) {
     const sections = navLinks.map((link) => $(link.getAttribute('href'))).filter(Boolean);
     const navObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -50,11 +54,11 @@
     const positionTimelineTicks = () => {
       const width = experienceTimeline.getBoundingClientRect().width;
       // 半径比容器宽一些，截出一段舒展的上圆弧（而非圆角矩形）。
-      const radius = Math.max(width * 0.55, 270);
+        const radius = Math.max(width * 0.66, 390);
       const centerX = width / 2;
       // 固定间距的四个刻度像同一只转盘一起转动，不在切换时交换左右位置。
       const step = 13 * Math.PI / 180;
-      const dialTop = width < 500 ? 34 : 42;
+        const dialTop = width < 500 ? 30 : 48;
       experienceTimeline.style.setProperty('--dial-diameter', `${radius * 2}px`);
       experienceTimeline.style.setProperty('--dial-top', `${dialTop}px`);
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => {

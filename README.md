@@ -1,4 +1,4 @@
-# 李乔英｜校招短视频编导作品集
+# 校招短视频编导作品集
 
 纯 HTML、CSS、JavaScript 构建，可直接部署到 GitHub Pages。
 
