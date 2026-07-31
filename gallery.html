@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="lqy 的摄影作品集。" /><title>lqy’s photo drawer</title>
+    <link rel="preconnect" href="https://images.unsplash.com" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet" /><link rel="stylesheet" href="styles.css" />
+  </head>
+  <body><main class="browser inner-browser"><div class="browser-bar"><span class="traffic"><i></i><i></i><i></i></span><a class="window-name" href="index.html">← lqy’s tiny universe</a><span class="window-mark">⌁</span></div>
+    <nav class="top-nav"><a href="about.html">about me</a><a class="active" href="gallery.html">photo drawer</a><a href="notes.html">tiny notes</a></nav>
+    <section class="gallery-page"><p class="page-kicker">02 / selected moments</p><header class="gallery-header"><h1>My Little<br /><span>Photo Drawer</span></h1><p>把仍然想记住的瞬间，收进这一格。<br />点击照片可以慢慢看。</p></header>
+      <div class="drawer-nav" role="tablist" aria-label="照片分类"><button class="drawer-label active" data-filter="all" type="button" role="tab" aria-selected="true"><b>▣</b> all</button><button class="drawer-label" data-filter="city" type="button" role="tab" aria-selected="false"><b>⌂</b> city walks</button><button class="drawer-label" data-filter="field" type="button" role="tab" aria-selected="false"><b>⌁</b> elsewhere</button><button class="drawer-label" data-filter="people" type="button" role="tab" aria-selected="false"><b>♡</b> people</button></div>
+      <div class="photo-grid" aria-live="polite">
+        <button class="photo-card tilt-left" data-category="city" data-title="after rain / 01" type="button"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=82" alt="傍晚城市道路" /><span>01 / after rain</span></button>
+        <button class="photo-card tilt-right" data-category="field" data-title="a long way / 02" type="button"><img src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=700&q=82" alt="山间道路" /><span>02 / a long way</span></button>
+        <button class="photo-card tilt-left" data-category="people" data-title="soft light / 03" type="button"><img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=700&q=82" alt="窗边人像" /><span>03 / soft light</span></button>
+        <button class="photo-card tilt-right" data-category="field" data-title="the sea / 04" type="button"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=82" alt="金色海浪" /><span>04 / the sea</span></button>
+        <button class="photo-card tilt-left" data-category="city" data-title="green window / 05" type="button"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=700&q=82" alt="树影中的房子" /><span>05 / green window</span></button>
+        <button class="photo-card tilt-right" data-category="people" data-title="little pause / 06" type="button"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=82" alt="阳光下的人像" /><span>06 / little pause</span></button>
+        <button class="photo-card tilt-left" data-category="field" data-title="the mountain / 07" type="button"><img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=700&q=82" alt="云雾山峰" /><span>07 / the mountain</span></button>
+        <button class="photo-card tilt-right" data-category="city" data-title="blue hour / 08" type="button"><img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=700&q=82" alt="现代城市建筑" /><span>08 / blue hour</span></button>
+      </div><p class="photo-hint">* currently using placeholder images — my own photos will arrive here soon</p>
+    </section>
+  </main><dialog class="lightbox" aria-label="照片预览"><button type="button" class="close" aria-label="关闭">×</button><img src="" alt="" /><p></p></dialog><script src="script.js"></script></body>
+</html>
