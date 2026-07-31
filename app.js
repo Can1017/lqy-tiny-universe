@@ -89,39 +89,38 @@
     showWriting(activeWriting);
   }
 
-  // 影像书：包含封面和每一张作品页。左右按钮会触发真实的 3D 翻页过渡。
+  // 影像书：StPageFlip 负责真实的双页、硬封面与纸页翻动。
   const visualBook = $('#visual-book');
   const bookPrev = $('#book-prev');
   const bookNext = $('#book-next');
   const bookDots = $('#book-dots');
   const bookCount = $('#book-count');
   if (visualBook && bookPrev && bookNext && bookDots && bookCount) {
-    const pages = [{ cover: true, title: 'Visual\nDiary.', note: '把光、人物和路过的时刻，装订成一本可以慢慢翻的笔记。' }, ...data.gallery];
-    let bookPage = 0;
-    let bookTurning = false;
-    const paintBook = () => {
-      const page = pages[bookPage];
-      if (page.cover) {
-        visualBook.innerHTML = `<article class="book-cover-page"><p>PORTFOLIO / 2026</p><h3>${page.title.replace('\n', '<br>')}</h3><span>LI QIAOYING</span><i>01</i></article>`;
-      } else {
-        visualBook.innerHTML = `<article class="book-spread"><div class="book-text-page"><p>PAGE / ${String(bookPage).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div class="book-rule"></div><p class="book-note">${html(page.note)}</p></div><div class="book-media-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><div class="book-video-slot"><b>▶</b><span>VIDEO SLOT<br />替换为作品视频链接</span></div></div></article>`;
-      }
-      bookDots.innerHTML = pages.map((_, index) => `<button class="${index === bookPage ? 'active' : ''}" type="button" aria-label="第 ${index + 1} 页" data-page="${index}"></button>`).join('');
-      bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => { const target = Number(dot.dataset.page); turnBook(target, target > bookPage ? 'next' : 'prev'); }));
-      bookCount.textContent = `${String(bookPage + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
-    };
-    const turnBook = (target, direction) => {
-      if (bookTurning || target === bookPage) return;
-      bookTurning = true;
-      visualBook.classList.remove('turn-next', 'turn-prev');
-      void visualBook.offsetWidth;
-      visualBook.classList.add(direction === 'next' ? 'turn-next' : 'turn-prev');
-      window.setTimeout(() => { bookPage = target; paintBook(); }, 370);
-      window.setTimeout(() => { visualBook.classList.remove('turn-next', 'turn-prev'); bookTurning = false; }, 760);
-    };
-    bookPrev.addEventListener('click', () => turnBook((bookPage - 1 + pages.length) % pages.length, 'prev'));
-    bookNext.addEventListener('click', () => turnBook((bookPage + 1) % pages.length, 'next'));
-    paintBook();
+    const galleryPages = data.gallery;
+    const pages = [
+      `<article class="flip-page flip-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>LI QIAOYING</span></article>`,
+      ...galleryPages.flatMap((page, index) => [
+        `<article class="flip-page flip-copy-page"><p>PAGE / ${String(index + 1).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div></div><b>${html(page.note)}</b></article>`,
+        `<article class="flip-page flip-media-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><span>▶ VIDEO SLOT<br />替换为作品视频链接</span></article>`
+      ]),
+      `<article class="flip-page flip-back-cover" data-density="hard"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></article>`
+    ];
+    visualBook.innerHTML = pages.join('');
+    const PageFlip = window.St?.PageFlip;
+    if (PageFlip) {
+      const book = new PageFlip(visualBook, { width: 470, height: 520, size: 'stretch', minWidth: 290, maxWidth: 620, minHeight: 350, maxHeight: 650, showCover: true, maxShadowOpacity: .45, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 820 });
+      book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
+      const updateBookStatus = (page) => {
+        bookCount.textContent = `${String(page + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
+        bookDots.innerHTML = galleryPages.map((_, index) => `<i class="${page === index * 2 + 1 || page === index * 2 + 2 ? 'active' : ''}"></i>`).join('');
+      };
+      book.on('flip', (event) => updateBookStatus(event.data));
+      bookPrev.addEventListener('click', () => book.flipPrev('top'));
+      bookNext.addEventListener('click', () => book.flipNext('top'));
+      updateBookStatus(0);
+    } else {
+      visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
+    }
   }
 
   // 运营页：以内容墙为主，指标只在页头保留一行。
