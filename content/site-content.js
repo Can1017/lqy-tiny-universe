@@ -9,6 +9,13 @@ window.portfolioContent = {
     { time: '2022 — 2026', title: '会计学 · 本科', description: '打下扎实的商业理解、数据敏感度与项目执行基础。' },
     { time: '2024 — 2026', title: '智能媒体技术 · 微专业', description: '系统学习短视频制作、新媒体传播与数字内容创作。' }
   ],
+  // 首页经历时间轴：可替换图片、年份和说明。
+  experience: [
+    { year: '2022', title: '会计学 · 本科', subtitle: '商业理解的起点', description: '在目标、成本和结果之间建立判断，也养成了对细节负责的习惯。', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85' },
+    { year: '2024', title: '智能媒体技术 · 微专业', subtitle: '开始用镜头表达', description: '系统学习短视频制作、新媒体传播与数字内容创作，把“想讲什么”落到镜头里。', image: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=85' },
+    { year: '2025', title: '内容运营与项目实践', subtitle: '让内容走向真实的人', description: '从选题、脚本到发布和复盘，开始理解一次内容传播完整发生的过程。', image: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=900&q=85' },
+    { year: '2026', title: '校招短视频编导', subtitle: '下一段故事，正在开始', description: '带着文字、画面和数据的三种语言，期待参与更有生命力的内容创作。', image: 'assets/images/profile-placeholder.svg' }
+  ],
   skills: [
     { icon: '🎬', title: '视频摄制', text: '选题、分镜、现场执行、剪辑节奏与成片把控。' },
     { icon: '✍️', title: '脚本文案', text: '从传播目标出发，完成创意、脚本、标题与口播文案。' },
@@ -34,6 +41,15 @@ window.portfolioContent = {
     { platform: '视频号', value: '8,000+', unit: '总播放', percent: 80, color: '#8CC7F4' },
     { platform: '公众号', value: '11.7w', unit: '总阅读', percent: 92, color: '#A9A0E8' },
     { platform: '三下乡', value: '10.2w', unit: '总曝光', percent: 86, color: '#F3A7BD' }
+  ],
+  // 运营页内容墙。替换 url 后，卡片会跳转到对应的真实笔记、文章或视频。
+  socialPosts: [
+    { platform: '抖音', title: '一分钟，看见非遗的新表情', meta: 'AI 短视频脚本 · 单条 9,999 播放', likes: '9,999 播放', image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=900&q=85', url: '#' },
+    { platform: '公众号', title: '把校园的春天装进一封信', meta: '校园传播 · 专题推文', likes: '11.7w 阅读', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=85', url: '#' },
+    { platform: '视频号', title: '毕业季，留给镜头的一句话', meta: '人物采访 · 视频号内容', likes: '8,000+ 播放', image: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85', url: '#' },
+    { platform: '省级官媒', title: '青春在基层的回响', meta: '三下乡 · 宣传稿与多平台分发', likes: '10.2w 曝光', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=85', url: '#' },
+    { platform: '小红书', title: '在镜头里收集校园的光', meta: '图片创意 · 日常视觉记录', likes: '内容链接待替换', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85', url: '#' },
+    { platform: '公众号', title: '活动回顾，不只是一篇总结', meta: '图文排版 · 信息层级设计', likes: '作品链接待替换', image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=85', url: '#' }
   ],
   honors: [
     '短视频竞赛｜奖项名称待补充 01', '短视频竞赛｜奖项名称待补充 02', '短视频竞赛｜奖项名称待补充 03',
