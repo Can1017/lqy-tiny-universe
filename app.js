@@ -47,16 +47,29 @@
       return relative;
     };
     experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description)}</p><em>点击返回正面</em></span></span></button>`).join('');
-    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span><button class="timeline-current" type="button" aria-label="当前经历年份"></button><span class="timeline-track">${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}</span>`;
+    // 每个年份都沿同一段圆弧等间距排布；切换时整组刻度绕固定指针移动。
+    experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span><span class="timeline-track">${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}</span>`;
+    const positionTimelineTicks = () => {
+      const width = experienceTimeline.getBoundingClientRect().width;
+      // 半径比容器宽一些，截出一段舒展的上圆弧（而非圆角矩形）。
+      const radius = Math.max(width * 0.55, 270);
+      const centerX = width / 2;
+      const step = 18 * Math.PI / 180;
+      experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => {
+        const offset = relativePosition(index);
+        const angle = offset * step;
+        // angle=0 永远是指针正上方，其他年份以相等角度分布在弧线上。
+        tick.style.setProperty('--tick-x', `${centerX + radius * Math.sin(angle)}px`);
+        tick.style.setProperty('--tick-y', `${radius - radius * Math.cos(angle)}px`);
+      });
+    };
     const updateExperience = () => {
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
         const relative = relativePosition(index);
         card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
         if (relative !== 0) card.classList.remove('flipped');
       });
-      experienceTimeline.style.setProperty('--timeline-rotation', '0deg');
-      const currentYear = experienceTimeline.querySelector('.timeline-current');
-      currentYear.textContent = items[activeExperience].year;
+      positionTimelineTicks();
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
     };
     const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; updateExperience(); };
@@ -68,6 +81,7 @@
     experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick) => tick.addEventListener('click', () => { activeExperience = Number(tick.dataset.index); updateExperience(); }));
     experiencePrev.addEventListener('click', () => moveExperience(-1));
     experienceNext.addEventListener('click', () => moveExperience(1));
+    window.addEventListener('resize', positionTimelineTicks);
     updateExperience();
   }
 
