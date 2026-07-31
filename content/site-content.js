@@ -3,24 +3,24 @@
  * 图片路径可以是本地路径（例如 assets/images/profile.jpg）或网络图片链接。
  */
 window.portfolioContent = {
-  // 替换为 assets/images/profile.jpg 后，首页将自动显示你的蓝底证件照。
-  profilePhoto: 'assets/images/profile-placeholder.svg',
+    // 首页右侧个人照片：替换此路径即可更新。
+    profilePhoto: 'assets/images/lqy-profile-photo.jpg',
   education: [
     { time: '2022 — 2026', title: '会计学 · 本科', description: '打下扎实的商业理解、数据敏感度与项目执行基础。' },
     { time: '2024 — 2026', title: '智能媒体技术 · 微专业', description: '系统学习短视频制作、新媒体传播与数字内容创作。' }
   ],
   // 首页经历时间轴：可替换图片、年份和说明。
   experience: [
-    { year: '2022', title: '会计学 · 本科', subtitle: '商业理解的起点', description: '在目标、成本和结果之间建立判断，也养成了对细节负责的习惯。', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85' },
-    { year: '2024', title: '智能媒体技术 · 微专业', subtitle: '开始用镜头表达', description: '系统学习短视频制作、新媒体传播与数字内容创作，把“想讲什么”落到镜头里。', image: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=85' },
-    { year: '2025', title: '内容运营与项目实践', subtitle: '让内容走向真实的人', description: '从选题、脚本到发布和复盘，开始理解一次内容传播完整发生的过程。', image: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=900&q=85' },
-    { year: '2026', title: '校招短视频编导', subtitle: '下一段故事，正在开始', description: '带着文字、画面和数据的三种语言，期待参与更有生命力的内容创作。', image: 'assets/images/profile-placeholder.svg' }
+    { year: '2023', title: '湖南信息学院', subtitle: '学习与创作的起点', description: '从这里开始把所学带进真实项目，也慢慢找到关于内容的方向。', image: 'assets/images/experience-school.jpg' },
+    { year: '2024', title: '智能媒体技术 · 微专业', subtitle: '开始用镜头表达', description: '系统学习短视频制作、新媒体传播与数字内容创作，把“想讲什么”落到镜头里。微专业成绩排名前 10%，获学校全额修读费用奖励。', image: 'assets/images/experience-studio.jpg' },
+    { year: '2025', title: '内容运营与项目实践', subtitle: '让内容走向真实的人', description: '项目一：AI 内容创作与视觉制作\n项目二：短视频创作与竞赛项目\n项目三：社会实践全媒体宣传。', image: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=900&q=85' },
+    { year: '2026', title: '个人技能介绍', subtitle: '下一段故事，正在开始', description: '文案编辑、现场拍摄、视频剪辑与平台运营，也在持续扩展新的表达方式。', image: 'assets/images/experience-camera.jpg' }
   ],
   skills: [
-    { icon: '✍️', title: '文案创作', text: '把模糊情绪拆成可共鸣的标题、口播与叙事线。' },
-    { icon: '⌁', title: '脚本制作', text: '从选题、人物弧光到分镜节奏，提前把故事想清楚。' },
+    { icon: '✍️', title: '文案编辑', text: '把模糊情绪拆成可共鸣的标题、口播与叙事线。' },
     { icon: '◉', title: '现场拍摄', text: '在真实场景中捕捉人、光和情绪，完成镜头调度与执行。' },
-    { icon: '✂', title: '视频剪辑', text: '用节奏、声音和留白，把素材剪成真正能抵达人的成片。' }
+    { icon: '✂', title: '视频剪辑', text: '用节奏、声音和留白，把素材剪成真正能抵达人的成片。' },
+    { icon: '⌁', title: '平台运营', text: '根据平台反馈复盘选题、标题与内容节奏，让作品被看见。' }
   ],
   works: [
     { category: '微电影脚本', title: '《把晚风寄给你》', label: '情感叙事 · 微电影脚本', summary: '我总会记住告别时没有说出口的话。于是用一段未寄出的语音，串联毕业季里三位好友的告别与成长。', stats: '完整剧本 / 分镜脚本 / 角色小传', award: '作品信息待补充', video: '视频作品占位框' },
