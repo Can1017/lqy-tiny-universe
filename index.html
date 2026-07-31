@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="lqy 的小小宇宙：关于摄影、散步和偶然遇见的光。" />
+    <title>lqy 的小小宇宙</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+    <main class="browser">
+      <div class="browser-bar" aria-hidden="true">
+        <span class="traffic"><i></i><i></i><i></i></span><span class="window-name">lqy’s tiny universe</span><span class="window-mark">⌁</span>
+      </div>
+
+      <section class="welcome page" id="home">
+        <p class="mini-title">♡ personal notebook / updated slowly</p>
+        <div class="doodle star">✦</div><div class="doodle sun">☼</div>
+        <h1>welcome to<br />lqy’s <span>tiny</span> universe</h1>
+        <p class="subtitle">一些关于光、散步和不愿忘记的瞬间。</p>
+        <nav class="main-nav" aria-label="页面导航">
+          <a href="#about">认识我 <b>↘</b></a><a href="#gallery">照片抽屉 <b>↘</b></a><a href="#notes">随手记 <b>↘</b></a>
+        </nav>
+        <p class="scroll-cue">scroll gently ↓</p>
+      </section>
+
+      <section class="about page" id="about">
+        <p class="corner-label">01 / hello there</p>
+        <p class="ghost-word">HELLO!</p>
+        <div class="scrapbook">
+          <div class="polaroid"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=82" alt="靠窗的人像占位图" /><span>this could be me</span></div>
+          <div class="stitches" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="intro-copy">
+            <h2>Hi, I’m lqy.</h2><p>这里是我的小小宇宙。</p>
+            <hr /><p>我会拍照、走路、发呆，<br />也会把普通日子认真地收起来。</p>
+            <div class="contact-tags"><span>📍 somewhere in China</span><a href="mailto:hello@lqy.photo">✉ say hello</a><span>📷 photo diary</span></div>
+          </div>
+        </div>
+        <a class="next-link" href="#gallery">打开照片抽屉 <span>→</span></a>
+      </section>
+
+      <section class="gallery page" id="gallery">
+        <p class="corner-label">02 / selected moments</p>
+        <div class="gallery-heading"><h2>My Little<br /><span>Photo Drawer</span></h2><p>点击标签，展开这一格里的照片 ♡</p></div>
+        <div class="drawer-nav" role="tablist" aria-label="照片分类">
+          <button class="drawer-label active" data-filter="all" type="button" role="tab" aria-selected="true"><b>▣</b> all</button>
+          <button class="drawer-label" data-filter="city" type="button" role="tab" aria-selected="false"><b>⌂</b> city walks</button>
+          <button class="drawer-label" data-filter="field" type="button" role="tab" aria-selected="false"><b>⌁</b> elsewhere</button>
+          <button class="drawer-label" data-filter="people" type="button" role="tab" aria-selected="false"><b>♡</b> people</button>
+        </div>
+        <div class="photo-row" aria-live="polite">
+          <button class="photo-card tilt-left" data-category="city" data-title="after rain / 01" type="button"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=700&q=82" alt="傍晚城市道路" /><span>01<br />after rain</span></button>
+          <button class="photo-card tilt-right" data-category="field" data-title="a long way / 02" type="button"><img src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=700&q=82" alt="山间道路" /><span>02<br />a long way</span></button>
+          <button class="photo-card tilt-left more" data-category="people" data-title="soft light / 03" type="button"><img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=700&q=82" alt="窗边人像" /><span>03<br />soft light</span></button>
+          <button class="photo-card tilt-right more" data-category="field" data-title="the sea / 04" type="button"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=82" alt="金色海浪" /><span>04<br />the sea</span></button>
+          <button class="photo-card tilt-left more" data-category="city" data-title="green window / 05" type="button"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=700&q=82" alt="树影中的房子" /><span>05<br />green window</span></button>
+          <button class="photo-card tilt-right more" data-category="people" data-title="little pause / 06" type="button"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=82" alt="阳光下的人像" /><span>06<br />little pause</span></button>
+        </div>
+        <p class="photo-hint">点击照片看大图 ⤢</p>
+      </section>
+
+      <section class="notes page" id="notes">
+        <p class="corner-label">03 / tiny notes</p>
+        <div class="note-board">
+          <div class="tape tape-one"></div><div class="tape tape-two"></div>
+          <p class="stamp">lqy’s note<br />no. 004</p>
+          <h2>今天也有<br /><span>一点点可爱。</span></h2>
+          <p>“我喜欢走得慢一点，<br />这样偶然遇见的光，才不会被错过。”</p>
+          <a href="mailto:hello@lqy.photo">写一封信给我 ↗</a>
+        </div>
+        <p class="final-line">thanks for visiting my tiny universe ✿</p>
+      </section>
+    </main>
+
+    <dialog class="lightbox" aria-label="照片预览"><button type="button" class="close" aria-label="关闭">×</button><img src="" alt="" /><p></p></dialog>
+    <script src="script.js"></script>
+  </body>
+</html>
