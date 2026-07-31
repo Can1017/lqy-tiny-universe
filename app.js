@@ -54,26 +54,24 @@
       // 半径比容器宽一些，截出一段舒展的上圆弧（而非圆角矩形）。
       const radius = Math.max(width * 0.55, 270);
       const centerX = width / 2;
-      const step = 18 * Math.PI / 180;
+      // 固定间距的四个刻度像同一只转盘一起转动，不在切换时交换左右位置。
+      const step = 13 * Math.PI / 180;
       const dialTop = width < 500 ? 34 : 42;
       experienceTimeline.style.setProperty('--dial-diameter', `${radius * 2}px`);
       experienceTimeline.style.setProperty('--dial-top', `${dialTop}px`);
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => {
-        const offset = relativePosition(index);
+        const offset = index - activeExperience;
         const angle = offset * step;
         // angle=0 永远是指针正上方，其他年份以相等角度分布在弧线上。
         tick.style.setProperty('--tick-x', `${centerX + radius * Math.sin(angle)}px`);
         tick.style.setProperty('--tick-y', `${dialTop + radius - radius * Math.cos(angle)}px`);
-        // 四张卡片在环形队列中切换时，最远的单独一项先收起；
-        // 画面上始终只保留与当前年份左右对称的一对刻度。
-        tick.classList.toggle('is-distant', Math.abs(offset) > 1);
       });
     };
     const updateExperience = () => {
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
-        const relative = relativePosition(index);
-        card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
-        if (relative !== 0) card.classList.remove('flipped');
+        // 卡片在扇面中的相对位置固定；切换只改变当前年份与高亮状态。
+        card.className = `experience-card fixed-card-${index} ${index === activeExperience ? 'active' : ''}`;
+        if (index !== activeExperience) card.classList.remove('flipped');
       });
       positionTimelineTicks();
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
