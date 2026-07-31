@@ -39,14 +39,10 @@
   const experienceNext = $('#experience-next');
   if (experienceStage && experienceTimeline && experiencePrev && experienceNext) {
     const items = data.experience?.length ? data.experience : data.education.map((item, index) => ({ ...item, year: item.time, subtitle: '教育经历', image: data.gallery[index]?.image || data.profilePhoto }));
-    // 四个卡片的固定槽位角度；切换时只改变倾角，不改变槽位坐标。
-    const cardSlotAngles = [-32, -20, 0, 20];
-    let activeExperience = 0;
+    // 从扇形中间的卡开始；整组只向左/右顺序旋转，不循环跳回另一侧。
+    let activeExperience = Math.min(2, items.length - 1);
     const relativePosition = (index) => {
-      let relative = index - activeExperience;
-      if (relative > items.length / 2) relative -= items.length;
-      if (relative < -items.length / 2) relative += items.length;
-      return relative;
+      return index - activeExperience;
     };
     experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description)}</p><em>点击返回正面</em></span></span></button>`).join('');
     // 每个年份都沿同一段圆弧等间距排布；切换时整组刻度绕固定指针移动。
@@ -71,15 +67,19 @@
     };
     const updateExperience = () => {
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
-        // 卡片在扇面中的相对位置固定；切换只改变当前年份与高亮状态。
-        card.className = `experience-card fixed-card-${index} ${index === activeExperience ? 'active' : ''}`;
-        card.style.setProperty('--fan-turn', `${-cardSlotAngles[activeExperience]}deg`);
-        if (index !== activeExperience) card.classList.remove('flipped');
+        const relative = relativePosition(index);
+        card.className = `experience-card position-${relative} ${relative === 0 ? 'active' : ''}`;
+        if (relative !== 0) card.classList.remove('flipped');
       });
       positionTimelineTicks();
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => tick.classList.toggle('active', index === activeExperience));
+      experiencePrev.disabled = activeExperience === 0;
+      experienceNext.disabled = activeExperience === items.length - 1;
     };
-    const moveExperience = (step) => { activeExperience = (activeExperience + step + items.length) % items.length; updateExperience(); };
+    const moveExperience = (step) => {
+      activeExperience = Math.max(0, Math.min(items.length - 1, activeExperience + step));
+      updateExperience();
+    };
     experienceStage.querySelectorAll('[data-index]').forEach((card) => card.addEventListener('click', () => {
       const index = Number(card.dataset.index);
       if (index === activeExperience) card.classList.toggle('flipped');
