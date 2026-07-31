@@ -55,12 +55,18 @@
       const radius = Math.max(width * 0.55, 270);
       const centerX = width / 2;
       const step = 18 * Math.PI / 180;
+      const dialTop = width < 500 ? 34 : 42;
+      experienceTimeline.style.setProperty('--dial-diameter', `${radius * 2}px`);
+      experienceTimeline.style.setProperty('--dial-top', `${dialTop}px`);
       experienceTimeline.querySelectorAll('.timeline-track button').forEach((tick, index) => {
         const offset = relativePosition(index);
         const angle = offset * step;
         // angle=0 永远是指针正上方，其他年份以相等角度分布在弧线上。
         tick.style.setProperty('--tick-x', `${centerX + radius * Math.sin(angle)}px`);
-        tick.style.setProperty('--tick-y', `${radius - radius * Math.cos(angle)}px`);
+        tick.style.setProperty('--tick-y', `${dialTop + radius - radius * Math.cos(angle)}px`);
+        // 四张卡片在环形队列中切换时，最远的单独一项先收起；
+        // 画面上始终只保留与当前年份左右对称的一对刻度。
+        tick.classList.toggle('is-distant', Math.abs(offset) > 1);
       });
     };
     const updateExperience = () => {
