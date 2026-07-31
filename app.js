@@ -39,6 +39,8 @@
   const experienceNext = $('#experience-next');
   if (experienceStage && experienceTimeline && experiencePrev && experienceNext) {
     const items = data.experience?.length ? data.experience : data.education.map((item, index) => ({ ...item, year: item.time, subtitle: '教育经历', image: data.gallery[index]?.image || data.profilePhoto }));
+    // 四个卡片的固定槽位角度；切换时只改变倾角，不改变槽位坐标。
+    const cardSlotAngles = [-32, -20, 0, 20];
     let activeExperience = 0;
     const relativePosition = (index) => {
       let relative = index - activeExperience;
@@ -71,6 +73,7 @@
       experienceStage.querySelectorAll('.experience-card').forEach((card, index) => {
         // 卡片在扇面中的相对位置固定；切换只改变当前年份与高亮状态。
         card.className = `experience-card fixed-card-${index} ${index === activeExperience ? 'active' : ''}`;
+        card.style.setProperty('--fan-turn', `${-cardSlotAngles[activeExperience]}deg`);
         if (index !== activeExperience) card.classList.remove('flipped');
       });
       positionTimelineTicks();
