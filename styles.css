@@ -186,3 +186,19 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
   .book-side-prev{left:3px!important}.book-side-next{right:3px!important}
   .flip-page{padding:22px 19px!important}
 }
+
+/* P4 影像书：封面与暮色背景同调，摊开时两页使用同一纸张色。 */
+.visual-book .flip-cover,.visual-book .flip-back-cover{background:linear-gradient(145deg,#805788 0%,#b878a0 54%,#dc977f 100%)!important}
+.visual-book .flip-page:not(.flip-cover):not(.flip-back-cover),.visual-book .flip-copy-page,.visual-book .flip-media-page{background:#fff8ed!important}
+.visual-book .flip-page.--left,.visual-book .flip-page.--right{box-shadow:none!important}
+/* 将翻页按钮移到书本外侧，避免与书页边缘相碰。 */
+.book-side-prev{left:-18px!important}.book-side-next{right:-18px!important}
+@media(max-width:760px){.book-side-prev{left:-20px!important}.book-side-next{right:-20px!important}}
+
+/* 手机菜单的高亮线独立留在文字下方，并融入半透明夜色。 */
+@media(max-width:760px){
+  .main-nav.open{background:rgba(24,21,66,.78)!important;backdrop-filter:blur(14px)!important}
+  .main-nav.open a{color:rgba(255,225,177,.82)!important;padding:7px 0 15px!important}
+  .main-nav.open a.active,.main-nav.open a:hover{color:rgba(255,241,210,.96)!important}
+  .main-nav.open a:after{background:rgba(255,221,157,.55)!important;bottom:5px!important}
+}
