@@ -259,15 +259,24 @@
     }
   }
 
-  // 运营页：以内容墙为主，指标只在页头保留一行。
+  // 运营页：以多平台手机样机呈现，文章链接与样机素材均在 content/p5-posts.js 中维护。
   const metrics = $('#metric-strip');
   if (metrics) metrics.innerHTML = data.stats.map((stat) => `<span><b>${html(stat.value)}</b><small>${html(stat.platform)} · ${html(stat.unit)}</small></span>`).join('');
   const socialGrid = $('#social-grid');
   if (socialGrid) {
+    const screens = window.P5_PHONE_SCREENS || [];
+    socialGrid.innerHTML = screens.map((screen, index) => `<figure class="social-phone social-phone-${index + 1}" style="--phone-index:${index}"><img src="${html(screen.image)}" alt="${html(screen.alt)}"></figure>`).join('');
+    const socialLinks = $('#social-links');
     const posts = window.P5_POSTS || [];
-    socialGrid.classList.toggle('is-scrollable', posts.length > 5);
-    socialGrid.classList.toggle('is-centered', posts.length <= 5);
-    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}"></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>${html(post.action || '查看内容 ↗')}</b></div></a>`).join('');
+    if (socialLinks) socialLinks.innerHTML = posts.map((post) => `<a href="${html(post.url)}" target="_blank" rel="noreferrer"><span>${html(post.platform)}</span>${html(post.action || '阅读全文')} <b>↗</b></a>`).join('');
+    if ('IntersectionObserver' in window) {
+      const phoneObserver = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in-view');
+        observer.unobserve(entry.target);
+      }), { threshold: .18 });
+      phoneObserver.observe(socialGrid);
+    } else socialGrid.classList.add('is-in-view');
   }
 
   const honorTickets = $('#honor-tickets');

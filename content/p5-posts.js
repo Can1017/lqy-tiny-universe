@@ -1,6 +1,4 @@
-// P5 内容卡片配置
-// 新增：复制一组 { ... } 并修改内容；删除：移除对应的一组 { ... }。
-// 图片统一放在 assets/images/，url 填写帖子原始链接。
+// P5 文章入口配置。新增或删除链接只需修改此数组。
 window.P5_POSTS = [
   {
     platform: '华声教育',
@@ -26,4 +24,13 @@ window.P5_POSTS = [
     image: 'assets/images/p5-post-03.jpg',
     url: 'https://mp.weixin.qq.com/s/ZpJGB730HtnHTW_Lxm8wmQ'
   }
+];
+
+// P5 样机屏幕配置。按顺序展示：前三张为短视频/视频号实景，后两张为图文推文页面。
+window.P5_PHONE_SCREENS = [
+  { image: 'assets/images/p5-phone-01.png', alt: '抖音作品主页界面' },
+  { image: 'assets/images/p5-phone-02.png', alt: '视频号湘信管院作品界面' },
+  { image: 'assets/images/p5-phone-03.jpg', alt: '短视频单篇数据后台界面' },
+  { image: 'assets/images/p5-phone-04.png', alt: '华声教育三下乡专题报道页面' },
+  { image: 'assets/images/p5-phone-05.png', alt: '微信公众号校园主题推文页面' }
 ];
