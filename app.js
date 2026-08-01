@@ -21,9 +21,10 @@
     lightbox.hidden = true;
     document.body.classList.remove('lightbox-open');
   };
-  const openLightbox = (src, alt) => {
+  const openLightbox = (src, alt, options = {}) => {
     lightboxPhoto.src = src;
     lightboxPhoto.alt = alt;
+    lightbox.classList.toggle('phone-lightbox', Boolean(options.phone));
     lightbox.hidden = false;
     document.body.classList.add('lightbox-open');
     lightbox.querySelector('.image-lightbox-close').focus();
@@ -269,7 +270,7 @@
     socialGrid.innerHTML = screens.map((screen, index) => `<button class="social-phone social-phone-${index + 1}" type="button" style="--phone-index:${index}" aria-label="放大查看：${html(screen.alt)}"><img src="${html(screen.image)}" alt="${html(screen.alt)}"></button>`).join('');
     socialGrid.querySelectorAll('.social-phone').forEach((phone) => phone.addEventListener('click', () => {
       const image = phone.querySelector('img');
-      openLightbox(image.currentSrc || image.src, image.alt);
+      openLightbox(image.currentSrc || image.src, image.alt, { phone: true });
     }));
     // 样机数量增减后自动判断：放得下时居中，超出时从左侧横向滚动。
     const syncPhoneLayout = () => {
