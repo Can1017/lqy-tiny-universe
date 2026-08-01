@@ -147,7 +147,7 @@
     if (PageFlip) {
       const bookStage = visualBook.closest('.book-stage');
       // 一页书的竖向比例，容器两侧为翻页按钮保留独立空间。
-      const book = new PageFlip(visualBook, { width: 350, height: 500, size: 'stretch', minWidth: 250, maxWidth: 360, minHeight: 350, maxHeight: 500, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
+      const book = new PageFlip(visualBook, { width: 470, height: 520, size: 'stretch', minWidth: 290, maxWidth: 620, minHeight: 350, maxHeight: 650, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       const updateBookMode = (page) => {
         if (!bookStage) return;
