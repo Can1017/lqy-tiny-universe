@@ -289,3 +289,10 @@ body.lightbox-open{overflow:hidden}
 /* P3 引导文案不允许由桌面端旧样式补入破折号。 */
 .writing-detail .detail-label{quotes:none!important}
 .writing-detail .detail-label::before,.writing-detail .detail-label::after{content:none!important;display:none!important}
+
+/* P5 三列内容墙：卡片数量由 content/p5-posts.js 自动决定。 */
+.social-grid{border-bottom-color:var(--ink)!important;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important}
+.social-grid .post-image{aspect-ratio:16/10}
+.social-grid .post-copy h3{font-size:15px;min-height:3em}
+.social-grid .post-copy b{color:#74415f!important}
+@media(max-width:760px){.social-grid{grid-template-columns:1fr!important}.social-grid .post-copy h3{min-height:0}}

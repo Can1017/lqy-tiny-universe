@@ -264,8 +264,8 @@
   if (metrics) metrics.innerHTML = data.stats.map((stat) => `<span><b>${html(stat.value)}</b><small>${html(stat.platform)} · ${html(stat.unit)}</small></span>`).join('');
   const socialGrid = $('#social-grid');
   if (socialGrid) {
-    const posts = data.socialPosts || [];
-    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}（可替换图片）"></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>♥ ${html(post.likes)}</b></div></a>`).join('');
+    const posts = window.P5_POSTS || [];
+    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}"><span>${html(post.platform)}</span></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>${html(post.action || '查看内容 ↗')}</b></div></a>`).join('');
   }
 
   const honorTickets = $('#honor-tickets');

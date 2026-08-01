@@ -84,15 +84,6 @@ window.portfolioContent = {
     { platform: '公众号', value: '11.7w', unit: '总阅读', percent: 92, color: '#A9A0E8' },
     { platform: '三下乡', value: '10.2w', unit: '总曝光', percent: 86, color: '#F3A7BD' }
   ],
-  // 运营页内容墙。替换 url 后，卡片会跳转到对应的真实笔记、文章或视频。
-  socialPosts: [
-    { platform: '抖音', title: '一分钟，看见非遗的新表情', meta: 'AI 短视频脚本 · 单条 9,999 播放', likes: '9,999 播放', image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=900&q=85', url: '#' },
-    { platform: '公众号', title: '把校园的春天装进一封信', meta: '校园传播 · 专题推文', likes: '11.7w 阅读', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=85', url: '#' },
-    { platform: '视频号', title: '毕业季，留给镜头的一句话', meta: '人物采访 · 视频号内容', likes: '8,000+ 播放', image: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85', url: '#' },
-    { platform: '省级官媒', title: '青春在基层的回响', meta: '三下乡 · 宣传稿与多平台分发', likes: '10.2w 曝光', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=85', url: '#' },
-    { platform: '小红书', title: '在镜头里收集校园的光', meta: '图片创意 · 日常视觉记录', likes: '内容链接待替换', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85', url: '#' },
-    { platform: '公众号', title: '活动回顾，不只是一篇总结', meta: '图文排版 · 信息层级设计', likes: '作品链接待替换', image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=85', url: '#' }
-  ],
   honors: [
     '短视频竞赛｜奖项名称待补充 01', '短视频竞赛｜奖项名称待补充 02', '短视频竞赛｜奖项名称待补充 03',
     '短视频竞赛｜奖项名称待补充 04', '省级三下乡｜奖项名称待补充 01', '省级三下乡｜奖项名称待补充 02'
