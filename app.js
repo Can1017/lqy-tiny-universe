@@ -265,7 +265,9 @@
   const socialGrid = $('#social-grid');
   if (socialGrid) {
     const posts = window.P5_POSTS || [];
-    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}"><span>${html(post.platform)}</span></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>${html(post.action || '查看内容 ↗')}</b></div></a>`).join('');
+    socialGrid.classList.toggle('is-scrollable', posts.length > 5);
+    socialGrid.classList.toggle('is-centered', posts.length <= 5);
+    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}"></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>${html(post.action || '查看内容 ↗')}</b></div></a>`).join('');
   }
 
   const honorTickets = $('#honor-tickets');
