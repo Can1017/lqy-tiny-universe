@@ -109,10 +109,16 @@
       writingList.querySelectorAll('button').forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === index));
       writingDetail.classList.remove('is-open');
       window.setTimeout(() => {
+        const story = Array.isArray(work.story) && work.story.length
+          ? `<div class="detail-story">${work.story.map((paragraph) => `<p>${html(paragraph)}</p>`).join('')}</div>`
+          : '';
+        const idea = work.idea
+          ? `<aside class="detail-note"><b>创作想法</b><p>${html(work.idea)}</p></aside>`
+          : '';
         const media = work.videoSrc
           ? `<video class="work-video" controls preload="metadata" playsinline><source src="${html(work.videoSrc)}" type="video/mp4">当前浏览器暂不支持视频播放。</video>`
           : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
-        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><p class="detail-summary">${html(work.summary)}</p><div class="detail-bottom"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p>${media}</div>`;
+        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><div class="detail-copy"><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p>${media}</div>`;
         writingDetail.classList.add('is-open');
       }, 80);
     };

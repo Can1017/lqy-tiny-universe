@@ -128,3 +128,16 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 .work-video{background:#2f234b;border:1px solid rgba(125,83,126,.45);border-radius:10px;display:block;max-height:230px;min-height:150px;object-fit:contain;width:100%}
 .detail-bottom:has(.work-video){grid-template-columns:minmax(130px,.72fr) minmax(130px,.72fr) minmax(300px,1.35fr)}
 @media(max-width:760px){.work-video{max-height:280px;min-height:190px}.detail-bottom:has(.work-video){grid-template-columns:1fr}}
+
+/* P3 长文案阅读：让故事与创作想法有稳定层级，避免挤在视频卡片中。 */
+.writing-detail{align-content:start!important;padding-bottom:34px!important}
+.detail-copy{display:grid;gap:16px;margin-top:18px;max-width:900px}
+.detail-summary{font-size:15px!important;line-height:1.92!important;margin:0!important;max-width:none!important}
+.detail-story{border-left:2px solid rgba(96,59,101,.3);display:grid;gap:12px;margin:2px 0 0;padding:2px 0 2px 18px}
+.detail-story p{font-size:14px!important;line-height:1.85!important;margin:0!important;max-width:none!important}
+.detail-note{background:rgba(235,214,226,.42);border-radius:12px;margin:2px 0 4px;padding:15px 17px}
+.detail-note b{color:#6f3e6d!important;display:block;font-size:12px!important;letter-spacing:.12em;margin-bottom:7px}
+.detail-note p{font-size:14px!important;line-height:1.8!important;margin:0!important;max-width:none!important}
+.detail-bottom{align-items:start!important;margin-top:26px!important}
+.detail-bottom:has(.work-video){grid-template-columns:minmax(150px,.7fr) minmax(150px,.78fr) minmax(340px,1.55fr)}
+@media(max-width:760px){.writing-detail{padding-bottom:24px!important}.detail-copy{gap:14px;margin-top:16px}.detail-summary{font-size:14px!important;line-height:1.85!important}.detail-story{padding-left:14px}.detail-story p,.detail-note p{font-size:13px!important}.detail-note{padding:14px}.detail-bottom:has(.work-video){grid-template-columns:1fr}}
