@@ -291,11 +291,11 @@ body.lightbox-open{overflow:hidden}
 .writing-detail .detail-label::before,.writing-detail .detail-label::after{content:none!important;display:none!important}
 
 /* P5 横向内容带：五张以内居中，更多卡片保留尺寸并通过底部滚动条浏览。 */
-.social-grid{border-bottom-color:var(--ink)!important;display:flex!important;gap:18px!important;overflow-x:auto;overflow-y:hidden;padding:4px 2px 20px;scrollbar-color:rgba(38,31,51,.7) rgba(255,255,255,.22);scrollbar-width:thin}
+.social-grid{border-bottom-color:var(--ink)!important;display:flex!important;gap:18px!important;overflow-x:auto;overflow-y:hidden;padding:4px 2px 38px;scrollbar-color:rgba(38,31,51,.7) rgba(255,255,255,.22);scrollbar-width:thin}
 .social-grid.is-centered{justify-content:center}
 .social-grid.is-scrollable{justify-content:flex-start}
-.social-grid .social-post{flex:0 0 clamp(160px,16vw,200px)}
-.social-grid .post-image{aspect-ratio:4/5}
+.social-grid .social-post{flex:0 0 clamp(170px,17vw,220px)}
+.social-grid .post-image{aspect-ratio:5/6}
 .social-grid .post-copy h3{font-size:14px;min-height:4.35em}
 .social-grid .post-copy b{color:#74415f!important}
 .social-grid::-webkit-scrollbar{height:7px}
