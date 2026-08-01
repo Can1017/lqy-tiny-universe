@@ -150,11 +150,43 @@
       // A4 竖版比例（1 : √2），电脑与手机缩放时都保持同一页型。
       const book = new PageFlip(visualBook, { width: 380, height: 537, size: 'stretch', minWidth: 240, maxWidth: 420, minHeight: 339, maxHeight: 594, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
-      const updateBookMode = (page) => {
+      let bookOffset = null;
+      let bookShiftAnimation = null;
+      const offsetForPage = (page) => {
+        if (!window.matchMedia('(min-width: 761px)').matches) return 0;
+        const quarterWidth = visualBook.clientWidth * .25;
+        if (page === 0) return -quarterWidth;
+        if (page === pages.length - 1) return quarterWidth;
+        return 0;
+      };
+      const positionBook = (page, animate = false) => {
+        const target = offsetForPage(page);
+        const from = bookOffset ?? target;
+        bookOffset = target;
+        bookShiftAnimation?.cancel();
+        visualBook.style.setProperty('transform', `translateX(${from}px)`, 'important');
+        if (!animate || Math.abs(target - from) < 1) {
+          visualBook.style.setProperty('transform', `translateX(${target}px)`, 'important');
+          return;
+        }
+        requestAnimationFrame(() => {
+          bookShiftAnimation = visualBook.animate([
+            { transform: `translateX(${from}px)` },
+            { transform: `translateX(${target}px)` }
+          ], { duration: 2300, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' });
+          bookShiftAnimation.addEventListener('finish', () => {
+            visualBook.style.setProperty('transform', `translateX(${target}px)`, 'important');
+            bookShiftAnimation?.cancel();
+            bookShiftAnimation = null;
+          }, { once: true });
+        });
+      };
+      const updateBookMode = (page, animate = false) => {
         if (!bookStage) return;
         bookStage.classList.toggle('is-front-cover', page === 0);
         bookStage.classList.toggle('is-back-cover', page === pages.length - 1);
         bookStage.classList.toggle('is-open-book', page > 0 && page < pages.length - 1);
+        positionBook(page, animate);
       };
       const updateBookStatus = (page) => {
         bookCount.textContent = `${String(page + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
@@ -164,14 +196,16 @@
       book.on('changeState', (event) => {
         if (!bookStage) return;
         bookStage.classList.toggle('is-turning', event.data === 'flipping');
-        if (event.data === 'read') updateBookMode(book.getCurrentPageIndex());
+        if (event.data === 'read') updateBookMode(book.getCurrentPageIndex(), true);
       });
       bookPrev.addEventListener('click', () => book.flipPrev('top'));
       bookNext.addEventListener('click', () => book.flipNext('top'));
       updateBookStatus(0);
       updateBookMode(0);
-      // 初次落位不播放，后续封面与双页之间才平滑移动。
-      requestAnimationFrame(() => bookStage?.classList.add('is-book-ready'));
+      window.addEventListener('resize', () => {
+        bookOffset = null;
+        positionBook(book.getCurrentPageIndex());
+      }, { passive: true });
     } else {
       visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
     }

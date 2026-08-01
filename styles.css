@@ -252,11 +252,5 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
   .book-nav{margin-top:18px!important}
 }
 
-/* 电脑端：单页封面居中，展开双页后向右回到阅读中线；末页反向执行。 */
-@media(min-width:761px){
-  .book-stage .visual-book{will-change:transform}
-  .book-stage.book-ready .visual-book{transition:transform 1.8s cubic-bezier(.22,.61,.36,1)!important}
-  .book-stage.is-front-cover .visual-book{transform:translateX(-25%)!important}
-  .book-stage.is-open-book .visual-book{transform:translateX(0)!important}
-  .book-stage.is-back-cover .visual-book{transform:translateX(25%)!important}
-}
+/* 位移由脚本在翻页结束后独立执行，避免被翻页组件的内部布局切换打断。 */
+@media(min-width:761px){.book-stage .visual-book{will-change:transform}}
