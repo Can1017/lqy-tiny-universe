@@ -255,7 +255,7 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 /* 电脑端：单页封面居中，展开双页后向右回到阅读中线；末页反向执行。 */
 @media(min-width:761px){
   .book-stage .visual-book{will-change:transform}
-  .book-stage.book-ready .visual-book{transition:transform .68s cubic-bezier(.22,.78,.2,1)!important}
+  .book-stage.book-ready .visual-book{transition:transform 1.05s cubic-bezier(.16,1,.3,1)!important}
   .book-stage.is-front-cover .visual-book{transform:translateX(-25%)!important}
   .book-stage.is-open-book .visual-book{transform:translateX(0)!important}
   .book-stage.is-back-cover .visual-book{transform:translateX(25%)!important}
