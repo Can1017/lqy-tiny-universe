@@ -17,8 +17,7 @@
     const opened = nav.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', String(opened));
   });
-  document.querySelectorAll('.main-nav a').forEach((link) => link.addEventListener('click', () => nav?.classList.remove('open')));
-    const navLinks = [...document.querySelectorAll('.main-nav a')];
+  const navLinks = [...document.querySelectorAll('.main-nav a')];
     const siteHeader = $('.site-header');
     const syncHeaderTransparency = () => siteHeader?.classList.toggle('is-scrolled', window.scrollY > 24);
     window.addEventListener('scroll', syncHeaderTransparency, { passive: true });

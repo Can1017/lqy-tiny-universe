@@ -197,7 +197,7 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 
 /* 手机菜单的高亮线独立留在文字下方，并融入半透明夜色。 */
 @media(max-width:760px){
-  .main-nav.open{background:rgba(24,21,66,.78)!important;backdrop-filter:blur(14px)!important}
+  .main-nav.open{background:rgba(255,255,255,.08)!important;backdrop-filter:blur(14px) saturate(135%)!important}
   .main-nav.open a{color:rgba(255,225,177,.82)!important;padding:7px 0 15px!important}
   .main-nav.open a.active,.main-nav.open a:hover{color:rgba(255,241,210,.96)!important}
   .main-nav.open a:after{background:rgba(255,221,157,.55)!important;bottom:5px!important}
