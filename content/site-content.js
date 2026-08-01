@@ -11,7 +11,7 @@ window.portfolioContent = {
   ],
   // 首页经历时间轴：可替换图片、年份和说明。
   experience: [
-    { year: '2023', title: '湖南信息学院', subtitle: '学习与创作的起点', description: '从这里开始把所学带进真实项目，也慢慢找到关于内容的方向。', image: 'assets/images/experience-school.jpg' },
+    { year: '2023', title: '湖南信息学院\n会计学 · 本科', subtitle: '学习与创作的起点', description: '从这里开始把所学带进真实项目，也慢慢找到关于内容的方向。', image: 'assets/images/experience-school.jpg' },
     { year: '2024', title: '智能媒体技术 · 微专业', subtitle: '开始用镜头表达', description: '系统学习短视频制作、新媒体传播与数字内容创作，把“想讲什么”落到镜头里。微专业成绩排名前 10%，获学校全额修读费用奖励。', image: 'assets/images/experience-studio.jpg' },
     { year: '2025', title: '内容运营与项目实践', subtitle: '让内容走向真实的人', description: '项目一：AI 内容创作与视觉制作\n项目二：短视频创作与竞赛项目\n项目三：社会实践全媒体宣传。', image: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=900&q=85' },
     { year: '2026', title: '个人技能介绍', subtitle: '下一段故事，正在开始', description: '文案编辑、现场拍摄、视频剪辑与平台运营，也在持续扩展新的表达方式。', image: 'assets/images/experience-camera.jpg' }

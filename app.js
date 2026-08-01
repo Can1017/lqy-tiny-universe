@@ -7,6 +7,8 @@
   if (!data) return;
   const $ = (selector) => document.querySelector(selector);
   const html = (value) => String(value ?? '');
+  // 内容区允许用换行分隔标题，例如学校名称与专业。
+  const withBreaks = (value) => html(value).replace(/\n/g, '<br />');
 
   // 移动端导航与滚动中的当前章节提示。
   const nav = $('.main-nav');
@@ -48,7 +50,7 @@
     const relativePosition = (index) => {
       return index - activeExperience;
     };
-    experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${html(item.title)}</b><p>${html(item.description).replace(/\n/g, '<br />')}</p></span></span></button>`).join('');
+    experienceStage.innerHTML = items.map((item, index) => `<button class="experience-card" type="button" data-index="${index}" aria-label="查看 ${html(item.title)}"><span class="experience-card-inner"><span class="experience-card-face experience-front"><img src="${html(item.image)}" alt="${html(item.title)}"><span><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${withBreaks(item.title)}</b></span></span><span class="experience-card-face experience-back"><small>${html(item.year)} / ${html(item.subtitle)}</small><b>${withBreaks(item.title)}</b><p>${html(item.description).replace(/\n/g, '<br />')}</p></span></span></button>`).join('');
     // 每个年份都沿同一段圆弧等间距排布；切换时整组刻度绕固定指针移动。
     experienceTimeline.innerHTML = `<span class="timeline-arc"></span><span class="timeline-hand"></span><span class="timeline-track">${items.map((item, index) => `<button type="button" data-index="${index}"><i></i><span>${html(item.year)}</span></button>`).join('')}</span>`;
     const positionTimelineTicks = () => {
