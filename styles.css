@@ -143,3 +143,46 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 .detail-bottom{grid-template-columns:minmax(190px,.78fr) minmax(230px,1.15fr)!important}
 .detail-bottom:has(.work-video){grid-template-columns:minmax(190px,.78fr) minmax(340px,1.55fr)!important}
 @media(max-width:760px){.writing-detail{padding-bottom:24px!important}.detail-copy{gap:14px;margin-top:16px}.detail-summary{font-size:14px!important;line-height:1.85!important}.detail-story{padding-left:14px}.detail-story p,.detail-note p{font-size:13px!important}.detail-note{padding:14px}.detail-bottom,.detail-bottom:has(.work-video){grid-template-columns:1fr!important}}
+
+/* Responsive polish: mobile navigation, portrait and P3's long-form work viewer. */
+.work-video{align-self:start;background:transparent!important;border:0!important;border-radius:8px!important;box-shadow:none!important;height:auto!important;max-height:170px!important;max-width:280px!important;min-height:0!important;object-fit:initial!important;width:280px!important}
+.detail-bottom:has(.work-video){grid-template-columns:minmax(190px,.78fr) minmax(280px,1fr)!important}
+.detail-bottom:has(.work-video) .work-video{justify-self:end}
+.metric-strip{align-self:end!important;min-height:42px!important;padding:4px 13px!important}
+.metric-strip span{min-height:32px!important}
+.metric-strip b{font-size:29px!important}
+.book-stage{box-sizing:border-box!important;max-width:840px!important;padding:0 62px!important}
+.visual-book{height:500px!important;max-width:720px!important}
+.book-side-prev{left:9px!important}.book-side-next{right:9px!important}
+.visual-book .flip-page{background:#fcfcf8!important;color:#26243c!important}
+.visual-book .flip-cover{background:radial-gradient(circle at 78% 15%,rgba(177,203,255,.25),transparent 29%),linear-gradient(150deg,#151d62 5%,#3d4e9b 62%,#7869ab 100%)!important}
+.visual-book .flip-copy-page>p{color:#5a67a9!important}
+.visual-book .flip-copy-page h3,.visual-book .flip-copy-page>b{color:#2a2d57!important}
+.visual-book .flip-copy-page>div{border-color:rgba(61,78,155,.34)!important}
+.visual-book .flip-media-page{background:#eef1ff!important}
+.visual-book .flip-media-page span{background:linear-gradient(135deg,#263c92,#5f62a8)!important;border-color:#7b87c8!important;color:#fff!important}
+.visual-book .flip-back-cover{background:linear-gradient(145deg,#151d62,#6b63a5)!important}
+
+@media(max-width:1020px){.main-nav.open{background:rgba(24,21,66,.98)!important;border-bottom-color:rgba(255,220,165,.35)!important;box-shadow:0 13px 26px rgba(8,7,30,.25)}.main-nav.open a{color:#ffe1ac!important}.main-nav.open a.active,.main-nav.open a:hover{color:#fff0cc!important}}
+@media(max-width:760px){
+  .intro-section{background:#0a103e!important;display:flex!important;flex-direction:column!important;min-height:0!important;padding:104px 24px 58px!important}
+  .intro-section:before{background:linear-gradient(180deg,rgba(8,13,56,.7) 0%,rgba(12,17,64,.5) 44%,rgba(13,17,59,.78) 100%),url("assets/images/lqy-cosmic-hero.png") 58% center/cover no-repeat!important;mix-blend-mode:normal!important;opacity:1!important}
+  .intro-section:after{background:linear-gradient(180deg,rgba(8,12,54,.04),rgba(8,12,54,.24))!important}
+  .intro-copy{max-width:100%!important}
+  .intro-portrait{display:block!important;margin:40px 0 0 auto!important;max-width:min(72vw,270px)!important;opacity:1!important;right:auto!important;top:auto!important;transform:rotate(3deg)!important}
+  .intro-portrait img{display:block!important;min-height:0!important;width:100%!important}
+  .writing-layout{margin-top:26px!important}
+  .writing-list{background:rgba(255,248,235,.96)!important;border:1px solid rgba(116,75,128,.34)!important;border-radius:14px!important;box-shadow:0 10px 22px rgba(36,23,62,.16)!important;display:grid!important;gap:5px!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;margin:0 0 22px!important;padding:6px!important;position:sticky!important;top:72px!important;z-index:25!important}
+  .writing-list button{align-content:center!important;background:transparent!important;border:0!important;border-radius:9px!important;display:block!important;min-height:50px!important;padding:7px 4px!important;text-align:center!important}
+  .writing-list button.active{background:rgba(168,112,136,.18)!important;padding:7px 4px!important}
+  .writing-list button span,.writing-list button i{display:none!important}
+  .writing-list button b{display:block;font-size:11px!important;line-height:1.3!important;overflow-wrap:anywhere!important}
+  .work-video{justify-self:start!important;max-height:none!important;max-width:min(100%,280px)!important;min-height:0!important;width:min(100%,280px)!important}
+  .detail-bottom:has(.work-video){grid-template-columns:1fr!important}
+  .metric-strip{min-height:38px!important;padding:4px 9px!important}.metric-strip span{min-height:29px!important}.metric-strip b{font-size:25px!important}
+  .book-stage{max-width:100%!important;padding:0 45px!important}
+  .visual-book{height:430px!important;max-width:calc(100vw - 90px)!important}
+  .book-side{height:36px!important;width:36px!important}.book-side:before{font-size:25px!important}
+  .book-side-prev{left:3px!important}.book-side-next{right:3px!important}
+  .flip-page{padding:22px 19px!important}
+}
