@@ -170,6 +170,8 @@
       bookNext.addEventListener('click', () => book.flipNext('top'));
       updateBookStatus(0);
       updateBookMode(0);
+      // 初次落位不播放，后续封面与双页之间才平滑移动。
+      requestAnimationFrame(() => bookStage?.classList.add('is-book-ready'));
     } else {
       visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
     }
