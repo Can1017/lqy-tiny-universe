@@ -234,3 +234,20 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
   .book-side-prev{left:0!important}.book-side-next{right:0!important}
   .book-side:before{font-size:23px!important}
 }
+
+/* P4 翻页书使用稳定的相对网格：翻封面不再带额外位移，也不保留外层方框。 */
+.book-stage{display:grid!important;filter:none!important;grid-template-columns:42px 760px 42px;justify-content:center;align-items:center;column-gap:28px}
+.book-stage .visual-book{grid-column:2;grid-row:1;margin:0!important;transform:none!important;transition:none!important;width:760px!important;height:537px!important;max-width:none!important}
+.book-stage .book-side{grid-row:1;position:relative!important;top:auto!important;left:auto!important;right:auto!important;transform:none!important}
+.book-stage .book-side-prev{grid-column:1}.book-stage .book-side-next{grid-column:3}
+.book-stage.is-front-cover .visual-book,.book-stage.is-back-cover .visual-book,.book-stage.is-open-book .visual-book{transform:none!important}
+.book-stage.is-front-cover .book-side-prev,.book-stage.is-back-cover .book-side-next,.book-stage.is-front-cover .book-side-next,.book-stage.is-back-cover .book-side-prev,.book-stage.is-open-book .book-side{transform:none!important}
+.visual-book .stf__parent,.visual-book .stf__wrapper,.visual-book .stf__block{box-shadow:none!important;outline:0!important}
+.book-nav{clear:both!important;margin-top:24px!important}
+@media(max-width:900px){.book-stage{grid-template-columns:38px 680px 38px;column-gap:22px}.book-stage .visual-book{width:680px!important;height:480px!important}}
+@media(max-width:760px){
+  .book-stage{column-gap:8px!important;grid-template-columns:30px 245px 30px!important;margin-left:-20px!important;width:100vw!important}
+  .book-stage .visual-book{height:346px!important;max-width:245px!important;width:245px!important}
+  .book-stage .book-side{height:30px!important;width:30px!important}
+  .book-nav{margin-top:18px!important}
+}

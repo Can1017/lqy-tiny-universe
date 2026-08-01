@@ -148,7 +148,7 @@
       const bookStage = visualBook.closest('.book-stage');
       // 一页书的竖向比例，容器两侧为翻页按钮保留独立空间。
       // A4 竖版比例（1 : √2），电脑与手机缩放时都保持同一页型。
-      const book = new PageFlip(visualBook, { width: 400, height: 566, size: 'stretch', minWidth: 250, maxWidth: 450, minHeight: 354, maxHeight: 636, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
+      const book = new PageFlip(visualBook, { width: 380, height: 537, size: 'stretch', minWidth: 240, maxWidth: 420, minHeight: 339, maxHeight: 594, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       const updateBookMode = (page) => {
         if (!bookStage) return;
