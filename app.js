@@ -146,7 +146,7 @@
           : workImage
             ? `<button class="work-media-card work-image-button" type="button" data-lightbox-src="${html(workImage.src)}" data-lightbox-alt="${html(workImage.alt)}" aria-label="放大查看${html(workImage.alt)}"><img src="${html(workImage.src)}" alt="${html(workImage.alt)}"><span class="work-media-action">点击放大 ↗</span></button>`
             : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
-        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">— ${html(work.label)}</p><div class="detail-copy"><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><div class="detail-meta"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p></div>${media}</div>`;
+        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><div class="detail-copy"><p class="detail-label">${html(work.label)}</p><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><div class="detail-meta"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p></div>${media}</div>`;
         writingDetail.querySelector('.work-image-button')?.addEventListener('click', (event) => {
           const button = event.currentTarget;
           openLightbox(button.dataset.lightboxSrc, button.dataset.lightboxAlt);
