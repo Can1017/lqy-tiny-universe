@@ -265,7 +265,11 @@
   const socialGrid = $('#social-grid');
   if (socialGrid) {
     const screens = window.P5_PHONE_SCREENS || [];
-    socialGrid.innerHTML = screens.map((screen, index) => `<figure class="social-phone social-phone-${index + 1}" style="--phone-index:${index}"><img src="${html(screen.image)}" alt="${html(screen.alt)}"></figure>`).join('');
+    socialGrid.innerHTML = screens.map((screen, index) => `<button class="social-phone social-phone-${index + 1}" type="button" style="--phone-index:${index}" aria-label="放大查看：${html(screen.alt)}"><img src="${html(screen.image)}" alt="${html(screen.alt)}"></button>`).join('');
+    socialGrid.querySelectorAll('.social-phone').forEach((phone) => phone.addEventListener('click', () => {
+      const image = phone.querySelector('img');
+      openLightbox(image.currentSrc || image.src, image.alt);
+    }));
     const socialLinks = $('#social-links');
     const posts = window.P5_POSTS || [];
     if (socialLinks) socialLinks.innerHTML = posts.map((post) => `<a href="${html(post.url)}" target="_blank" rel="noreferrer"><span>${html(post.platform)}</span>${html(post.action || '阅读全文')} <b>↗</b></a>`).join('');
