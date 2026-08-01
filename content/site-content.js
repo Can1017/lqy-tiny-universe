@@ -23,10 +23,10 @@ window.portfolioContent = {
     { icon: '⌁', title: '平台运营', text: '根据平台反馈复盘选题、标题与内容节奏，让作品被看见。' }
   ],
   works: [
-    { category: '微电影脚本', title: '《把晚风寄给你》', label: '情感叙事 · 微电影脚本', summary: '我总会记住告别时没有说出口的话。于是用一段未寄出的语音，串联毕业季里三位好友的告别与成长。', stats: '完整剧本 / 分镜脚本 / 角色小传', award: '作品信息待补充', video: '视频作品占位框' },
-    { category: 'AI短视频脚本', title: '《一分钟，看见非遗的新表情》', label: 'AIGC 创意 · 短视频脚本', summary: '以“传统纹样进入当代生活”为创意核心，设计快节奏镜头与 AI 视觉转场。', stats: '60 秒脚本 / 8 个镜头段落 / 多版本标题', award: '作品信息待补充', video: '视频作品占位框' },
+    { category: 'Ai短视频制作', title: '《一分钟，看见非遗的新表情》', label: 'AIGC 创意 · 短视频制作', summary: '以“传统纹样进入当代生活”为创意核心，设计快节奏镜头与 AI 视觉转场。', stats: '60 秒脚本 / 8 个镜头段落 / 多版本标题', award: '作品信息待补充', videoSrc: 'assets/videos/ai-short-video.mp4' },
+    { category: '微电影制作', title: '《把晚风寄给你》', label: '情感叙事 · 微电影制作', summary: '我总会记住告别时没有说出口的话。于是用一段未寄出的语音，串联毕业季里三位好友的告别与成长。', stats: '完整剧本 / 分镜脚本 / 角色小传', award: '作品信息待补充', videoSrc: 'assets/videos/micro-film.mp4' },
     { category: '公众号推文', title: '《把校园的春天装进一封信》', label: '校园传播 · 公众号推文', summary: '春天不是一个抽象的词：是树影落在信纸上、是路过的人停了一秒。围绕这些细节，写成一封可以被打开的校园来信。', stats: '选题策划 / 图文排版 / 标题 AB 测试', award: '阅读数据待补充', video: '图文长页占位框' },
-    { category: '省级官媒宣传稿', title: '《青春在基层的回响》', label: '三下乡 · 省级官媒宣传稿', summary: '以团队服务故事为主线，完成采访梳理、文字撰写与对外传播素材整理。', stats: '采访整理 / 宣传稿撰写 / 多平台分发', award: '省级发布信息待补充', video: '新闻稿页面占位框' }
+    { category: '省级报道新闻稿', title: '《青春在基层的回响》', label: '三下乡 · 省级报道新闻稿', summary: '以团队服务故事为主线，完成采访梳理、文字撰写与对外传播素材整理。', stats: '采访整理 / 新闻稿撰写 / 多平台分发', award: '省级发布信息待补充', video: '新闻稿页面占位框' }
   ],
   gallery: [
     { category: '公众号排版', title: '春日校园专题排版', note: '用奶油白、浅绿与留白营造轻盈阅读节奏。', image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=85' },

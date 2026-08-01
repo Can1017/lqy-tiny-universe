@@ -107,7 +107,10 @@
       writingList.querySelectorAll('button').forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === index));
       writingDetail.classList.remove('is-open');
       window.setTimeout(() => {
-        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><p class="detail-summary">${html(work.summary)}</p><div class="detail-bottom"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p><div class="video-slot"><span>▶</span>${html(work.video)}</div></div>`;
+        const media = work.videoSrc
+          ? `<video class="work-video" controls preload="metadata" playsinline><source src="${html(work.videoSrc)}" type="video/mp4">当前浏览器暂不支持视频播放。</video>`
+          : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
+        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><p class="detail-summary">${html(work.summary)}</p><div class="detail-bottom"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p>${media}</div>`;
         writingDetail.classList.add('is-open');
       }, 80);
     };
@@ -125,7 +128,7 @@
   if (visualBook && bookPrev && bookNext && bookDots && bookCount) {
     const galleryPages = data.gallery;
     const pages = [
-      `<article class="flip-page flip-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>LI QIAOYING</span></article>`,
+      `<article class="flip-page flip-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></article>`,
       ...galleryPages.flatMap((page, index) => [
         `<article class="flip-page flip-copy-page"><p>PAGE / ${String(index + 1).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div></div><b>${html(page.note)}</b></article>`,
         `<article class="flip-page flip-media-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><span>▶ VIDEO SLOT<br />替换为作品视频链接</span></article>`
@@ -135,16 +138,29 @@
     visualBook.innerHTML = pages.join('');
     const PageFlip = window.St?.PageFlip;
     if (PageFlip) {
-      const book = new PageFlip(visualBook, { width: 470, height: 520, size: 'stretch', minWidth: 290, maxWidth: 620, minHeight: 350, maxHeight: 650, showCover: true, maxShadowOpacity: .45, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 820 });
+      const bookStage = visualBook.closest('.book-stage');
+      const book = new PageFlip(visualBook, { width: 470, height: 520, size: 'stretch', minWidth: 290, maxWidth: 620, minHeight: 350, maxHeight: 650, showCover: true, maxShadowOpacity: .28, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
+      const updateBookMode = (page) => {
+        if (!bookStage) return;
+        bookStage.classList.toggle('is-front-cover', page === 0);
+        bookStage.classList.toggle('is-back-cover', page === pages.length - 1);
+        bookStage.classList.toggle('is-open-book', page > 0 && page < pages.length - 1);
+      };
       const updateBookStatus = (page) => {
         bookCount.textContent = `${String(page + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
         bookDots.innerHTML = galleryPages.map((_, index) => `<i class="${page === index * 2 + 1 || page === index * 2 + 2 ? 'active' : ''}"></i>`).join('');
       };
       book.on('flip', (event) => updateBookStatus(event.data));
+      book.on('changeState', (event) => {
+        if (!bookStage) return;
+        bookStage.classList.toggle('is-turning', event.data === 'flipping');
+        if (event.data === 'read') updateBookMode(book.getCurrentPageIndex());
+      });
       bookPrev.addEventListener('click', () => book.flipPrev('top'));
       bookNext.addEventListener('click', () => book.flipNext('top'));
       updateBookStatus(0);
+      updateBookMode(0);
     } else {
       visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
     }
@@ -156,7 +172,7 @@
   const socialGrid = $('#social-grid');
   if (socialGrid) {
     const posts = data.socialPosts || [];
-    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}（可替换图片）"><span>${html(post.platform)}</span></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>♥ ${html(post.likes)}</b></div></a>`).join('');
+    socialGrid.innerHTML = posts.map((post, index) => `<a class="social-post post-${(index % 3) + 1}" href="${html(post.url || '#')}" ${post.url && post.url !== '#' ? 'target="_blank" rel="noreferrer"' : ''}><div class="post-image"><img src="${html(post.image)}" alt="${html(post.title)}（可替换图片）"></div><div class="post-copy"><h3>${html(post.title)}</h3><p>${html(post.meta)}</p><b>♥ ${html(post.likes)}</b></div></a>`).join('');
   }
 
   const honorTickets = $('#honor-tickets');

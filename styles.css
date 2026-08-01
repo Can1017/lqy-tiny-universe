@@ -97,3 +97,31 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 .metric-strip{align-items:center!important;align-self:stretch;justify-content:center!important;min-height:68px;padding:9px 18px!important}.metric-strip span{align-items:center;display:flex;flex-direction:column;justify-content:center;min-height:48px;text-align:center}.metric-strip b{color:#fff8ed!important;line-height:1!important}.metric-strip small{color:#fff9ef!important;line-height:1.35!important;margin-top:5px!important}
 .honor-tickets article,.honor-tickets article:nth-child(2n),.honor-tickets article:nth-child(3n){background:linear-gradient(135deg,#fff0d6,#f4c898)!important;border-color:rgba(117,67,73,.25)!important;box-shadow:0 16px 30px rgba(104,50,68,.2)!important;color:#633d50!important}.honor-tickets article:nth-child(2n){background:linear-gradient(135deg,#fbe1d7,#eeb9aa)!important}.honor-tickets article:nth-child(3n){background:linear-gradient(135deg,#f8e5be,#e9bd85)!important}.honor-tickets article p{color:#633d50!important}.honor-tickets article small,.honor-tickets article span,.honor-tickets article i{color:#a25b63!important}.honor-tickets article:hover{background:linear-gradient(135deg,#733f61,#a65f70)!important;color:#fff8ec!important}.honor-tickets article:hover p,.honor-tickets article:hover small,.honor-tickets article:hover span,.honor-tickets article:hover i{color:#fff3dc!important}
 @media(max-width:760px){.site-header{background:rgba(12,20,70,.72)!important}.site-header.is-scrolled{background:rgba(27,22,62,.28)!important}.intro-link,.intro-quiet-link{height:46px}.metric-strip{align-items:stretch!important;justify-content:center!important;min-height:0;padding:10px!important}.metric-strip span{min-height:52px}.honor-tickets article,.honor-tickets article:nth-child(2n),.honor-tickets article:nth-child(3n){transform:none!important}}
+
+/* Final interaction polish: a warm dial hand, calm book controls and a compact data strip. */
+.experience-timeline .timeline-hand{background:#f1c979!important;box-shadow:0 0 16px rgba(241,201,121,.55)!important}
+.experience-timeline .timeline-hand:after{background:#f1c979!important;box-shadow:0 0 10px rgba(241,201,121,.48)!important}
+.book-stage{isolation:isolate;position:relative}
+.visual-book{margin-left:auto!important;margin-right:auto!important;position:relative!important}
+.visual-book .stf__wrapper,.visual-book .stf__block{background:transparent!important}
+.visual-book .stf__wrapper{margin-left:auto!important;margin-right:auto!important;transform:translateZ(0)}
+.visual-book .flip-page.--left{box-shadow:inset -.5px 0 0 rgba(78,58,82,.36),inset -12px 0 20px -22px rgba(55,38,62,.28)!important}
+.visual-book .flip-page.--right{box-shadow:inset 9px 0 18px -22px rgba(55,38,62,.2)!important}
+.book-stage .visual-book{transition:transform .48s cubic-bezier(.22,.72,.2,1)}
+.book-stage.is-front-cover .visual-book{transform:translateX(-25%)}
+.book-stage.is-back-cover .visual-book{transform:translateX(25%)}
+.book-stage.is-open-book .visual-book{transform:translateX(0)}
+.book-stage .book-side{transition:opacity .28s ease,transform .28s ease,background .2s ease}
+.book-stage.is-front-cover .book-side-prev,.book-stage.is-back-cover .book-side-next{opacity:0;pointer-events:none;transform:translateY(-50%) scale(.82)}
+.book-stage.is-front-cover .book-side-next,.book-stage.is-back-cover .book-side-prev,.book-stage.is-open-book .book-side{opacity:1;pointer-events:auto;transform:translateY(-50%) scale(1)}
+.book-stage.is-turning .book-side{opacity:.38;pointer-events:none}
+.book-side{align-items:center!important;display:flex!important;font-size:0!important;justify-content:center!important;line-height:1!important;padding:0!important;text-align:center!important}
+.book-side:before{align-items:center;display:flex;font:400 29px/1 "Noto Serif SC",serif;height:100%;justify-content:center;transform:translateY(-1px);width:100%}
+.book-side-prev:before{content:"‹"}.book-side-next:before{content:"›"}
+.metric-strip{min-height:54px!important;padding:5px 16px!important}.metric-strip span{min-height:40px!important}.metric-strip small{margin-top:2px!important}
+@media(max-width:760px){.book-stage.is-front-cover .visual-book,.book-stage.is-back-cover .visual-book,.book-stage.is-open-book .visual-book{transform:none}.metric-strip{padding:6px 9px!important}.metric-strip span{min-height:43px!important}}
+
+/* Writing work videos live beside the editable copy instead of using a placeholder tile. */
+.work-video{background:#2f234b;border:1px solid rgba(125,83,126,.45);border-radius:10px;display:block;max-height:230px;min-height:150px;object-fit:contain;width:100%}
+.detail-bottom:has(.work-video){grid-template-columns:minmax(130px,.72fr) minmax(130px,.72fr) minmax(300px,1.35fr)}
+@media(max-width:760px){.work-video{max-height:280px;min-height:190px}.detail-bottom:has(.work-video){grid-template-columns:1fr}}
