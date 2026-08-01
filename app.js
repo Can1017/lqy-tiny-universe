@@ -169,7 +169,7 @@
           return;
         }
         const startedAt = performance.now();
-        const duration = 1800;
+        const duration = 1200;
         const step = (now) => {
           const progress = Math.min(1, (now - startedAt) / duration);
           // smoothstep：起步与收尾都柔和，中段保持连续移动，接近 PPT 平滑切换。
