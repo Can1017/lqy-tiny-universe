@@ -254,3 +254,15 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 
 /* 位移由脚本在翻页结束后独立执行，避免被翻页组件的内部布局切换打断。 */
 @media(min-width:761px){.book-stage .visual-book{will-change:transform}}
+
+/* P3 照片作品：缩略图位于卡片右下角，点击后进入沉浸式大图预览。 */
+.work-image-button{align-self:start;background:transparent;border:0;border-radius:9px;cursor:zoom-in;justify-self:end;max-width:320px;overflow:hidden;padding:0;position:relative;width:100%}
+.work-image-button img{display:block;height:auto;max-height:230px;object-fit:cover;transition:transform .35s ease;width:100%}
+.work-image-button span{background:rgba(30,24,56,.72);border-radius:999px;bottom:9px;color:#fff7e8;font-size:10px;letter-spacing:.06em;padding:6px 10px;position:absolute;right:9px}
+.work-image-button:hover img{transform:scale(1.025)}
+body.lightbox-open{overflow:hidden}
+.image-lightbox[hidden]{display:none}
+.image-lightbox{align-items:center;background:rgba(10,10,24,.88);display:flex;inset:0;justify-content:center;padding:32px;position:fixed;z-index:999}
+.image-lightbox-photo{box-shadow:0 24px 70px rgba(0,0,0,.45);display:block;max-height:calc(100vh - 64px);max-width:calc(100vw - 64px);object-fit:contain}
+.image-lightbox-close{align-items:center;background:rgba(255,248,235,.9);border:0;border-radius:50%;color:#432d4f;cursor:pointer;display:flex;font:28px/1 sans-serif;height:42px;justify-content:center;position:absolute;right:24px;top:20px;width:42px;z-index:1}
+@media(max-width:760px){.work-image-button{justify-self:start;max-width:280px}.work-image-button img{max-height:210px}.image-lightbox{padding:18px}.image-lightbox-photo{max-height:calc(100vh - 36px);max-width:calc(100vw - 36px)}.image-lightbox-close{height:38px;right:14px;top:14px;width:38px}}

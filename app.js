@@ -10,6 +10,31 @@
   // 内容区允许用换行分隔标题，例如学校名称与专业。
   const withBreaks = (value) => html(value).replace(/\n/g, '<br />');
 
+  // P3 图片放大预览：点击背景、关闭按钮或按 Esc 均可退出。
+  const lightbox = document.createElement('div');
+  lightbox.className = 'image-lightbox';
+  lightbox.hidden = true;
+  lightbox.innerHTML = '<button type="button" class="image-lightbox-close" aria-label="关闭图片预览">×</button><img class="image-lightbox-photo" alt="">';
+  document.body.appendChild(lightbox);
+  const lightboxPhoto = lightbox.querySelector('.image-lightbox-photo');
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    document.body.classList.remove('lightbox-open');
+  };
+  const openLightbox = (src, alt) => {
+    lightboxPhoto.src = src;
+    lightboxPhoto.alt = alt;
+    lightbox.hidden = false;
+    document.body.classList.add('lightbox-open');
+    lightbox.querySelector('.image-lightbox-close').focus();
+  };
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox || event.target.closest('.image-lightbox-close')) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+
   // 移动端导航与滚动中的当前章节提示。
   const nav = $('.main-nav');
   const navToggle = $('.nav-toggle');
@@ -114,10 +139,17 @@
         const idea = work.idea
           ? `<aside class="detail-note"><b>创作想法</b><p>${html(work.idea)}</p></aside>`
           : '';
+        const workImage = window.p3WorkMedia?.[index];
         const media = work.videoSrc
           ? `<video class="work-video" controls preload="metadata" playsinline><source src="${html(work.videoSrc)}" type="video/mp4">当前浏览器暂不支持视频播放。</video>`
-          : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
+          : workImage
+            ? `<button class="work-image-button" type="button" data-lightbox-src="${html(workImage.src)}" data-lightbox-alt="${html(workImage.alt)}" aria-label="放大查看${html(workImage.alt)}"><img src="${html(workImage.src)}" alt="${html(workImage.alt)}"><span>点击放大 ↗</span></button>`
+            : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
         writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><div class="detail-copy"><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><div class="detail-meta"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p></div>${media}</div>`;
+        writingDetail.querySelector('.work-image-button')?.addEventListener('click', (event) => {
+          const button = event.currentTarget;
+          openLightbox(button.dataset.lightboxSrc, button.dataset.lightboxAlt);
+        });
         writingDetail.classList.add('is-open');
       }, 80);
     };
