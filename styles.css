@@ -222,3 +222,15 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
   .main-nav.open a{padding:4px 0 10px!important}
   .main-nav.open a:after{bottom:2px!important}
 }
+
+/* P4 统一为 A4 竖版页型；书脊只保留一条轻细的中缝。 */
+.visual-book .flip-page.--left{box-shadow:inset -.5px 0 0 rgba(38,31,51,.52)!important}
+.visual-book .flip-page.--right{box-shadow:inset .5px 0 0 rgba(38,31,51,.52)!important}
+@media(min-width:761px){.visual-book{height:566px!important}}
+@media(max-width:760px){
+  .book-stage{margin-left:-20px!important;max-width:none!important;padding:0!important;width:100vw!important}
+  .visual-book{height:368px!important;max-width:min(260px,calc(100vw - 100px))!important;width:min(260px,calc(100vw - 100px))!important}
+  .book-side{height:30px!important;width:30px!important}
+  .book-side-prev{left:0!important}.book-side-next{right:0!important}
+  .book-side:before{font-size:23px!important}
+}
