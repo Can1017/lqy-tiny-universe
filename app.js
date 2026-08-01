@@ -151,7 +151,7 @@
       const book = new PageFlip(visualBook, { width: 380, height: 537, size: 'stretch', minWidth: 240, maxWidth: 420, minHeight: 339, maxHeight: 594, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       let bookOffset = null;
-      let bookShiftAnimation = null;
+      let bookShiftFrame = null;
       const offsetForPage = (page) => {
         if (!window.matchMedia('(min-width: 761px)').matches) return 0;
         const quarterWidth = visualBook.clientWidth * .25;
@@ -162,24 +162,24 @@
       const positionBook = (page, animate = false) => {
         const target = offsetForPage(page);
         const from = bookOffset ?? target;
-        bookOffset = target;
-        bookShiftAnimation?.cancel();
-        visualBook.style.setProperty('transform', `translateX(${from}px)`, 'important');
+        if (bookShiftFrame !== null) cancelAnimationFrame(bookShiftFrame);
         if (!animate || Math.abs(target - from) < 1) {
-          visualBook.style.setProperty('transform', `translateX(${target}px)`, 'important');
+          bookOffset = target;
+          visualBook.style.setProperty('transform', `translate3d(${target}px,0,0)`, 'important');
           return;
         }
-        requestAnimationFrame(() => {
-          bookShiftAnimation = visualBook.animate([
-            { transform: `translateX(${from}px)` },
-            { transform: `translateX(${target}px)` }
-          ], { duration: 2300, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' });
-          bookShiftAnimation.addEventListener('finish', () => {
-            visualBook.style.setProperty('transform', `translateX(${target}px)`, 'important');
-            bookShiftAnimation?.cancel();
-            bookShiftAnimation = null;
-          }, { once: true });
-        });
+        const startedAt = performance.now();
+        const duration = 1800;
+        const step = (now) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          // smoothstep：起步与收尾都柔和，中段保持连续移动，接近 PPT 平滑切换。
+          const eased = progress * progress * (3 - 2 * progress);
+          bookOffset = from + (target - from) * eased;
+          visualBook.style.setProperty('transform', `translate3d(${bookOffset}px,0,0)`, 'important');
+          if (progress < 1) bookShiftFrame = requestAnimationFrame(step);
+          else bookShiftFrame = null;
+        };
+        bookShiftFrame = requestAnimationFrame(step);
       };
       const updateBookMode = (page, animate = false) => {
         if (!bookStage) return;
