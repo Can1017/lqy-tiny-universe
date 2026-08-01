@@ -280,8 +280,12 @@ body.lightbox-open{overflow:hidden}
 /* 缓存与移动端顶栏收尾：确保引导文案不生成符号，手机品牌栏更紧凑。 */
 .writing-detail .detail-label:before,.writing-detail .detail-label:after{content:none!important;display:none!important}
 @media(max-width:760px){
-  .site-header{height:56px!important;padding:0 18px!important}
+  .site-header{height:48px!important;padding:0 16px!important}
   .brand{gap:8px!important}
-  .brand-mark{height:22px!important;width:22px!important}
-  .main-nav{top:55px!important}
+  .brand-mark{height:20px!important;width:20px!important}
+  .main-nav{top:47px!important}
 }
+
+/* P3 引导文案不允许由桌面端旧样式补入破折号。 */
+.writing-detail .detail-label{quotes:none!important}
+.writing-detail .detail-label::before,.writing-detail .detail-label::after{content:none!important;display:none!important}
