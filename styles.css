@@ -266,3 +266,13 @@ body.lightbox-open{overflow:hidden}
 .image-lightbox-photo{box-shadow:0 24px 70px rgba(0,0,0,.45);display:block;max-height:calc(100vh - 64px);max-width:calc(100vw - 64px);object-fit:contain}
 .image-lightbox-close{align-items:center;background:rgba(255,248,235,.9);border:0;border-radius:50%;color:#432d4f;cursor:pointer;display:flex;font:28px/1 sans-serif;height:42px;justify-content:center;position:absolute;right:24px;top:20px;width:42px;z-index:1}
 @media(max-width:760px){.work-image-button{justify-self:start;max-width:280px}.work-image-button img{max-height:210px}.image-lightbox{padding:18px}.image-lightbox-photo{max-height:calc(100vh - 36px);max-width:calc(100vw - 36px)}.image-lightbox-close{height:38px;right:14px;top:14px;width:38px}}
+
+/* P3 最终排版：引语右对齐；视频与图片使用同一张 8:5 媒体卡片。 */
+.writing-detail .detail-label{color:#66415f!important;font-size:clamp(17px,1.55vw,21px)!important;font-weight:500!important;line-height:1.65!important;margin:15px 0 0 auto!important;max-width:760px;text-align:right!important}
+.work-media-card{align-self:start;aspect-ratio:8/5;background:#2b2540;border:0;border-radius:9px;box-shadow:0 9px 22px rgba(45,28,73,.18);display:block;justify-self:end;max-width:320px;overflow:hidden;padding:0;position:relative;width:320px}
+.work-media-card img,.work-video-preview{display:block;height:100%!important;max-height:none!important;object-fit:cover;width:100%!important}
+.work-media-action{align-items:center;background:rgba(30,24,56,.76)!important;border:0;border-radius:999px;bottom:10px;color:#fff7e8!important;cursor:pointer;display:flex;font:10px/1 var(--sans);gap:6px;letter-spacing:.05em;padding:7px 11px;position:absolute;right:10px;z-index:2}
+.work-video-play i{align-items:center;background:#fff4d8;border-radius:50%;color:#61415f;display:flex;font-size:9px;font-style:normal;height:19px;justify-content:center;padding-left:1px;width:19px}
+.work-video-card.is-playing .work-video-play{display:none}
+.work-video-card.is-playing .work-video-preview{object-fit:contain}
+@media(max-width:760px){.writing-detail .detail-label{font-size:16px!important;line-height:1.6!important}.work-media-card{justify-self:start;max-width:min(100%,280px);width:min(100%,280px)}}

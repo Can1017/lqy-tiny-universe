@@ -140,16 +140,32 @@
           ? `<aside class="detail-note"><b>创作想法</b><p>${html(work.idea)}</p></aside>`
           : '';
         const workImage = window.p3WorkMedia?.[index];
+        const videoPreviewTime = index === 1 ? 1 : .1;
         const media = work.videoSrc
-          ? `<video class="work-video" controls preload="metadata" playsinline><source src="${html(work.videoSrc)}" type="video/mp4">当前浏览器暂不支持视频播放。</video>`
+          ? `<div class="work-media-card work-video-card"><video class="work-video-preview" data-preview-time="${videoPreviewTime}" preload="metadata" playsinline><source src="${html(work.videoSrc)}" type="video/mp4">当前浏览器暂不支持视频播放。</video><button class="work-video-play work-media-action" type="button" aria-label="播放${html(work.title)}"><i>▶</i><span>点击播放</span></button></div>`
           : workImage
-            ? `<button class="work-image-button" type="button" data-lightbox-src="${html(workImage.src)}" data-lightbox-alt="${html(workImage.alt)}" aria-label="放大查看${html(workImage.alt)}"><img src="${html(workImage.src)}" alt="${html(workImage.alt)}"><span>点击放大 ↗</span></button>`
+            ? `<button class="work-media-card work-image-button" type="button" data-lightbox-src="${html(workImage.src)}" data-lightbox-alt="${html(workImage.alt)}" aria-label="放大查看${html(workImage.alt)}"><img src="${html(workImage.src)}" alt="${html(workImage.alt)}"><span class="work-media-action">点击放大 ↗</span></button>`
             : `<div class="video-slot"><span>▶</span>${html(work.video)}</div>`;
-        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">${html(work.label)}</p><div class="detail-copy"><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><div class="detail-meta"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p></div>${media}</div>`;
+        writingDetail.innerHTML = `<p class="detail-code">WORK / ${String(index + 1).padStart(2, '0')} · ${html(work.category)}</p><h3>${html(work.title)}</h3><p class="detail-label">— ${html(work.label)}</p><div class="detail-copy"><p class="detail-summary">${html(work.summary)}</p>${story}${idea}</div><div class="detail-bottom"><div class="detail-meta"><p><b>完成内容</b>${html(work.stats)}</p><p><b>项目注记</b>${html(work.award)}</p></div>${media}</div>`;
         writingDetail.querySelector('.work-image-button')?.addEventListener('click', (event) => {
           const button = event.currentTarget;
           openLightbox(button.dataset.lightboxSrc, button.dataset.lightboxAlt);
         });
+        writingDetail.querySelector('.work-video-play')?.addEventListener('click', async (event) => {
+          const card = event.currentTarget.closest('.work-video-card');
+          const video = card.querySelector('.work-video-preview');
+          card.classList.add('is-playing');
+          video.controls = true;
+          video.currentTime = 0;
+          try { await video.play(); }
+          catch (_) { card.classList.remove('is-playing'); video.controls = false; }
+        });
+        const previewVideo = writingDetail.querySelector('.work-video-preview');
+        if (previewVideo) {
+          const seekToPreview = () => { previewVideo.currentTime = Number(previewVideo.dataset.previewTime || .1); };
+          if (previewVideo.readyState >= 1) seekToPreview();
+          else previewVideo.addEventListener('loadedmetadata', seekToPreview, { once: true });
+        }
         writingDetail.classList.add('is-open');
       }, 80);
     };
