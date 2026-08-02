@@ -339,15 +339,5 @@
   if (contactList) contactList.innerHTML = `<a href="tel:${html(data.contact.phone)}"><small>PHONE</small>${html(data.contact.phone)}</a><a href="mailto:${html(data.contact.email)}"><small>EMAIL</small>${html(data.contact.email)}</a><a href="${html(data.contact.github)}" target="_blank" rel="noreferrer"><small>GITHUB</small>查看网站源码 ↗</a><a class="resume" href="${html(data.contact.resumeUrl)}" download>下载简历 PDF ↓</a>`;
 
   const momentNotes = $('#moment-notes');
-  if (momentNotes) {
-    momentNotes.innerHTML = (data.moments || []).map((note, index) => `<article class="moment-note moment-note-${index + 1}"><span>0${index + 1}</span><p>${html(note)}</p></article>`).join('');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries, instance) => entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        momentNotes.classList.add('is-visible');
-        instance.unobserve(entry.target);
-      }), { threshold: .22 });
-      observer.observe(momentNotes);
-    } else momentNotes.classList.add('is-visible');
-  }
+  if (momentNotes) momentNotes.innerHTML = (data.moments || []).map((note, index) => `<article class="moment-note moment-note-${index + 1}"><span>0${index + 1}</span><p>${html(note)}</p></article>`).join('');
 })();
