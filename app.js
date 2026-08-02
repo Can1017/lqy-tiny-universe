@@ -14,7 +14,7 @@
   const lightbox = document.createElement('div');
   lightbox.className = 'image-lightbox';
   lightbox.hidden = true;
-  lightbox.innerHTML = '<button type="button" class="image-lightbox-close" aria-label="关闭图片预览">×</button><img class="image-lightbox-photo" alt=""><p class="image-lightbox-note"></p>';
+  lightbox.innerHTML = '<button type="button" class="image-lightbox-close" aria-label="关闭图片预览">×</button><img class="image-lightbox-photo" alt="">';
   document.body.appendChild(lightbox);
   const lightboxPhoto = lightbox.querySelector('.image-lightbox-photo');
   const closeLightbox = () => {
@@ -24,8 +24,6 @@
   const openLightbox = (src, alt) => {
     lightboxPhoto.src = src;
     lightboxPhoto.alt = alt;
-    lightbox.classList.toggle('is-text-note', !src);
-    lightbox.querySelector('.image-lightbox-note').textContent = !src ? alt : '';
     lightbox.hidden = false;
     document.body.classList.add('lightbox-open');
     lightbox.querySelector('.image-lightbox-close').focus();
@@ -60,39 +58,6 @@
 
   const profilePhoto = $('#profile-photo');
   if (profilePhoto) profilePhoto.src = data.profilePhoto || profilePhoto.src;
-
-  // Frame Story：内容来自 site-content.js。点击后使用带前后翻阅的全屏图像浏览。
-  const frameGallery = $('#frame-gallery');
-  if (frameGallery) {
-    const frames = data.frameStory || [];
-    let activeFrame = 0;
-    const frameViewer = document.createElement('div');
-    frameViewer.className = 'frame-viewer';
-    frameViewer.hidden = true;
-    frameViewer.innerHTML = '<button class="frame-viewer-close" type="button" aria-label="关闭预览">×</button><button class="frame-viewer-prev" type="button" aria-label="上一张">←</button><figure><img alt=""><figcaption></figcaption></figure><button class="frame-viewer-next" type="button" aria-label="下一张">→</button>';
-    document.body.appendChild(frameViewer);
-    const drawFrame = () => {
-      const item = frames[activeFrame];
-      frameViewer.querySelector('img').src = item.image;
-      frameViewer.querySelector('img').alt = item.title;
-      frameViewer.querySelector('figcaption').innerHTML = `<b>${html(item.title)}</b><span>${html(item.type)} · ${html(item.note)}</span><i>${String(activeFrame + 1).padStart(2, '0')} / ${String(frames.length).padStart(2, '0')}</i>`;
-    };
-    const openFrame = (index) => { activeFrame = index; drawFrame(); frameViewer.hidden = false; document.body.classList.add('lightbox-open'); frameViewer.querySelector('.frame-viewer-close').focus(); };
-    const closeFrame = () => { frameViewer.hidden = true; document.body.classList.remove('lightbox-open'); };
-    const moveFrame = (step) => { activeFrame = (activeFrame + step + frames.length) % frames.length; drawFrame(); };
-    frameGallery.innerHTML = frames.map((frame, index) => `<button type="button" class="frame-card frame-card-${index + 1}" aria-label="放大查看 ${html(frame.title)}"><img src="${html(frame.image)}" alt="${html(frame.title)}"><span><small>${html(frame.type)}</small><b>${html(frame.title)}</b><i>${html(frame.note)}</i></span></button>`).join('');
-    frameGallery.querySelectorAll('.frame-card').forEach((card, index) => card.addEventListener('click', () => openFrame(index)));
-    frameViewer.querySelector('.frame-viewer-close').addEventListener('click', closeFrame);
-    frameViewer.querySelector('.frame-viewer-prev').addEventListener('click', () => moveFrame(-1));
-    frameViewer.querySelector('.frame-viewer-next').addEventListener('click', () => moveFrame(1));
-    frameViewer.addEventListener('click', (event) => { if (event.target === frameViewer) closeFrame(); });
-    document.addEventListener('keydown', (event) => {
-      if (frameViewer.hidden) return;
-      if (event.key === 'ArrowLeft') moveFrame(-1);
-      if (event.key === 'ArrowRight') moveFrame(1);
-      if (event.key === 'Escape') closeFrame();
-    });
-  }
 
   const skillLines = $('#skill-lines');
   if (skillLines) skillLines.innerHTML = data.skills.map((skill, index) => `<article><span>0${index + 1}</span><b>${html(skill.title)}</b><p>${html(skill.text)}</p></article>`).join('');
@@ -328,14 +293,7 @@
   }
 
   const honorTickets = $('#honor-tickets');
-  if (honorTickets) {
-    honorTickets.innerHTML = data.honors.map((honor, index) => `<button type="button" class="honor-ticket"><small>ARCHIVE / ${String(index + 1).padStart(2, '0')}</small><i>✦</i><p>${html(honor)}</p><span>点击查看项目注记 ↗</span></button>`).join('');
-    honorTickets.querySelectorAll('.honor-ticket').forEach((ticket, index) => ticket.addEventListener('click', () => {
-      const honor = data.honors[index];
-      openLightbox('', `项目档案 / ${String(index + 1).padStart(2, '0')}｜${honor}`);
-    }));
-  }
+  if (honorTickets) honorTickets.innerHTML = data.honors.map((honor, index) => `<article><small>ARCHIVE / ${String(index + 1).padStart(2, '0')}</small><i>✦</i><p>${html(honor)}</p><span>LI QIAOYING / 2026</span></article>`).join('');
   const contactList = $('#contact-list');
   if (contactList) contactList.innerHTML = `<a href="tel:${html(data.contact.phone)}"><small>PHONE</small>${html(data.contact.phone)}</a><a href="mailto:${html(data.contact.email)}"><small>EMAIL</small>${html(data.contact.email)}</a><a href="${html(data.contact.github)}" target="_blank" rel="noreferrer"><small>GITHUB</small>查看网站源码 ↗</a><a class="resume" href="${html(data.contact.resumeUrl)}" download>下载简历 PDF ↓</a>`;
-
 })();

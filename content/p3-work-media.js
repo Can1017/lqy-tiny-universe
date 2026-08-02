@@ -2,6 +2,13 @@
  * P3 第三、第四栏的图片配置。
  * 后续换图时，只需替换 assets/images 中的文件，或修改这里的路径与说明。
  */
-// 脚本库只保留文字稿、策划与成片入口，不在这里混入拍摄画面。
-// 若后续需要放“文稿首页扫描件”，可按 { 2: { src, alt } } 的格式新增。
-window.p3WorkMedia = {};
+window.p3WorkMedia = {
+  2: {
+    src: 'assets/images/p3-work-03.png',
+    alt: '校园志愿者陪伴轮椅学生前行'
+  },
+  3: {
+    src: 'assets/images/p3-work-04.png',
+    alt: '三下乡实践团队开展夜间助农直播'
+  }
+};
