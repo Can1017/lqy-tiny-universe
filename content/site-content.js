@@ -71,12 +71,13 @@ window.portfolioContent = {
     }
   ],
   gallery: [
-    { category: '公众号排版', title: '春日校园专题排版', note: '用奶油白、浅绿与留白营造轻盈阅读节奏。', image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=85' },
-    { category: '公众号排版', title: '活动回顾视觉模板', note: '以清晰的信息层级，让活动内容更易于被快速浏览。', image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=85' },
-    { category: '人像实拍', title: '傍晚的人像练习', note: '利用窗边自然光和低饱和色彩，记录放松而真实的状态。', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=85' },
-    { category: '人像实拍', title: '校园人物采访肖像', note: '让人物在熟悉的场景中说话，画面也成为故事的一部分。', image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85' },
-    { category: '风景文创二创', title: '城市散步视觉二创', note: '提取城市色块和建筑线条，延展为适合社媒传播的视觉素材。', image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=900&q=85' },
-    { category: '风景文创二创', title: '山野主题海报实验', note: '用远景留白承托标题，使风景成为情绪而非单纯背景。', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85' }
+    // P4 只收纳图文排版与视觉设计；补图时优先替换 image 路径即可。
+    { category: '公众号图文 · 春日专题', title: '春天来了，校园也在发芽', note: '以浅绿、花朵和燕子建立春日情绪，让长文的开场先轻轻落下来。', image: 'assets/images/p4-spring-campus-layout.jpg', mediaLabel: '已收录图文长页' },
+    { category: '公众号图文 · 活动回顾', title: '把现场整理成一张会呼吸的长图', note: '用时间节点串联信息，给照片与文字留出能够一起停顿的空间。', placeholder: '活动回顾\n图文版式待补充' },
+    { category: '推文封面 · 栏目视觉', title: '一眼读懂的栏目开场', note: '先确立主标题的呼吸感，再让配色、贴纸和信息层级回应主题。', placeholder: '栏目封面\n视觉设计待补充' },
+    { category: '节气海报 · 视觉二创', title: '把季节翻译成可分享的画面', note: '从自然色彩里提取低饱和色块，让海报既有情绪，也保留阅读重点。', placeholder: '节气海报\n视觉二创待补充' },
+    { category: '人物专题 · 信息排版', title: '让人物故事被慢慢读完', note: '把采访内容拆成清楚的段落与标题，使人物的语气成为页面的一部分。', placeholder: '人物专题\n排版设计待补充' },
+    { category: '品牌推文 · 版式实验', title: '为一段文字寻找合适的表情', note: '尝试用克制的字体、留白与图形，建立统一却不单调的阅读节奏。', placeholder: '品牌推文\n版式实验待补充' }
   ],
   stats: [
     { platform: '抖音', value: '9,999', unit: '单条播放', percent: 100, color: '#4298E0' },

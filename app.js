@@ -184,10 +184,16 @@
     const galleryPages = data.gallery;
     const pages = [
       `<article class="flip-page flip-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></article>`,
-      ...galleryPages.flatMap((page, index) => [
-        `<article class="flip-page flip-copy-page"><p>PAGE / ${String(index + 1).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div></div><b>${html(page.note)}</b></article>`,
-        `<article class="flip-page flip-media-page"><img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）"><span>▶ VIDEO SLOT<br />替换为作品视频链接</span></article>`
-      ]),
+      ...galleryPages.flatMap((page, index) => {
+        // 图片路径留在 content/site-content.js；没有图片时呈现不裁切的版式占位页。
+        const artwork = page.image
+          ? `<img src="${html(page.image)}" alt="${html(page.title)}（可替换图片）">`
+          : `<div class="visual-placeholder" aria-label="${html(page.placeholder || '图文版式待补充')}"><small>VISUAL DIARY</small><strong>${html(page.placeholder || '图文版式待补充').replace(/\n/g, '<br />')}</strong><i>replace in content/site-content.js</i></div>`;
+        return [
+          `<article class="flip-page flip-copy-page"><p>PAGE / ${String(index + 1).padStart(2, '0')} · ${html(page.category)}</p><h3>${html(page.title)}</h3><div></div><b>${html(page.note)}</b></article>`,
+          `<article class="flip-page flip-media-page">${artwork}<span>${html(page.mediaLabel || '图文长页 · 待补充链接')}</span></article>`
+        ];
+      }),
       `<article class="flip-page flip-back-cover" data-density="hard"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></article>`
     ];
     visualBook.innerHTML = pages.join('');

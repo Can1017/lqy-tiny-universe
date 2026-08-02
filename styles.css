@@ -255,6 +255,16 @@ html{background:#11195a}body{background:linear-gradient(180deg,#121b69 0%,#26378
 /* 位移由脚本在翻页结束后独立执行，避免被翻页组件的内部布局切换打断。 */
 @media(min-width:761px){.book-stage .visual-book{will-change:transform}}
 
+/* P4 只展示图文版式：真实长图完整呈现，未补素材时使用可读的版式占位页。 */
+.visual-book .flip-media-page{align-items:center;display:flex;justify-content:center;padding:16px!important;position:relative}
+.visual-book .flip-media-page>img{background:#ece9e6;display:block;height:100%;max-width:100%;object-fit:contain;width:100%}
+.visual-book .flip-media-page>span{bottom:25px!important;left:50%!important;right:auto!important;top:auto!important;transform:translateX(-50%);white-space:nowrap}
+.visual-placeholder{background:linear-gradient(150deg,#f5eef9,#eee2f2 56%,#e4d6ea);border:1px dashed rgba(93,62,112,.34);color:#54405e;display:flex;flex-direction:column;height:100%;justify-content:center;padding:28px;text-align:center;width:100%}
+.visual-placeholder small{color:#876a95;font:600 10px var(--mono);letter-spacing:.13em}
+.visual-placeholder strong{font:600 27px/1.5 "Noto Serif SC",serif;margin:22px 0}
+.visual-placeholder i{color:#8c7892;font:10px var(--mono);font-style:normal}
+@media(max-width:760px){.visual-book .flip-media-page{padding:10px!important}.visual-placeholder{padding:16px}.visual-placeholder strong{font-size:20px;margin:15px 0}.visual-book .flip-media-page>span{bottom:17px!important;font-size:8px!important;padding:5px 7px!important}}
+
 /* P3 照片作品：缩略图位于卡片右下角，点击后进入沉浸式大图预览。 */
 .work-image-button{align-self:start;background:transparent;border:0;border-radius:9px;cursor:zoom-in;justify-self:end;max-width:320px;overflow:hidden;padding:0;position:relative;width:100%}
 .work-image-button img{display:block;height:auto;max-height:230px;object-fit:cover;transition:transform .35s ease;width:100%}
