@@ -78,22 +78,6 @@ window.portfolioContent = {
     { category: '风景文创二创', title: '城市散步视觉二创', note: '提取城市色块和建筑线条，延展为适合社媒传播的视觉素材。', image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=900&q=85' },
     { category: '风景文创二创', title: '山野主题海报实验', note: '用远景留白承托标题，使风景成为情绪而非单纯背景。', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85' }
   ],
-  // Frame Story：新增、删除或替换图片时只改这一组。每一张都会自动进入瀑布流和放大预览。
-  frameStory: [
-    { title: '向光而行', type: '人物纪实', note: '把陪伴留在同一条路上。', image: 'assets/images/p3-work-03.png' },
-    { title: '夜色里的声音', type: '现场记录', note: '镜头之外，也有人认真守着这一场直播。', image: 'assets/images/p3-work-04.png' },
-    { title: '夏日出发', type: '团队影像', note: '出发之前，先记住每一张真诚的脸。', image: 'assets/images/p5-post-01.png' },
-    { title: '双生光影', type: '人像创意', note: '白色也可以有不同的情绪。', image: 'assets/images/p5-post-02.png' },
-    { title: '春日弹幕', type: '视觉二创', note: '把细碎日常写成一页会呼吸的排版。', image: 'assets/images/p5-post-03.jpg' },
-    { title: '镜头准备中', type: '创作现场', note: '故事开始前，相机先替我看一眼世界。', image: 'assets/images/experience-camera.jpg' }
-  ],
-  moments: [
-    '有时镜头先记住了，我才明白那一刻为什么重要。',
-    '我喜欢把晚风、脚步声和没说完的话，一起留在素材里。',
-    '不是每一次记录都要很宏大，真诚就已经足够动人。',
-    '愿意慢下来的人，常常会先看见光。',
-    '把复杂的感受讲清楚，是我正在练习的事。'
-  ],
   stats: [
     { platform: '抖音', value: '9,999', unit: '单条播放', percent: 100, color: '#4298E0' },
     { platform: '视频号', value: '8,000+', unit: '总播放', percent: 80, color: '#8CC7F4' },
