@@ -9,9 +9,9 @@ window.P4_ALBUM = {
   assets: {
     fireworkMain: 'assets/images/p4-album/firework-main.png',
     fireworkScatter: 'assets/images/p4-album/firework-scatter.png',
-    fireworkHaze: 'assets/images/p4-album/firework-haze.png',
-    leafNotes: 'assets/images/p4-album/leaf-notes.png',
-    bareTree: 'assets/images/p4-album/bare-tree.png',
+    fireworkHaze: 'assets/images/p4-album/firework-haze-cutout.png',
+    leafNotes: 'assets/images/p4-album/leaf-notes-cutout.png',
+    bareTree: 'assets/images/p4-album/bare-tree-cutout.png',
     seaSilhouette: 'assets/images/p4-album/sea-silhouette.png',
     groupSilhouette: 'assets/images/p4-album/group-silhouette.png',
     portraitNight: 'assets/images/p4-album/portrait-night.png',

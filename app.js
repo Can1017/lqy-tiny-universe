@@ -188,7 +188,7 @@
     const awardCards = (start, end) => album.awards.slice(start, end).map((award, index) => `<article class="album-award award-${start + index + 1}"><span>${html(award.year)}</span><b>${html(award.title)}</b><small>${html(award.detail)}</small><i>✦</i></article>`).join('');
     const filmPage = (film) => `<article class="flip-page album-film-page"><div class="album-film-copy"><p>${html(film.eyebrow)}</p><h3>${html(film.title)}</h3><div class="album-film-rule"></div><b>${html(film.summary)}</b><small>${html(film.role)}</small></div><div class="album-film-stills">${film.stills.map((image, index) => `<figure class="still-${index + 1}"><img src="${html(image)}" alt="${html(film.title)}剧照占位 ${index + 1}"><figcaption>STILL / 0${index + 1}</figcaption></figure>`).join('')}</div></article>`;
     const pages = [
-      `<article class="flip-page flip-cover album-cover" data-density="hard"><div class="album-firework album-cover-firework"><i></i><i></i><i></i><i></i><i></i><i></i></div><p>CREATIVE ALBUM / 2026</p><h3>${html(album.title)}</h3><span>${html(album.subtitle)}</span><small>${html(album.author)}</small></article>`,
+      `<article class="flip-page flip-cover album-cover album-visual-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></article>`,
       `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${[['序章 · 我是谁？',2],['烟花 · 我如何观察世界',3],['扎根 · 文字在心里生根',5],['攀登 · 每一步向上',7]].map(([label,page]) => `<button type="button" class="album-toc-jump" data-page="${page}"><span>${label}</span><i>········</i><b>P${page + 1}</b></button>`).join('')}</nav></article>`,
       `<article class="flip-page album-video-page"><div class="album-video-frame"><img src="assets/images/lqy-profile-photo.jpg" alt="李乔英自我介绍视频封面"><span>lqy’s<br />Self-Introduction vlog</span><small>WELCOME TO MY LITTLE UNIVERSE</small></div></article>`,
       `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
@@ -199,7 +199,7 @@
       `<article class="flip-page album-photo-pair-page"><div><img src="${html(album.assets.seaSilhouette)}" alt="海边张开双臂的人物剪影"><img src="${html(album.assets.groupSilhouette)}" alt="举起手的人群剪影"></div></article>`,
       `<article class="flip-page album-portrait-page"><img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像"></article>`,
       `<article class="flip-page album-portraits-page"><img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照"></article>`,
-      `<article class="flip-page flip-back-cover album-back-cover" data-density="hard"><div class="album-firework album-back-firework"><i></i><i></i><i></i><i></i></div><p>THE END</p><h3>Fin.</h3><span>LQY / 2026</span></article>`
+      `<article class="flip-page flip-back-cover album-back-cover album-visual-back" data-density="hard"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></article>`
     ];
     visualBook.innerHTML = pages.join('');
     const PageFlip = window.St?.PageFlip;
