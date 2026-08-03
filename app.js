@@ -187,9 +187,16 @@
     const treeSvg = `<svg class="album-tree-svg" viewBox="0 0 420 520" aria-hidden="true"><path class="tree-root" d="M211 480C202 415 209 354 202 296M204 420c-43 20-78 36-111 45m115-20c39 18 78 27 117 30"/><path class="tree-trunk" d="M207 472c-6-78 14-131 5-199-5-45-18-86-7-136m8 171c-55-30-94-72-114-124m118 84c51-22 88-62 106-111m-98 39c-5-58 10-101 44-137"/><path class="tree-branch" d="M198 169c-47-10-82-33-107-70m120 74c34-32 70-46 112-46m-63-68c-4-22 7-42 24-58"/></svg>`;
     const awardCards = (start, end) => album.awards.slice(start, end).map((award, index) => `<article class="album-award award-${start + index + 1}"><span>${html(award.year)}</span><b>${html(award.title)}</b><small>${html(award.detail)}</small><i>✦</i></article>`).join('');
     const filmPage = (film) => `<article class="flip-page album-film-page"><div class="album-film-copy"><p>${html(film.eyebrow)}</p><h3>${html(film.title)}</h3><div class="album-film-rule"></div><b>${html(film.summary)}</b><small>${html(film.role)}</small></div><div class="album-film-stills">${film.stills.map((image, index) => `<figure class="still-${index + 1}"><img src="${html(image)}" alt="${html(film.title)}剧照占位 ${index + 1}"><figcaption>STILL / 0${index + 1}</figcaption></figure>`).join('')}</div></article>`;
+    const tocItems = [
+      { label: '序章 · 我是谁？', target: 1, page: 3 },
+      { label: '烟花 · 我如何观察世界', target: 2, page: 4 },
+      { label: '扎根 · 文字在心里生根', target: 4, page: 6 },
+      { label: '攀登 · 每一步向上', target: 6, page: 8 }
+    ];
+    const tocButtons = tocItems.map(({ label, target, page }) => `<button type="button" class="album-toc-jump" data-page="${target}"><span>${label}</span><i>········</i><b>P${page}</b></button>`).join('');
+    const coverToc = tocItems.map(({ label, page }) => `<p><span>${label}</span><b>P${page}</b></p>`).join('');
     const pages = [
-      `<article class="flip-page flip-cover album-cover album-visual-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></article>`,
-      `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${[['序章 · 我是谁？',2],['烟花 · 我如何观察世界',3],['扎根 · 文字在心里生根',5],['攀登 · 每一步向上',7]].map(([label,page]) => `<button type="button" class="album-toc-jump" data-page="${page}"><span>${label}</span><i>········</i><b>P${page + 1}</b></button>`).join('')}</nav></article>`,
+      `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${tocButtons}</nav></article>`,
       `<article class="flip-page album-video-page"><button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button></article>`,
       `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
       `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕"></article>`,
@@ -198,59 +205,95 @@
       `<article class="flip-page album-blank-page" aria-label="留白页"></article>`,
       `<article class="flip-page album-photo-pair-page"><div><img src="${html(album.assets.seaSilhouette)}" alt="海边张开双臂的人物剪影"><img src="${html(album.assets.groupSilhouette)}" alt="举起手的人群剪影"></div></article>`,
       `<article class="flip-page album-portrait-page"><img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像"></article>`,
-      `<article class="flip-page album-portraits-page"><img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照"></article>`,
-      `<article class="flip-page flip-back-cover album-back-cover album-visual-back" data-density="hard"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></article>`
+      `<article class="flip-page album-portraits-page"><img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照"></article>`
     ];
     visualBook.innerHTML = pages.join('');
     const PageFlip = window.St?.PageFlip;
     if (PageFlip) {
       const bookStage = visualBook.closest('.book-stage');
-      // 一页书的竖向比例，容器两侧为翻页按钮保留独立空间。
-      // A4 竖版比例（1 : √2），电脑与手机缩放时都保持同一页型。
-      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 980 });
+      // 内页只由 PageFlip 管理。正反封面另用原生双面硬封面，彻底避免库在封面动画时预绘相邻内容。
+      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: false, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 780 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
-      let bookOffset = null;
-      let bookShiftFrame = null;
-      const offsetForPage = (page) => {
-        if (!window.matchMedia('(min-width: 761px)').matches) return 0;
-        const quarterWidth = visualBook.clientWidth * .25;
-        if (page === 0) return -quarterWidth;
-        if (page === pages.length - 1) return quarterWidth;
-        return 0;
-      };
-      const positionBook = (page, animate = false) => {
-        const target = offsetForPage(page);
-        const from = bookOffset ?? target;
-        if (bookShiftFrame !== null) cancelAnimationFrame(bookShiftFrame);
-        if (!animate || Math.abs(target - from) < 1) {
-          bookOffset = target;
-          visualBook.style.setProperty('transform', `translate3d(${target}px,0,0)`, 'important');
-          return;
-        }
-        const startedAt = performance.now();
-        const duration = 800;
-        const step = (now) => {
-          const progress = Math.min(1, (now - startedAt) / duration);
-          // smoothstep：起步与收尾都柔和，中段保持连续移动，接近 PPT 平滑切换。
-          const eased = progress * progress * (3 - 2 * progress);
-          bookOffset = from + (target - from) * eased;
-          visualBook.style.setProperty('transform', `translate3d(${bookOffset}px,0,0)`, 'important');
-          if (progress < 1) bookShiftFrame = requestAnimationFrame(step);
-          else bookShiftFrame = null;
-        };
-        bookShiftFrame = requestAnimationFrame(step);
-      };
-      const updateBookMode = (page, animate = false) => {
-        if (!bookStage) return;
-        bookStage.classList.toggle('is-front-cover', page === 0);
-        bookStage.classList.toggle('is-back-cover', page === pages.length - 1);
-        bookStage.classList.toggle('is-open-book', page > 0 && page < pages.length - 1);
-        positionBook(page, animate);
-      };
+      const totalBookPages = pages.length + 2;
+      const lastInnerPage = pages.length - 2;
+      const coverDuration = 780;
+      let coverState = 'front-closed';
+      let coverTimer = null;
+
+      if (bookStage) {
+        bookStage.querySelector('.book-cover-layer')?.remove();
+        const coverLayer = document.createElement('div');
+        coverLayer.className = 'book-cover-layer';
+        coverLayer.setAttribute('aria-hidden', 'true');
+        coverLayer.innerHTML = `
+          <div class="book-cover-slab book-front-slab">
+            <section class="book-cover-face book-cover-outer"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></section>
+            <section class="book-cover-face book-cover-inner book-cover-toc"><p>目录</p><div>${coverToc}</div></section>
+          </div>
+          <div class="book-cover-slab book-back-slab">
+            <section class="book-cover-face book-cover-outer book-back-outer"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></section>
+            <section class="book-cover-face book-cover-inner book-cover-last"><p>最后一页 · 仍在发生</p><div><img src="${html(album.assets.portraitSign)}" alt=""><img src="${html(album.assets.portraitPose)}" alt=""></div></section>
+          </div>`;
+        bookStage.appendChild(coverLayer);
+      }
+
       const updateBookStatus = (page) => {
-        bookCount.textContent = `${String(page + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
-        bookDots.innerHTML = Array.from({ length: pages.length - 2 }, (_, index) => `<button type="button" data-page="${index + 1}" class="${page === index + 1 ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
+        bookCount.textContent = `${String(page + 2).padStart(2, '0')} / ${String(totalBookPages).padStart(2, '0')}`;
+        bookDots.innerHTML = Array.from({ length: pages.length }, (_, index) => `<button type="button" data-page="${index}" class="${page === index ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
         bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => book.turnToPage(Number(dot.dataset.page))));
+      };
+      const updateClosedStatus = (side) => {
+        bookDots.innerHTML = '';
+        bookCount.textContent = side === 'front'
+          ? `01 / ${String(totalBookPages).padStart(2, '0')}`
+          : `${String(totalBookPages).padStart(2, '0')} / ${String(totalBookPages).padStart(2, '0')}`;
+      };
+      const setCoverState = (nextState) => {
+        coverState = nextState;
+        if (!bookStage) return;
+        const classes = ['cover-front-closed', 'cover-front-opening', 'cover-front-closing-prepare', 'cover-front-closing', 'cover-back-closed', 'cover-back-opening', 'cover-back-closing-prepare', 'cover-back-closing', 'cover-open'];
+        bookStage.classList.remove(...classes);
+        bookStage.classList.add(`cover-${nextState}`);
+        const isOpen = nextState === 'open';
+        visualBook.classList.toggle('cover-book-hidden', !isOpen);
+        visualBook.setAttribute('aria-hidden', String(!isOpen));
+        const isTransition = nextState.includes('opening') || nextState.includes('closing');
+        bookPrev.disabled = isTransition || nextState === 'front-closed';
+        bookNext.disabled = isTransition || nextState === 'back-closed';
+        if (nextState === 'front-closed') updateClosedStatus('front');
+        if (nextState === 'back-closed') updateClosedStatus('back');
+      };
+      const finishCoverTransition = (nextState, page) => {
+        window.clearTimeout(coverTimer);
+        coverTimer = window.setTimeout(() => {
+          if (page !== null) book.turnToPage(page);
+          setCoverState(nextState);
+          if (nextState === 'open') updateBookStatus(book.getCurrentPageIndex());
+        }, coverDuration);
+      };
+      const openFrontCover = () => {
+        if (coverState !== 'front-closed') return;
+        book.turnToPage(0);
+        setCoverState('front-opening');
+        finishCoverTransition('open', 0);
+      };
+      const closeFrontCover = () => {
+        if (coverState !== 'open' || book.getCurrentPageIndex() !== 0) return;
+        setCoverState('front-closing-prepare');
+        requestAnimationFrame(() => setCoverState('front-closing'));
+        finishCoverTransition('front-closed', null);
+      };
+      const openBackCover = () => {
+        if (coverState !== 'back-closed') return;
+        book.turnToPage(lastInnerPage);
+        setCoverState('back-opening');
+        finishCoverTransition('open', lastInnerPage);
+      };
+      const closeBackCover = () => {
+        if (coverState !== 'open' || book.getCurrentPageIndex() !== lastInnerPage) return;
+        setCoverState('back-closing-prepare');
+        requestAnimationFrame(() => setCoverState('back-closing'));
+        finishCoverTransition('back-closed', null);
       };
       // 目录和视频属于页面内交互，不能把鼠标/触摸事件继续交给翻页器。
       const protectPageInteraction = (element) => {
@@ -262,22 +305,20 @@
       book.on('flip', (event) => updateBookStatus(event.data));
       book.on('changeState', (event) => {
         if (!bookStage) return;
-        bookStage.classList.toggle('is-turning', event.data === 'flipping');
-        if (event.data === 'flipping') {
-          const currentPage = book.getCurrentPageIndex();
-          const direction = book.getFlipController().getCalculation()?.getDirection();
-          const isFrontCoverTurn = (currentPage === 0 && direction === 0) || (currentPage === 1 && direction === 1);
-          const isBackCoverTurn = (currentPage === pages.length - 3 && direction === 0) || (currentPage === pages.length - 1 && direction === 1);
-          bookStage.classList.toggle('is-cover-transition', isFrontCoverTurn || isBackCoverTurn);
-        }
-        if (event.data === 'read') {
-          const currentPage = book.getCurrentPageIndex();
-          bookStage.classList.remove('is-cover-transition', 'is-back-cover-transition');
-          updateBookMode(currentPage, true);
-        }
+        bookStage.classList.toggle('is-inner-turning', event.data === 'flipping');
       });
-      bookPrev.addEventListener('click', () => book.flipPrev('top'));
-      bookNext.addEventListener('click', () => book.flipNext('top'));
+      bookPrev.addEventListener('click', () => {
+        if (coverState === 'back-closed') return openBackCover();
+        if (coverState !== 'open') return;
+        if (book.getCurrentPageIndex() === 0) return closeFrontCover();
+        book.flipPrev('top');
+      });
+      bookNext.addEventListener('click', () => {
+        if (coverState === 'front-closed') return openFrontCover();
+        if (coverState !== 'open') return;
+        if (book.getCurrentPageIndex() === lastInnerPage) return closeBackCover();
+        book.flipNext('top');
+      });
       // 预览状态不显示浏览器控制条；点击后才播放并交给原生控件处理。
       const videoFrame = visualBook.querySelector('.album-video-frame');
       protectPageInteraction(videoFrame);
@@ -304,12 +345,7 @@
           book.turnToPage(Number(button.dataset.page));
         });
       });
-      updateBookStatus(0);
-      updateBookMode(0);
-      window.addEventListener('resize', () => {
-        bookOffset = null;
-        positionBook(book.getCurrentPageIndex());
-      }, { passive: true });
+      setCoverState('front-closed');
     } else {
       visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
     }
