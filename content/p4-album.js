@@ -8,6 +8,8 @@ window.P4_ALBUM = {
   author: '李乔英 | Qiaoying Li',
   assets: {
     introVideo: 'assets/videos/visual-diary.mp4',
+    // 视频封面可单独替换；保持 16:9 横图会得到最自然的预览比例。
+    introVideoPoster: 'assets/images/p4-album/visual-diary-poster.jpg',
     fireworkMain: 'assets/images/p4-album/firework-main.png',
     fireworkScatter: 'assets/images/p4-album/firework-scatter.png',
     fireworkHaze: 'assets/images/p4-album/firework-haze-cutout.png',

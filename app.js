@@ -190,7 +190,7 @@
     const pages = [
       `<article class="flip-page flip-cover album-cover album-visual-cover" data-density="hard"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></article>`,
       `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${[['序章 · 我是谁？',2],['烟花 · 我如何观察世界',3],['扎根 · 文字在心里生根',5],['攀登 · 每一步向上',7]].map(([label,page]) => `<button type="button" class="album-toc-jump" data-page="${page}"><span>${label}</span><i>········</i><b>P${page + 1}</b></button>`).join('')}</nav></article>`,
-      `<article class="flip-page album-video-page"><video class="album-intro-video" controls playsinline preload="metadata" aria-label="李乔英作品视频"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video></article>`,
+      `<article class="flip-page album-video-page"><button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button></article>`,
       `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
       `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕"></article>`,
       `<article class="flip-page album-leaves-page"><img src="${html(album.assets.leafNotes)}" alt="写着随笔的三片树叶"></article>`,
@@ -260,6 +260,19 @@
       });
       bookPrev.addEventListener('click', () => book.flipPrev('top'));
       bookNext.addEventListener('click', () => book.flipNext('top'));
+      // 预览状态不显示浏览器控制条；点击后才播放并交给原生控件处理。
+      visualBook.querySelector('.album-video-frame')?.addEventListener('click', async (event) => {
+        const frame = event.currentTarget;
+        const video = frame.querySelector('.album-intro-video');
+        if (!video) return;
+        frame.classList.add('is-playing');
+        video.controls = true;
+        try {
+          await video.play();
+        } catch (_) {
+          // 浏览器若阻止播放，仍保留原生播放控件供用户再次操作。
+        }
+      });
       visualBook.querySelectorAll('.album-toc-jump').forEach((button) => button.addEventListener('click', () => book.turnToPage(Number(button.dataset.page))));
       updateBookStatus(0);
       updateBookMode(0);
