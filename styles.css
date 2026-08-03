@@ -581,6 +581,7 @@ body.lightbox-open{overflow:hidden}
 }
 
 /* PageFlip 通过行内 display:none 回收离屏页；页面自身的布局规则不得把它们重新显示。 */
+#visual-book .stf__item{position:absolute!important}
 #visual-book .stf__item[style*="display: none"]{display:none!important}
 
 /* 桌面双页模式中，真实页面的百分比内边距按整本书宽度计算；封面内页需换算为单页比例才能无缝交接。 */
