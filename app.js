@@ -188,10 +188,10 @@
     const awardCards = (start, end) => album.awards.slice(start, end).map((award, index) => `<article class="album-award award-${start + index + 1}"><span>${html(award.year)}</span><b>${html(award.title)}</b><small>${html(award.detail)}</small><i>✦</i></article>`).join('');
     const filmPage = (film) => `<article class="flip-page album-film-page"><div class="album-film-copy"><p>${html(film.eyebrow)}</p><h3>${html(film.title)}</h3><div class="album-film-rule"></div><b>${html(film.summary)}</b><small>${html(film.role)}</small></div><div class="album-film-stills">${film.stills.map((image, index) => `<figure class="still-${index + 1}"><img src="${html(image)}" alt="${html(film.title)}剧照占位 ${index + 1}"><figcaption>STILL / 0${index + 1}</figcaption></figure>`).join('')}</div></article>`;
     const tocItems = [
-      { label: '序章 · 我是谁？', target: 1, page: 3 },
-      { label: '烟花 · 我如何观察世界', target: 2, page: 4 },
-      { label: '扎根 · 文字在心里生根', target: 4, page: 6 },
-      { label: '攀登 · 每一步向上', target: 6, page: 8 }
+      { label: '序章·我是谁？', target: 1, page: 2 },
+      { label: '烟花·我如何观察世界', target: 2, page: 3 },
+      { label: '扎根·文字在心里生根', target: 4, page: 5 },
+      { label: '攀登·每一步向上', target: 6, page: 7 }
     ];
     const tocButtons = tocItems.map(({ label, target, page }) => `<button type="button" class="album-toc-jump" data-page="${target}"><span>${label}</span><i>········</i><b>P${page}</b></button>`).join('');
     const pageCopy = album.pageCopy || {};
@@ -258,15 +258,23 @@
       }
 
       const updateBookStatus = (page) => {
-        bookCount.textContent = `${String(page + 2).padStart(2, '0')} / ${String(totalBookPages).padStart(2, '0')}`;
-        bookDots.innerHTML = Array.from({ length: pages.length }, (_, index) => `<button type="button" data-page="${index}" class="${page === index ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
+        const isSinglePage = window.matchMedia('(max-width: 760px)').matches;
+        const singleLabels = ['目录', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'];
+        const spreadLabels = ['目录 · P2', 'P3–P4', 'P5–P6', 'P7–P8', 'P9–P10'];
+        const safePage = Math.max(0, Math.min(page, pages.length - 1));
+        const activeIndex = isSinglePage ? safePage : Math.floor(safePage / 2);
+        const dotCount = isSinglePage ? pages.length : Math.ceil(pages.length / 2);
+        bookCount.textContent = isSinglePage ? singleLabels[safePage] : spreadLabels[activeIndex];
+        bookDots.innerHTML = Array.from({ length: dotCount }, (_, index) => {
+          const target = isSinglePage ? index : index * 2;
+          const label = isSinglePage ? singleLabels[index] : spreadLabels[index];
+          return `<button type="button" data-page="${target}" class="${activeIndex === index ? 'active' : ''}" aria-label="跳至 ${label}"></button>`;
+        }).join('');
         bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => book.turnToPage(Number(dot.dataset.page))));
       };
       const updateClosedStatus = (side) => {
         bookDots.innerHTML = '';
-        bookCount.textContent = side === 'front'
-          ? `01 / ${String(totalBookPages).padStart(2, '0')}`
-          : `${String(totalBookPages).padStart(2, '0')} / ${String(totalBookPages).padStart(2, '0')}`;
+        bookCount.textContent = side === 'front' ? 'P1 · 封面' : '封底';
       };
       const setInnerBookVisible = (visible) => {
         visualBook.classList.toggle('cover-book-hidden', !visible);
@@ -349,6 +357,13 @@
         });
       };
       book.on('flip', (event) => updateBookStatus(event.data));
+      let statusLayoutIsSingle = window.matchMedia('(max-width: 760px)').matches;
+      window.addEventListener('resize', () => {
+        const nextLayoutIsSingle = window.matchMedia('(max-width: 760px)').matches;
+        if (nextLayoutIsSingle === statusLayoutIsSingle) return;
+        statusLayoutIsSingle = nextLayoutIsSingle;
+        if (coverState === 'open') updateBookStatus(book.getCurrentPageIndex());
+      }, { passive: true });
       book.on('changeState', (event) => {
         if (!bookStage) return;
         bookStage.classList.toggle('is-inner-turning', event.data === 'flipping');
