@@ -498,3 +498,28 @@ body.lightbox-open{overflow:hidden}
 .book-stage.is-inner-turning .book-side,.book-stage.is-book-shifting .book-side{opacity:.38!important;pointer-events:none!important}
 /* 原生组件翻硬封面时会预绘前后多张软页；封面过渡中只保留硬封面，避免底页露出。 */
 .book-stage.is-cover-turning .visual-book .flip-page:not(.flip-cover):not(.flip-back-cover){visibility:hidden!important}
+
+/* P4 最终封面状态机：封面不再交给 PageFlip，因此翻动时不会生成或露出临时底页。 */
+.book-stage{--cover-flip-duration:560ms;--cover-shift-duration:820ms}
+.book-stage .visual-book{opacity:1!important;transform:none!important;transition:none!important}
+.book-stage .visual-book.cover-book-hidden{opacity:0!important;pointer-events:none!important}
+.book-cover-layer{display:block!important;grid-column:2;grid-row:1;height:100%;isolation:isolate;opacity:0;perspective:2200px;pointer-events:none;position:relative;transform:translateX(0);transition:opacity .1s linear,transform var(--cover-shift-duration) cubic-bezier(.22,.72,.2,1),visibility 0s linear .1s;visibility:hidden;width:100%;z-index:50}
+.book-stage.cover-front-closed .book-cover-layer,.book-stage.cover-front-shifting .book-cover-layer,.book-stage.cover-front-opening .book-cover-layer,.book-stage.cover-front-closing-prepare .book-cover-layer,.book-stage.cover-front-closing .book-cover-layer,.book-stage.cover-front-returning .book-cover-layer,.book-stage.cover-back-closed .book-cover-layer,.book-stage.cover-back-shifting .book-cover-layer,.book-stage.cover-back-opening .book-cover-layer,.book-stage.cover-back-closing-prepare .book-cover-layer,.book-stage.cover-back-closing .book-cover-layer,.book-stage.cover-back-returning .book-cover-layer{opacity:1;transition-delay:0s;visibility:visible}
+.book-cover-slab{height:100%;position:absolute;top:0;transform-style:preserve-3d;width:50%;will-change:transform}
+.book-front-slab{left:50%;transform:rotateY(0deg);transform-origin:left center;transition:transform var(--cover-flip-duration) cubic-bezier(.2,.72,.2,1)}
+.book-back-slab{left:0;transform:rotateY(0deg);transform-origin:right center;transition:transform var(--cover-flip-duration) cubic-bezier(.2,.72,.2,1)}
+.book-cover-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;height:100%;inset:0;overflow:hidden;position:absolute;width:100%}
+.book-stage.cover-front-closed .book-cover-layer{transform:translateX(-25%)}
+.book-stage.cover-front-shifting .book-cover-layer,.book-stage.cover-front-opening .book-cover-layer,.book-stage.cover-front-closing-prepare .book-cover-layer,.book-stage.cover-front-closing .book-cover-layer{transform:translateX(0)}
+.book-stage.cover-front-returning .book-cover-layer{transform:translateX(-25%)}
+.book-stage.cover-back-closed .book-cover-layer{transform:translateX(25%)}
+.book-stage.cover-back-shifting .book-cover-layer,.book-stage.cover-back-opening .book-cover-layer,.book-stage.cover-back-closing-prepare .book-cover-layer,.book-stage.cover-back-closing .book-cover-layer{transform:translateX(0)}
+.book-stage.cover-back-returning .book-cover-layer{transform:translateX(25%)}
+.book-stage.cover-front-opening .book-front-slab{transform:rotateY(-180deg)}
+.book-stage.cover-front-closing-prepare .book-front-slab{transition:none;transform:rotateY(-180deg)}
+.book-stage.cover-front-closing .book-front-slab{transform:rotateY(0deg)}
+.book-stage.cover-back-opening .book-back-slab{transform:rotateY(180deg)}
+.book-stage.cover-back-closing-prepare .book-back-slab{transition:none;transform:rotateY(180deg)}
+.book-stage.cover-back-closing .book-back-slab{transform:rotateY(0deg)}
+.book-stage.cover-front-closed .book-back-slab,.book-stage.cover-front-shifting .book-back-slab,.book-stage.cover-front-opening .book-back-slab,.book-stage.cover-front-closing-prepare .book-back-slab,.book-stage.cover-front-closing .book-back-slab,.book-stage.cover-front-returning .book-back-slab,.book-stage.cover-back-closed .book-front-slab,.book-stage.cover-back-shifting .book-front-slab,.book-stage.cover-back-opening .book-front-slab,.book-stage.cover-back-closing-prepare .book-front-slab,.book-stage.cover-back-closing .book-front-slab,.book-stage.cover-back-returning .book-front-slab{visibility:hidden}
+@media(max-width:760px){.book-cover-layer{transform:none!important}.book-cover-slab{left:0;width:100%}}
