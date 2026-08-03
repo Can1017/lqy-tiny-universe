@@ -213,7 +213,7 @@
     if (PageFlip) {
       const bookStage = visualBook.closest('.book-stage');
       // 使用组件原生硬封面：翻封面与书本平移分别在两个连续阶段完成。
-      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 1080 });
+      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: true, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 560 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       let bookOffset = null;
       let bookShiftFrame = null;
@@ -229,6 +229,7 @@
         const target = offsetForPage(page);
         const from = bookOffset ?? target;
         if (bookShiftFrame !== null) cancelAnimationFrame(bookShiftFrame);
+        bookStage?.classList.remove('is-book-shifting');
         if (!animate || Math.abs(target - from) < 1) {
           bookOffset = target;
           visualBook.style.setProperty('transform', `translate3d(${target}px,0,0)`, 'important');
@@ -236,13 +237,17 @@
         }
         const startedAt = performance.now();
         const duration = 820;
+        bookStage?.classList.add('is-book-shifting');
         const step = (now) => {
           const progress = Math.min(1, (now - startedAt) / duration);
           const eased = progress * progress * (3 - 2 * progress);
           bookOffset = from + (target - from) * eased;
           visualBook.style.setProperty('transform', `translate3d(${bookOffset}px,0,0)`, 'important');
           if (progress < 1) bookShiftFrame = requestAnimationFrame(step);
-          else bookShiftFrame = null;
+          else {
+            bookShiftFrame = null;
+            bookStage?.classList.remove('is-book-shifting');
+          }
         };
         bookShiftFrame = requestAnimationFrame(step);
       };
@@ -274,14 +279,23 @@
         // 只有原生翻页彻底结束后，才开始整体平移；不会和翻页同时进行。
         if (event.data === 'read' && hasActiveFlip) {
           hasActiveFlip = false;
+          bookStage.classList.remove('is-cover-turning');
           updateBookMode(book.getCurrentPageIndex(), true);
         }
       });
+      const flipBook = (direction) => {
+        const page = book.getCurrentPageIndex();
+        const isCoverTurn = (direction === 'next' && (page === 0 || page === pages.length - 2))
+          || (direction === 'prev' && (page === 1 || page === pages.length - 1));
+        bookStage?.classList.toggle('is-cover-turning', isCoverTurn);
+        if (direction === 'next') book.flipNext('top');
+        else book.flipPrev('top');
+      };
       bookPrev.addEventListener('click', () => {
-        book.flipPrev('top');
+        flipBook('prev');
       });
       bookNext.addEventListener('click', () => {
-        book.flipNext('top');
+        flipBook('next');
       });
       // 预览状态不显示浏览器控制条；点击后才播放并交给原生控件处理。
       const videoFrame = visualBook.querySelector('.album-video-frame');

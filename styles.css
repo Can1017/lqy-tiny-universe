@@ -495,4 +495,6 @@ body.lightbox-open{overflow:hidden}
 .book-stage .visual-book{clip-path:none!important;opacity:1!important;transition:none!important;will-change:transform}
 .book-cover-layer{display:none!important}
 .book-stage.is-front-cover .album-visual-back,.book-stage.is-back-cover .album-visual-cover{opacity:0!important;pointer-events:none!important}
-.book-stage.is-inner-turning .book-side{opacity:.38!important;pointer-events:none!important}
+.book-stage.is-inner-turning .book-side,.book-stage.is-book-shifting .book-side{opacity:.38!important;pointer-events:none!important}
+/* 原生组件翻硬封面时会预绘前后多张软页；封面过渡中只保留硬封面，避免底页露出。 */
+.book-stage.is-cover-turning .visual-book .flip-page:not(.flip-cover):not(.flip-back-cover){visibility:hidden!important}
