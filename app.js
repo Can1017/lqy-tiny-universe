@@ -212,13 +212,15 @@
     if (PageFlip) {
       const bookStage = visualBook.closest('.book-stage');
       // 内页只由 PageFlip 管理。正反封面另用原生双面硬封面，彻底避免库在封面动画时预绘相邻内容。
-      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: false, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 780 });
+      const book = new PageFlip(visualBook, { width: 440, height: 622, size: 'stretch', minWidth: 240, maxWidth: 480, minHeight: 339, maxHeight: 678, showCover: false, maxShadowOpacity: .22, mobileScrollSupport: false, useMouseEvents: true, flippingTime: 960 });
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       const totalBookPages = pages.length + 2;
       const lastInnerPage = pages.length - 2;
-      const coverDuration = 780;
+      // 封面比内页稍慢：先看到封面翻动，再自然露出左右两张真实内页。
+      const coverDuration = 960;
       let coverState = 'front-closed';
       let coverTimer = null;
+      let innerBookTimer = null;
 
       if (bookStage) {
         bookStage.querySelector('.book-cover-layer')?.remove();
@@ -248,15 +250,26 @@
           ? `01 / ${String(totalBookPages).padStart(2, '0')}`
           : `${String(totalBookPages).padStart(2, '0')} / ${String(totalBookPages).padStart(2, '0')}`;
       };
+      const showInnerBook = (delay = 0) => {
+        window.clearTimeout(innerBookTimer);
+        innerBookTimer = window.setTimeout(() => {
+          visualBook.classList.remove('cover-book-hidden');
+          visualBook.setAttribute('aria-hidden', 'false');
+        }, delay);
+      };
+      const hideInnerBook = (delay = 0) => {
+        window.clearTimeout(innerBookTimer);
+        innerBookTimer = window.setTimeout(() => {
+          visualBook.classList.add('cover-book-hidden');
+          visualBook.setAttribute('aria-hidden', 'true');
+        }, delay);
+      };
       const setCoverState = (nextState) => {
         coverState = nextState;
         if (!bookStage) return;
         const classes = ['cover-front-closed', 'cover-front-opening', 'cover-front-closing-prepare', 'cover-front-closing', 'cover-back-closed', 'cover-back-opening', 'cover-back-closing-prepare', 'cover-back-closing', 'cover-open'];
         bookStage.classList.remove(...classes);
         bookStage.classList.add(`cover-${nextState}`);
-        const isOpen = nextState === 'open';
-        visualBook.classList.toggle('cover-book-hidden', !isOpen);
-        visualBook.setAttribute('aria-hidden', String(!isOpen));
         const isTransition = nextState.includes('opening') || nextState.includes('closing');
         bookPrev.disabled = isTransition || nextState === 'front-closed';
         bookNext.disabled = isTransition || nextState === 'back-closed';
@@ -275,24 +288,30 @@
         if (coverState !== 'front-closed') return;
         book.turnToPage(0);
         setCoverState('front-opening');
+        // 翻到约三分之一时露出真实跨页，右页不会在封面落下后才突然出现。
+        showInnerBook(Math.round(coverDuration * .34));
         finishCoverTransition('open', 0);
       };
       const closeFrontCover = () => {
         if (coverState !== 'open' || book.getCurrentPageIndex() !== 0) return;
         setCoverState('front-closing-prepare');
         requestAnimationFrame(() => setCoverState('front-closing'));
+        // 保留内页到封面基本合拢，避免闭合时出现空白断层。
+        hideInnerBook(Math.round(coverDuration * .82));
         finishCoverTransition('front-closed', null);
       };
       const openBackCover = () => {
         if (coverState !== 'back-closed') return;
         book.turnToPage(lastInnerPage);
         setCoverState('back-opening');
+        showInnerBook(Math.round(coverDuration * .34));
         finishCoverTransition('open', lastInnerPage);
       };
       const closeBackCover = () => {
         if (coverState !== 'open' || book.getCurrentPageIndex() !== lastInnerPage) return;
         setCoverState('back-closing-prepare');
         requestAnimationFrame(() => setCoverState('back-closing'));
+        hideInnerBook(Math.round(coverDuration * .82));
         finishCoverTransition('back-closed', null);
       };
       // 目录和视频属于页面内交互，不能把鼠标/触摸事件继续交给翻页器。
@@ -345,6 +364,7 @@
           book.turnToPage(Number(button.dataset.page));
         });
       });
+      hideInnerBook();
       setCoverState('front-closed');
     } else {
       visualBook.innerHTML = '<p class="book-fallback">影像书正在加载，请稍后刷新页面。</p>';
