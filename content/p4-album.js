@@ -12,9 +12,10 @@ window.P4_ALBUM = {
     introVideoPoster: 'assets/images/p4-album/visual-diary-poster.jpg',
     fireworkMain: 'assets/images/p4-album/firework-main.png',
     fireworkScatter: 'assets/images/p4-album/firework-scatter.png',
-    fireworkHaze: 'assets/images/p4-album/firework-haze-cutout.png',
-    leafNotes: 'assets/images/p4-album/leaf-notes-cutout.png',
-    bareTree: 'assets/images/p4-album/bare-tree-cutout.png',
+    // 从原图去除纸张白底后的透明版，画布已按真实内容收边，便于在纸页中准确居中。
+    fireworkHaze: 'assets/images/p4-album/firework-haze-centered.png',
+    leafNotes: 'assets/images/p4-album/leaf-notes-centered.png',
+    bareTree: 'assets/images/p4-album/bare-tree-centered.png',
     seaSilhouette: 'assets/images/p4-album/sea-silhouette.png',
     groupSilhouette: 'assets/images/p4-album/group-silhouette.png',
     portraitNight: 'assets/images/p4-album/portrait-night.png',

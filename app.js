@@ -252,6 +252,13 @@
         bookDots.innerHTML = Array.from({ length: pages.length - 2 }, (_, index) => `<button type="button" data-page="${index + 1}" class="${page === index + 1 ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
         bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => book.turnToPage(Number(dot.dataset.page))));
       };
+      // 目录和视频属于页面内交互，不能把鼠标/触摸事件继续交给翻页器。
+      const protectPageInteraction = (element) => {
+        if (!element) return;
+        ['pointerdown', 'mousedown', 'touchstart', 'pointerup', 'mouseup', 'touchend'].forEach((type) => {
+          element.addEventListener(type, (event) => event.stopPropagation(), { passive: true });
+        });
+      };
       book.on('flip', (event) => updateBookStatus(event.data));
       book.on('changeState', (event) => {
         if (!bookStage) return;
@@ -261,7 +268,11 @@
       bookPrev.addEventListener('click', () => book.flipPrev('top'));
       bookNext.addEventListener('click', () => book.flipNext('top'));
       // 预览状态不显示浏览器控制条；点击后才播放并交给原生控件处理。
-      visualBook.querySelector('.album-video-frame')?.addEventListener('click', async (event) => {
+      const videoFrame = visualBook.querySelector('.album-video-frame');
+      protectPageInteraction(videoFrame);
+      videoFrame?.addEventListener('click', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         const frame = event.currentTarget;
         const video = frame.querySelector('.album-intro-video');
         if (!video) return;
@@ -273,7 +284,15 @@
           // 浏览器若阻止播放，仍保留原生播放控件供用户再次操作。
         }
       });
-      visualBook.querySelectorAll('.album-toc-jump').forEach((button) => button.addEventListener('click', () => book.turnToPage(Number(button.dataset.page))));
+      visualBook.querySelectorAll('.album-toc-jump').forEach((button) => {
+        protectPageInteraction(button);
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          // turnToPage 是无翻页动画的定位跳转；目录仅更新到目标页。
+          book.turnToPage(Number(button.dataset.page));
+        });
+      });
       updateBookStatus(0);
       updateBookMode(0);
       window.addEventListener('resize', () => {

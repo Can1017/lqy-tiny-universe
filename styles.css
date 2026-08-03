@@ -409,15 +409,12 @@ body.lightbox-open{overflow:hidden}
 @media(max-width:760px){.social-section .social-grid{border-radius:20px;justify-content:flex-start;min-height:390px;overflow-x:auto;overflow-y:hidden;padding:25px 23px!important;scrollbar-color:rgba(255,235,211,.72) transparent;scrollbar-width:thin}.social-section .social-grid:after{position:sticky;min-width:1px;right:0}.social-phone{flex:0 0 132px;margin-left:0}.social-phone-1{--phone-y:20px}.social-phone-2{--phone-y:-8px}.social-phone-3{--phone-y:14px}.social-phone-4{--phone-y:-2px}.social-phone-5{--phone-y:21px}.social-closure{gap:22px;margin-top:30px;padding-bottom:32px}.social-closure>p{font-size:15px}.social-links{display:grid;grid-template-columns:1fr}.social-links a{justify-content:space-between}.social-section .social-grid::-webkit-scrollbar{height:5px}.social-section .social-grid::-webkit-scrollbar-thumb{background:rgba(255,235,211,.72)}}
 
 /* P4 最终版：封面是单页，内页按照实际纸张安全区居中排版。 */
-/* PageFlip 在硬封面状态仍会保留一张内页的图层；裁掉左半幅，避免其出现在封面左侧。 */
-@media(min-width:761px){
-  .book-stage.is-front-cover .visual-book,.book-stage.is-back-cover .visual-book{clip-path:inset(0 0 0 50%)}
-  .book-stage.is-open-book .visual-book{clip-path:inset(0)}
-}
+/* PageFlip 在硬封面静止时会暂存内页图层；仅隐藏这些图层，翻动开始即恢复，避免裁切整个书本导致开合跳变。 */
+.book-stage.is-front-cover:not(.is-turning) .flip-page:not(.album-visual-cover),.book-stage.is-back-cover:not(.is-turning) .flip-page:not(.album-visual-back){background:transparent!important;visibility:hidden!important}
 
 /* 第二页视频：先展示一张横向电影感预览，点击才显示原生播放控件。 */
-.visual-book .album-video-page{align-items:center!important;background:#fffdf7!important;display:flex!important;justify-content:center!important;padding:7%!important}
-.visual-book .album-video-frame{aspect-ratio:16/9;background:#4d4a3e;border:0;border-radius:7px;box-shadow:0 13px 26px rgba(70,56,46,.2);cursor:pointer;height:auto!important;max-width:92%;overflow:hidden;padding:0;position:relative;width:92%}
+.visual-book .album-video-page{align-items:center!important;background:#fffdf7!important;display:flex!important;justify-content:center!important;padding:4%!important}
+.visual-book .album-video-frame{aspect-ratio:16/9;background:#4d4a3e;border:0;border-radius:7px;box-shadow:0 13px 26px rgba(70,56,46,.2);cursor:pointer;height:auto!important;max-width:96%;overflow:hidden;padding:0;position:relative;width:96%}
 .visual-book .album-intro-video{background:#4d4a3e;box-shadow:none!important;display:block;height:100%!important;max-height:none!important;max-width:none!important;object-fit:cover!important;width:100%!important}
 .visual-book .album-video-frame:after{background:rgba(34,37,29,.29)!important;content:"";inset:0;opacity:1;pointer-events:none;position:absolute;transition:opacity .2s ease;z-index:1}
 .visual-book .album-video-play{align-items:center;border:1.5px solid rgba(255,255,255,.78);border-radius:50%;color:#fff;display:flex;font:17px/1 var(--sans)!important;height:51px!important;justify-content:center;left:50%!important;padding-left:3px;position:absolute!important;text-shadow:none!important;top:50%!important;transform:translate(-50%,-50%)!important;transition:opacity .2s ease;width:51px!important;z-index:2}
@@ -429,22 +426,22 @@ body.lightbox-open{overflow:hidden}
 
 /* 第五、六页插画严格居中，保留所有透明边缘。 */
 .visual-book .album-leaves-page,.visual-book .album-bare-tree-page{align-items:center!important;display:flex!important;justify-content:center!important}
-.visual-book .album-leaves-page img{height:84%!important;margin:0!important;max-width:86%!important;object-fit:contain!important;width:82%!important}
-.visual-book .album-bare-tree-page img{height:80%!important;margin:0!important;max-width:82%!important;object-fit:contain!important;width:76%!important}
+.visual-book .album-leaves-page img{height:90%!important;margin:0!important;max-width:92%!important;object-fit:contain!important;width:88%!important}
+.visual-book .album-bare-tree-page img{height:87%!important;margin:0!important;max-width:90%!important;object-fit:contain!important;width:86%!important}
 
 /* 第八页：两张风景剪影下移至视觉中心，并保持不相接。 */
 .visual-book .album-photo-pair-page{display:block!important;padding:0!important}
 .visual-book .album-photo-pair-page>div{align-content:center!important;display:grid!important;gap:8.3333%!important;grid-template-rows:repeat(2,41.6667%)!important;height:60%!important;justify-items:center!important;left:0!important;padding:0!important;position:absolute!important;top:20%!important;width:100%!important}
 .visual-book .album-photo-pair-page img,.visual-book .album-photo-pair-page img:first-child,.visual-book .album-photo-pair-page img:last-child{height:100%!important;object-fit:cover!important;width:72%!important}
 
-/* 第九页单图处在纸张正中；第十页同样是两张放大的独立横图。 */
-.visual-book .album-portrait-page{align-items:center!important;display:flex!important;justify-content:center!important;padding:8%!important}
+/* 第九、十页恢复为稳定的正常文档流：第九页单图居中，第十页两图居中、放大且留白分隔。 */
+.visual-book .album-portrait-page{align-items:center!important;display:flex!important;justify-content:center!important;padding:0!important;position:relative!important}
 .visual-book .album-portrait-page img{height:86%!important;margin:0!important;object-fit:contain!important;width:76%!important}
-.visual-book .album-portraits-page{align-content:stretch!important;display:grid!important;gap:10%!important;grid-template-rows:45% 45%!important;height:70%!important;justify-items:center!important;left:0!important;padding:0!important;position:absolute!important;top:15%!important;width:100%!important}
-.visual-book .album-portraits-page img{aspect-ratio:auto!important;display:block!important;height:100%!important;object-fit:contain!important;width:90%!important}
+.visual-book .album-portraits-page{align-content:center!important;display:grid!important;gap:8%!important;grid-template-rows:1fr 1fr!important;height:100%!important;justify-items:center!important;left:auto!important;padding:10% 0!important;position:relative!important;top:auto!important;width:100%!important}
+.visual-book .album-portraits-page img{aspect-ratio:auto!important;display:block!important;height:100%!important;object-fit:contain!important;width:72%!important}
 
 @media(max-width:760px){
-  .visual-book .album-video-frame{width:92%!important}
+  .visual-book .album-video-frame{width:96%!important}
   .visual-book .album-video-play{font-size:14px!important;height:42px!important;width:42px!important}
   .visual-book .album-photo-pair-page>div{height:60%!important;top:20%!important}
   .visual-book .album-photo-pair-page img,.visual-book .album-photo-pair-page img:first-child,.visual-book .album-photo-pair-page img:last-child{width:72%!important}
