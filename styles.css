@@ -411,8 +411,8 @@ body.lightbox-open{overflow:hidden}
 /* P4 最终版：封面是单页，内页按照实际纸张安全区居中排版。 */
 /* PageFlip 在硬封面静止时会暂存内页图层；仅隐藏这些图层，翻动开始即恢复，避免裁切整个书本导致开合跳变。 */
 .book-stage.is-front-cover:not(.is-turning) .flip-page:not(.album-visual-cover),.book-stage.is-back-cover:not(.is-turning) .flip-page:not(.album-visual-back){background:transparent!important;visibility:hidden!important}
-/* 背封翻动时 PageFlip 会短暂保留首个媒体页的缓存层；此时绝不让视频框出现在背封右侧。 */
-.book-stage.is-back-cover .album-video-page,.book-stage.is-back-cover-transition .album-video-page{background:transparent!important;visibility:hidden!important}
+/* 封面翻动的整个过程都不展示翻页器预绘的相邻内页，动画结束才呈现目标双页。 */
+.book-stage.is-cover-transition .flip-page:not(.album-visual-cover):not(.album-visual-back){background:transparent!important;visibility:hidden!important}
 
 /* 第二页视频：先展示一张横向电影感预览，点击才显示原生播放控件。 */
 .visual-book .album-video-page{align-items:center!important;background:#fffdf7!important;display:flex!important;justify-content:center!important;padding:4%!important}

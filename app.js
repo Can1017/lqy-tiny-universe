@@ -263,20 +263,21 @@
       book.on('changeState', (event) => {
         if (!bookStage) return;
         bookStage.classList.toggle('is-turning', event.data === 'flipping');
+        if (event.data === 'flipping') {
+          const currentPage = book.getCurrentPageIndex();
+          const direction = book.getFlipController().getCalculation()?.getDirection();
+          const isFrontCoverTurn = (currentPage === 0 && direction === 0) || (currentPage === 1 && direction === 1);
+          const isBackCoverTurn = (currentPage === pages.length - 3 && direction === 0) || (currentPage === pages.length - 1 && direction === 1);
+          bookStage.classList.toggle('is-cover-transition', isFrontCoverTurn || isBackCoverTurn);
+        }
         if (event.data === 'read') {
           const currentPage = book.getCurrentPageIndex();
-          bookStage.classList.toggle('is-back-cover-transition', currentPage === pages.length - 1);
+          bookStage.classList.remove('is-cover-transition', 'is-back-cover-transition');
           updateBookMode(currentPage, true);
         }
       });
-      bookPrev.addEventListener('click', () => {
-        if (book.getCurrentPageIndex() === pages.length - 1) bookStage?.classList.add('is-back-cover-transition');
-        book.flipPrev('top');
-      });
-      bookNext.addEventListener('click', () => {
-        if (book.getCurrentPageIndex() === pages.length - 2) bookStage?.classList.add('is-back-cover-transition');
-        book.flipNext('top');
-      });
+      bookPrev.addEventListener('click', () => book.flipPrev('top'));
+      bookNext.addEventListener('click', () => book.flipNext('top'));
       // 预览状态不显示浏览器控制条；点击后才播放并交给原生控件处理。
       const videoFrame = visualBook.querySelector('.album-video-frame');
       protectPageInteraction(videoFrame);
