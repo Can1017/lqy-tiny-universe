@@ -435,9 +435,9 @@ body.lightbox-open{overflow:hidden}
 .visual-book .album-photo-pair-page img,.visual-book .album-photo-pair-page img:first-child,.visual-book .album-photo-pair-page img:last-child{height:100%!important;object-fit:cover!important;width:72%!important}
 
 /* 第九、十页恢复为稳定的正常文档流：第九页单图居中，第十页两图居中、放大且留白分隔。 */
-.visual-book .album-portrait-page{align-items:center!important;display:flex!important;justify-content:center!important;padding:0!important;position:relative!important}
+.visual-book .album-portrait-page{align-items:center!important;display:flex!important;justify-content:center!important;padding:0!important}
 .visual-book .album-portrait-page img{height:86%!important;margin:0!important;object-fit:contain!important;width:76%!important}
-.visual-book .album-portraits-page{align-content:center!important;display:grid!important;gap:8%!important;grid-template-rows:1fr 1fr!important;height:100%!important;justify-items:center!important;left:auto!important;padding:10% 0!important;position:relative!important;top:auto!important;width:100%!important}
+.visual-book .album-portraits-page{align-content:center!important;display:grid!important;gap:8%!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;justify-items:center!important;padding:10% 0!important}
 .visual-book .album-portraits-page img{aspect-ratio:auto!important;display:block!important;height:100%!important;object-fit:contain!important;width:72%!important}
 
 @media(max-width:760px){
