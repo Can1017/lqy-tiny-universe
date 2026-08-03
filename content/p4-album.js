@@ -7,6 +7,7 @@ window.P4_ALBUM = {
   subtitle: 'From Sparks to Stories',
   author: '李乔英 | Qiaoying Li',
   assets: {
+    introVideo: 'assets/videos/visual-diary.mp4',
     fireworkMain: 'assets/images/p4-album/firework-main.png',
     fireworkScatter: 'assets/images/p4-album/firework-scatter.png',
     fireworkHaze: 'assets/images/p4-album/firework-haze-cutout.png',
