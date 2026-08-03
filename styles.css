@@ -490,3 +490,9 @@ body.lightbox-open{overflow:hidden}
   .book-cover-toc{padding:15% 12%}.book-cover-toc>p{font-size:32px;margin-bottom:35px}.book-cover-toc>div{gap:10px}.book-cover-toc>div p{font-size:9px}.book-cover-toc>div b{font-size:8px}
   .book-cover-last>p{font-size:19px}
 }
+
+/* P4 交回 PageFlip 原生硬封面：先翻页，组件读完新页后再单独平移书本。 */
+.book-stage .visual-book{clip-path:none!important;opacity:1!important;transition:none!important;will-change:transform}
+.book-cover-layer{display:none!important}
+.book-stage.is-front-cover .album-visual-back,.book-stage.is-back-cover .album-visual-cover{opacity:0!important;pointer-events:none!important}
+.book-stage.is-inner-turning .book-side{opacity:.38!important;pointer-events:none!important}
