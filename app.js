@@ -194,17 +194,21 @@
       { label: '攀登 · 每一步向上', target: 6, page: 8 }
     ];
     const tocButtons = tocItems.map(({ label, target, page }) => `<button type="button" class="album-toc-jump" data-page="${target}"><span>${label}</span><i>········</i><b>P${page}</b></button>`).join('');
+    const contentsBody = `<p>目录</p><nav>${tocButtons}</nav>`;
+    const videoBody = `<button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button>`;
+    const finalLeftBody = `<img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像">`;
+    const finalRightBody = `<img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照">`;
     const pages = [
-      `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${tocButtons}</nav></article>`,
-      `<article class="flip-page album-video-page"><button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button></article>`,
+      `<article class="flip-page album-contents-page album-pdf-contents">${contentsBody}</article>`,
+      `<article class="flip-page album-video-page">${videoBody}</article>`,
       `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
       `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕"></article>`,
       `<article class="flip-page album-leaves-page"><img src="${html(album.assets.leafNotes)}" alt="写着随笔的三片树叶"></article>`,
       `<article class="flip-page album-bare-tree-page"><img src="${html(album.assets.bareTree)}" alt="枯树与飞鸟"></article>`,
       `<article class="flip-page album-blank-page" aria-label="留白页"></article>`,
       `<article class="flip-page album-photo-pair-page"><div><img src="${html(album.assets.seaSilhouette)}" alt="海边张开双臂的人物剪影"><img src="${html(album.assets.groupSilhouette)}" alt="举起手的人群剪影"></div></article>`,
-      `<article class="flip-page album-portrait-page"><img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像"></article>`,
-      `<article class="flip-page album-portraits-page"><img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照"></article>`
+      `<article class="flip-page album-portrait-page">${finalLeftBody}</article>`,
+      `<article class="flip-page album-portraits-page">${finalRightBody}</article>`
     ];
     visualBook.innerHTML = pages.join('');
     const PageFlip = window.St?.PageFlip;
@@ -215,8 +219,8 @@
       book.loadFromHTML(visualBook.querySelectorAll('.flip-page'));
       const totalBookPages = pages.length + 2;
       const lastInnerPage = pages.length - 2;
-      const coverFlipDuration = 560;
-      const coverShiftDuration = 820;
+      const coverFlipDuration = 920;
+      const coverShiftDuration = 800;
       let coverState = 'front-closed';
       let coverTimer = null;
 
@@ -226,13 +230,20 @@
         coverLayer.className = 'book-cover-layer';
         coverLayer.setAttribute('aria-hidden', 'true');
         coverLayer.innerHTML = `
+          <div class="book-cover-preview book-front-preview">
+            <section class="book-preview-page book-preview-right album-video-page"><div class="album-video-frame" aria-hidden="true"><img class="album-intro-video" src="${html(album.assets.introVideoPoster)}" alt=""><span class="album-video-play">▶</span></div></section>
+            <section class="book-preview-page book-preview-mobile album-contents-page album-pdf-contents">${contentsBody}</section>
+          </div>
+          <div class="book-cover-preview book-back-preview">
+            <section class="book-preview-page book-preview-left album-portrait-page">${finalLeftBody}</section>
+          </div>
           <div class="book-cover-slab book-front-slab">
             <section class="book-cover-face book-cover-outer"><p>PORTFOLIO / 2026</p><h3>Visual<br />Diary.</h3><span>一册关于光、镜头与正在发生的故事</span></section>
-            <section class="book-cover-face book-cover-inner book-cover-toc"><p>目录</p><div>${tocItems.map(({ label, page }) => `<p><span>${label}</span><b>P${page}</b></p>`).join('')}</div></section>
+            <section class="book-cover-face book-cover-inner album-contents-page album-pdf-contents">${contentsBody}</section>
           </div>
           <div class="book-cover-slab book-back-slab">
             <section class="book-cover-face book-cover-outer book-back-outer"><p>END OF VISUAL DIARY</p><span>LQY / 2026</span></section>
-            <section class="book-cover-face book-cover-inner book-cover-last"><p>最后一页 · 仍在发生</p><div><img src="${html(album.assets.portraitSign)}" alt=""><img src="${html(album.assets.portraitPose)}" alt=""></div></section>
+            <section class="book-cover-face book-cover-inner album-portraits-page">${finalRightBody}</section>
           </div>`;
         bookStage.appendChild(coverLayer);
       }
@@ -255,7 +266,7 @@
       const setCoverState = (nextState) => {
         coverState = nextState;
         if (!bookStage) return;
-        const states = ['cover-front-closed', 'cover-front-shifting', 'cover-front-opening', 'cover-front-closing-prepare', 'cover-front-closing', 'cover-front-returning', 'cover-back-closed', 'cover-back-shifting', 'cover-back-opening', 'cover-back-closing-prepare', 'cover-back-closing', 'cover-back-returning', 'cover-open'];
+        const states = ['cover-front-closed', 'cover-front-opening', 'cover-front-expanding', 'cover-front-closing-ready', 'cover-front-closing', 'cover-front-returning', 'cover-back-closed', 'cover-back-opening', 'cover-back-expanding', 'cover-back-closing-ready', 'cover-back-closing', 'cover-back-returning', 'cover-open'];
         bookStage.classList.remove(...states);
         bookStage.classList.add(`cover-${nextState}`);
         const isTransition = nextState !== 'open' && !nextState.endsWith('closed');
@@ -264,55 +275,62 @@
         if (nextState === 'front-closed') updateClosedStatus('front');
         if (nextState === 'back-closed') updateClosedStatus('back');
       };
-      const after = (delay, callback) => {
+      const after = (delay) => new Promise((resolve) => {
         window.clearTimeout(coverTimer);
-        coverTimer = window.setTimeout(callback, delay);
-      };
-      const openFrontCover = () => {
+        coverTimer = window.setTimeout(resolve, delay);
+      });
+      const nextFrame = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const openFrontCover = async () => {
         if (coverState !== 'front-closed') return;
-        setCoverState('front-shifting');
-        after(coverShiftDuration, () => {
-          book.turnToPage(0);
-          setInnerBookVisible(true);
-          setCoverState('front-opening');
-          after(coverFlipDuration, () => {
-            setCoverState('open');
-            updateBookStatus(book.getCurrentPageIndex());
-          });
-        });
+        book.turnToPage(0);
+        setCoverState('front-opening');
+        await after(coverFlipDuration);
+        if (coverState !== 'front-opening') return;
+        setCoverState('front-expanding');
+        await after(coverShiftDuration);
+        if (coverState !== 'front-expanding') return;
+        setInnerBookVisible(true);
+        await nextFrame();
+        setCoverState('open');
+        updateBookStatus(book.getCurrentPageIndex());
       };
-      const closeFrontCover = () => {
+      const closeFrontCover = async () => {
         if (coverState !== 'open' || book.getCurrentPageIndex() !== 0) return;
-        setCoverState('front-closing-prepare');
-        requestAnimationFrame(() => setCoverState('front-closing'));
-        after(coverFlipDuration, () => {
-          setInnerBookVisible(false);
-          setCoverState('front-returning');
-          after(coverShiftDuration, () => setCoverState('front-closed'));
-        });
+        setInnerBookVisible(false);
+        setCoverState('front-closing-ready');
+        await nextFrame();
+        setCoverState('front-closing');
+        await after(coverFlipDuration);
+        if (coverState !== 'front-closing') return;
+        setCoverState('front-returning');
+        await after(coverShiftDuration);
+        if (coverState === 'front-returning') setCoverState('front-closed');
       };
-      const openBackCover = () => {
+      const openBackCover = async () => {
         if (coverState !== 'back-closed') return;
-        setCoverState('back-shifting');
-        after(coverShiftDuration, () => {
-          book.turnToPage(lastInnerPage);
-          setInnerBookVisible(true);
-          setCoverState('back-opening');
-          after(coverFlipDuration, () => {
-            setCoverState('open');
-            updateBookStatus(book.getCurrentPageIndex());
-          });
-        });
+        book.turnToPage(lastInnerPage);
+        setCoverState('back-opening');
+        await after(coverFlipDuration);
+        if (coverState !== 'back-opening') return;
+        setCoverState('back-expanding');
+        await after(coverShiftDuration);
+        if (coverState !== 'back-expanding') return;
+        setInnerBookVisible(true);
+        await nextFrame();
+        setCoverState('open');
+        updateBookStatus(book.getCurrentPageIndex());
       };
-      const closeBackCover = () => {
+      const closeBackCover = async () => {
         if (coverState !== 'open' || book.getCurrentPageIndex() !== lastInnerPage) return;
-        setCoverState('back-closing-prepare');
-        requestAnimationFrame(() => setCoverState('back-closing'));
-        after(coverFlipDuration, () => {
-          setInnerBookVisible(false);
-          setCoverState('back-returning');
-          after(coverShiftDuration, () => setCoverState('back-closed'));
-        });
+        setInnerBookVisible(false);
+        setCoverState('back-closing-ready');
+        await nextFrame();
+        setCoverState('back-closing');
+        await after(coverFlipDuration);
+        if (coverState !== 'back-closing') return;
+        setCoverState('back-returning');
+        await after(coverShiftDuration);
+        if (coverState === 'back-returning') setCoverState('back-closed');
       };
       // 目录和视频属于页面内交互，不能把鼠标/触摸事件继续交给翻页器。
       const protectPageInteraction = (element) => {
