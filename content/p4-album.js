@@ -6,6 +6,18 @@ window.P4_ALBUM = {
   title: '李乔英的创作画册',
   subtitle: 'From Sparks to Stories',
   author: '李乔英 | Qiaoying Li',
+  assets: {
+    fireworkMain: 'assets/images/p4-album/firework-main.png',
+    fireworkScatter: 'assets/images/p4-album/firework-scatter.png',
+    fireworkHaze: 'assets/images/p4-album/firework-haze.png',
+    leafNotes: 'assets/images/p4-album/leaf-notes.png',
+    bareTree: 'assets/images/p4-album/bare-tree.png',
+    seaSilhouette: 'assets/images/p4-album/sea-silhouette.png',
+    groupSilhouette: 'assets/images/p4-album/group-silhouette.png',
+    portraitNight: 'assets/images/p4-album/portrait-night.png',
+    portraitSign: 'assets/images/p4-album/portrait-sign.png',
+    portraitPose: 'assets/images/p4-album/portrait-pose.png'
+  },
   intro: [
     '我是李乔英。04 年生的狮子座，天生就带着一团火，走到哪里都想把光分给别人。',
     '他们说 ENFP 像风，我偏觉得自己是风里的镜头——不只是为了路过，是为了停下来，把此刻留住。',

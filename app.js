@@ -189,18 +189,16 @@
     const filmPage = (film) => `<article class="flip-page album-film-page"><div class="album-film-copy"><p>${html(film.eyebrow)}</p><h3>${html(film.title)}</h3><div class="album-film-rule"></div><b>${html(film.summary)}</b><small>${html(film.role)}</small></div><div class="album-film-stills">${film.stills.map((image, index) => `<figure class="still-${index + 1}"><img src="${html(image)}" alt="${html(film.title)}剧照占位 ${index + 1}"><figcaption>STILL / 0${index + 1}</figcaption></figure>`).join('')}</div></article>`;
     const pages = [
       `<article class="flip-page flip-cover album-cover" data-density="hard"><div class="album-firework album-cover-firework"><i></i><i></i><i></i><i></i><i></i><i></i></div><p>CREATIVE ALBUM / 2026</p><h3>${html(album.title)}</h3><span>${html(album.subtitle)}</span><small>${html(album.author)}</small></article>`,
-      `<article class="flip-page album-intro-page"><div class="album-polaroid"><img src="assets/images/lqy-profile-photo.jpg" alt="李乔英照片"><b>李乔英</b></div><div class="album-intro-copy"><p>CHAPTER 01 · 序章</p><h3>认识我。</h3><em>短视频编导 · 文案创作者 · 影像记录者</em><div>${paragraphs(album.intro)}</div></div></article>`,
-      `<article class="flip-page album-contents-page"><div class="album-mini-firework">✦</div><p>CONTENTS</p><h3>从一粒火星，<br />到一个故事。</h3><nav>${[['序章 · 认识我',1],['烟花 · 看见世界',3],['生根 · 文字长成树',5],['攀登 · 每一步向上',7],['落地 · 故事变成片',9],['收获 · 所有的答案',11]].map(([label,page]) => `<button type="button" class="album-toc-jump" data-page="${page}"><span>${label}</span><i>·····</i><b>P${String(page + 1).padStart(2,'0')}</b></button>`).join('')}</nav><small>点击章节，翻至对应画册页</small></article>`,
-      `<article class="flip-page album-fireworks-page"><div class="album-firework album-page-firework"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="album-firework-copy"><span>02</span><p>我与我的关系</p><h3>我如何观察世界</h3><div>${paragraphs(album.fireworks)}</div></div></article>`,
-      `<article class="flip-page album-transition-page"><div class="album-falling-seeds"><i></i><i></i><i></i><i></i><i></i></div><p class="transition-top">那些烟花，并没有消失。</p><div class="album-horizon"></div><p class="transition-mid">它们化作种子，落入心底的土壤，<br />在无人看见的地方，悄悄生根。</p><div class="album-sprout"><i></i><i></i><b></b></div><p class="transition-bottom">直到有一天，它们破土而出，<br />长成一棵叫做「思考」的树。</p></article>`,
-      `<article class="flip-page album-tree-page"><div class="album-tree-art">${treeSvg}<span class="tree-word word-1">感受</span><span class="tree-word word-2">共鸣</span><span class="tree-word word-3">镜头</span><span class="tree-word word-4">故事</span><span class="tree-word word-5">留白</span></div><div class="album-tree-copy"><span>03</span><p>所有影像，根源都来自文字</p><h3>画面背后的<br />文字思考</h3><b>繁花如烟花四散的灵感，不会无序散落。我用文字把它们梳理、归纳、延展，让零散的想法扎根，长成系统的思考。</b><small>向下翻页，看看这棵树上结出的果实 →</small></div></article>`,
-      `<article class="flip-page album-fruits-page"><div class="album-fruit-tree">${treeSvg}</div><div class="album-writing-fruits">${album.writingWorks.map((work, index) => `<article><span>0${index + 1}</span><b>${html(work.title)}</b><small>${html(work.tag)}</small></article>`).join('')}</div><p>一片叶子，是一段思绪；<br />一枚果实，是一次落笔。</p></article>`,
-      `<article class="flip-page album-stair-page"><div class="album-stair-copy"><span>04</span><p>每一步，都在向上</p><h3>视觉表达的<br />延展练习</h3><b>文字搭建好思考的框架，我开始走向现实，用镜头去捕捉世界。每一次按下快门，都是一次练习。</b></div><div class="album-stairs"><i>光</i><i>影</i><i>人</i><i>景</i><i>我</i></div></article>`,
-      `<article class="flip-page album-scrapbook-page"><p>VISUAL NOTES / 05</p><h3>被我留住的<br />几个瞬间。</h3><div class="album-photo-notes">${album.photoWorks.map((work, index) => `<figure class="photo-${index + 1}"><img src="${html(work.image)}" alt="${html(work.label)}"><figcaption>${html(work.label)}</figcaption></figure>`).join('')}</div></article>`,
-      filmPage(album.films[0]),
-      filmPage(album.films[1]),
-      `<article class="flip-page album-awards-page"><p>06 / RECEIPTS &amp; LETTERS</p><h3>把认真留下来。</h3><div class="album-award-grid">${awardCards(0, 3)}</div></article>`,
-      `<article class="flip-page album-awards-page album-awards-final"><p>06 / RECEIPTS &amp; LETTERS</p><div class="album-award-grid">${awardCards(3, 6)}</div><div class="album-farewell"><h3>谢谢你<br />看到这里。</h3><b>每一步，都算数。</b></div></article>`,
+      `<article class="flip-page album-contents-page album-pdf-contents"><p>目录</p><nav>${[['序章 · 我是谁？',2],['烟花 · 我如何观察世界',3],['扎根 · 文字在心里生根',5],['攀登 · 每一步向上',7]].map(([label,page]) => `<button type="button" class="album-toc-jump" data-page="${page}"><span>${label}</span><i>········</i><b>P${page + 1}</b></button>`).join('')}</nav></article>`,
+      `<article class="flip-page album-video-page"><div class="album-video-frame"><img src="assets/images/lqy-profile-photo.jpg" alt="李乔英自我介绍视频封面"><span>lqy’s<br />Self-Introduction vlog</span><small>WELCOME TO MY LITTLE UNIVERSE</small></div></article>`,
+      `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
+      `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕"></article>`,
+      `<article class="flip-page album-leaves-page"><img src="${html(album.assets.leafNotes)}" alt="写着随笔的三片树叶"></article>`,
+      `<article class="flip-page album-bare-tree-page"><img src="${html(album.assets.bareTree)}" alt="枯树与飞鸟"></article>`,
+      `<article class="flip-page album-blank-page" aria-label="留白页"></article>`,
+      `<article class="flip-page album-photo-pair-page"><div><img src="${html(album.assets.seaSilhouette)}" alt="海边张开双臂的人物剪影"><img src="${html(album.assets.groupSilhouette)}" alt="举起手的人群剪影"></div></article>`,
+      `<article class="flip-page album-portrait-page"><img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像"></article>`,
+      `<article class="flip-page album-portraits-page"><img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照"></article>`,
       `<article class="flip-page flip-back-cover album-back-cover" data-density="hard"><div class="album-firework album-back-firework"><i></i><i></i><i></i><i></i></div><p>THE END</p><h3>Fin.</h3><span>LQY / 2026</span></article>`
     ];
     visualBook.innerHTML = pages.join('');
@@ -251,7 +249,7 @@
       };
       const updateBookStatus = (page) => {
         bookCount.textContent = `${String(page + 1).padStart(2, '0')} / ${String(pages.length).padStart(2, '0')}`;
-        bookDots.innerHTML = Array.from({ length: 12 }, (_, index) => `<button type="button" data-page="${index + 1}" class="${page === index + 1 ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
+        bookDots.innerHTML = Array.from({ length: pages.length - 2 }, (_, index) => `<button type="button" data-page="${index + 1}" class="${page === index + 1 ? 'active' : ''}" aria-label="跳至画册第 ${index + 2} 页"></button>`).join('');
         bookDots.querySelectorAll('button').forEach((dot) => dot.addEventListener('click', () => book.turnToPage(Number(dot.dataset.page))));
       };
       book.on('flip', (event) => updateBookStatus(event.data));
