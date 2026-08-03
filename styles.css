@@ -504,6 +504,8 @@ body.lightbox-open{overflow:hidden}
 .book-stage .visual-book{opacity:1!important;transform:none!important;transition:none!important}
 .book-stage .visual-book.cover-book-hidden{opacity:0!important;pointer-events:none!important}
 .book-cover-layer{display:block!important;grid-column:2;grid-row:1;height:100%;isolation:isolate;opacity:0;perspective:2200px;pointer-events:none;position:relative;transform:translateX(0);transition:opacity .1s linear,transform var(--cover-shift-duration) cubic-bezier(.22,.72,.2,1),visibility 0s linear .1s;visibility:hidden;width:100%;z-index:50}
+.book-stage.cover-open .book-cover-layer{opacity:0!important;transition:none!important;visibility:hidden!important}
+.book-stage.cover-open .book-front-slab,.book-stage.cover-open .book-back-slab{transition:none!important}
 .book-stage.cover-front-closed .book-cover-layer,.book-stage.cover-front-opening .book-cover-layer,.book-stage.cover-front-expanding .book-cover-layer,.book-stage.cover-front-closing-ready .book-cover-layer,.book-stage.cover-front-closing .book-cover-layer,.book-stage.cover-front-returning .book-cover-layer,.book-stage.cover-back-closed .book-cover-layer,.book-stage.cover-back-opening .book-cover-layer,.book-stage.cover-back-expanding .book-cover-layer,.book-stage.cover-back-closing-ready .book-cover-layer,.book-stage.cover-back-closing .book-cover-layer,.book-stage.cover-back-returning .book-cover-layer{opacity:1;transition-delay:0s;visibility:visible}
 .book-cover-preview{height:100%;inset:0;position:absolute;width:100%;z-index:0}
 .book-preview-page{height:100%;overflow:hidden;position:absolute!important;top:0;width:50%}
