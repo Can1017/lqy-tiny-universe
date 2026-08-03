@@ -538,3 +538,60 @@ body.lightbox-open{overflow:hidden}
 .book-stage.cover-back-closing .book-back-slab{transform:rotateY(0deg)}
 .book-stage.cover-front-closed .book-back-slab,.book-stage.cover-front-opening .book-back-slab,.book-stage.cover-front-expanding .book-back-slab,.book-stage.cover-front-closing-ready .book-back-slab,.book-stage.cover-front-closing .book-back-slab,.book-stage.cover-front-returning .book-back-slab,.book-stage.cover-back-closed .book-front-slab,.book-stage.cover-back-opening .book-front-slab,.book-stage.cover-back-expanding .book-front-slab,.book-stage.cover-back-closing-ready .book-front-slab,.book-stage.cover-back-closing .book-front-slab,.book-stage.cover-back-returning .book-front-slab{visibility:hidden}
 @media(max-width:760px){.book-cover-layer{transform:none!important}.book-cover-slab,.book-preview-page{left:0;width:100%}.book-front-preview{display:block!important}.book-front-preview .book-preview-right{display:none!important}.book-preview-mobile{display:block}.book-front-slab .book-cover-inner{background:transparent!important}.book-front-slab .book-cover-inner>*{visibility:hidden!important}.book-cover-layer .album-video-play{font-size:14px;height:42px;width:42px}}
+
+/* P4 逐页文字版式：内容来自「翻页文字部分.pdf」，所有文字均直接落在纸面上，不使用示意白底。 */
+.visual-book .album-video-page,.book-cover-layer .album-video-page{align-items:flex-start!important;background:#fffdf7!important;display:flex!important;flex-direction:column!important;gap:4%!important;justify-content:flex-start!important;padding:8% 9%!important}
+.album-video-heading{color:#282328;font:500 15px/1.65 "Noto Serif SC",serif;letter-spacing:.03em;margin:1% 0 0;width:100%}
+.album-video-heading span{display:block}
+.visual-book .album-video-frame,.book-cover-layer .album-video-frame{aspect-ratio:16/9!important;flex:0 0 auto!important;margin:0!important;max-width:none!important;width:100%!important}
+
+.album-page-copy{color:#463b43;position:absolute;z-index:3}
+.album-page-copy strong{display:block;font:600 13px/1.65 "Noto Serif SC",serif;letter-spacing:.01em;margin:0 0 13%}
+.album-page-copy p{font:500 10.5px/1.78 "Noto Serif SC",serif;letter-spacing:.01em;margin:0 0 10%}
+.visual-book .album-firework-left-page{background:#fffdf7!important}
+.visual-book .album-firework-left-page>img{height:76%!important;left:-8%!important;mix-blend-mode:multiply;object-fit:contain!important;opacity:.82;top:17%!important;width:94%!important}
+.visual-book .album-firework-left-copy{left:42%;top:22%;width:50%}
+.visual-book .album-firework-right-page{background:#fffdf7!important}
+.visual-book .album-firework-right-page .firework-scatter{height:auto!important;max-height:43%!important;right:-3%!important;top:1%!important;width:69%!important}
+.visual-book .album-firework-right-page .firework-haze{bottom:1%!important;left:52%!important;opacity:.72!important;width:106%!important}
+.visual-book .album-firework-right-copy{left:8%;top:49%;width:51%}
+.visual-book .album-firework-right-copy p{margin-bottom:13%}
+
+.visual-book .album-bare-tree-page{background:#fffdf7!important;display:block!important;position:relative!important}
+.visual-book .album-bare-tree-page>img{height:63%!important;left:50%!important;margin:0!important;max-width:none!important;object-fit:contain!important;position:absolute!important;top:51%!important;transform:translate(-50%,-45%)!important;width:72%!important}
+.album-tree-top-copy,.album-tree-bottom-copy{color:#453b40;font:500 12px/1.72 "Noto Serif SC",serif;letter-spacing:.02em;margin:0;position:absolute;z-index:3}
+.album-tree-top-copy{right:7%;text-align:left;top:6%;width:48%}
+.album-tree-bottom-copy{bottom:5%;left:12%;text-align:center;width:76%}
+.album-tree-top-copy span,.album-tree-bottom-copy span{display:block}
+
+.visual-book .album-growth-page{background:#fffdf7!important;display:block!important;position:relative!important}
+.album-growth-copy{bottom:10%;color:#40373d;display:flex;flex-direction:column;justify-content:space-between;left:12%;position:absolute;top:10%;width:76%}
+.album-growth-copy p{font:500 13px/2 "Noto Serif SC",serif;letter-spacing:.025em;margin:0}
+.album-growth-copy span{display:block}
+
+@media(max-width:760px){
+  .album-video-heading{font-size:10px;line-height:1.5}
+  .visual-book .album-video-page,.book-cover-layer .album-video-page{gap:3%!important;padding:8% 9%!important}
+  .album-page-copy strong{font-size:8.5px;line-height:1.5;margin-bottom:9%}
+  .album-page-copy p{font-size:7.4px;line-height:1.56;margin-bottom:7%}
+  .visual-book .album-firework-left-copy{left:40%;top:19%;width:53%}
+  .visual-book .album-firework-right-copy{left:7%;top:47%;width:54%}
+  .album-tree-top-copy,.album-tree-bottom-copy{font-size:8px;line-height:1.5}
+  .album-growth-copy p{font-size:8.8px;line-height:1.7}
+}
+
+/* PageFlip 通过行内 display:none 回收离屏页；页面自身的布局规则不得把它们重新显示。 */
+#visual-book .stf__item[style*="display: none"]{display:none!important}
+
+/* 桌面双页模式中，真实页面的百分比内边距按整本书宽度计算；封面内页需换算为单页比例才能无缝交接。 */
+@media(min-width:761px){.book-front-slab .album-pdf-contents{padding:34% 26%!important}}
+
+/* 过渡页沿用真实 PageFlip 纸张色，避免开合交接时产生白度闪变。 */
+.book-cover-inner,.book-preview-page,.book-cover-layer .album-video-page{background:#fff8ed!important}
+
+/* 反封面内侧复用真实 P9/P10 的人像版式，避免封底打开后图片再次缩放或跳位。 */
+.book-back-preview .album-portrait-page{align-items:center!important;display:flex!important;justify-content:center!important;padding:0!important}
+.book-back-preview .album-portrait-page img{height:86%!important;margin:0!important;object-fit:contain!important;width:76%!important}
+.book-back-slab .album-portraits-page{align-content:center!important;display:grid!important;gap:8%!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;justify-items:center!important;padding:20% 0!important}
+.book-back-slab .album-portraits-page img{aspect-ratio:auto!important;display:block!important;height:100%!important;object-fit:contain!important;width:72%!important}
+@media(max-width:760px){.book-back-slab .album-portraits-page{padding:10% 0!important}}

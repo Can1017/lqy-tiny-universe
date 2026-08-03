@@ -194,18 +194,27 @@
       { label: '攀登 · 每一步向上', target: 6, page: 8 }
     ];
     const tocButtons = tocItems.map(({ label, target, page }) => `<button type="button" class="album-toc-jump" data-page="${target}"><span>${label}</span><i>········</i><b>P${page}</b></button>`).join('');
+    const pageCopy = album.pageCopy || {};
+    const copyLines = (items) => (items || []).map((item) => `<span>${html(item)}</span>`).join('');
+    const copyParagraphs = (items) => (items || []).map((item) => `<p>${html(item)}</p>`).join('');
     const contentsBody = `<p>目录</p><nav>${tocButtons}</nav>`;
-    const videoBody = `<button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button>`;
+    const videoHeading = `<p class="album-video-heading">${copyLines(pageCopy.videoHeading)}</p>`;
+    const videoBody = `${videoHeading}<button type="button" class="album-video-frame" aria-label="播放李乔英作品视频"><video class="album-intro-video" poster="${html(album.assets.introVideoPoster)}" playsinline preload="metadata"><source src="${html(album.assets.introVideo)}" type="video/mp4">当前浏览器不支持视频播放。</video><span class="album-video-play" aria-hidden="true">▶</span></button>`;
+    const videoPreviewBody = `${videoHeading}<div class="album-video-frame" aria-hidden="true"><img class="album-intro-video" src="${html(album.assets.introVideoPoster)}" alt=""><span class="album-video-play">▶</span></div>`;
+    const fireworkLeftCopy = `<div class="album-page-copy album-firework-left-copy"><strong>${html(pageCopy.fireworkLeft?.lead || '')}</strong>${copyParagraphs(pageCopy.fireworkLeft?.paragraphs)}</div>`;
+    const fireworkRightCopy = `<div class="album-page-copy album-firework-right-copy">${copyParagraphs(pageCopy.fireworkRight)}</div>`;
+    const treeCopy = `<p class="album-tree-top-copy">${copyLines(pageCopy.treeTop)}</p><p class="album-tree-bottom-copy">${copyLines(pageCopy.treeBottom)}</p>`;
+    const growthCopy = `<div class="album-growth-copy">${(pageCopy.growth || []).map((paragraph) => `<p>${copyLines(paragraph)}</p>`).join('')}</div>`;
     const finalLeftBody = `<img src="${html(album.assets.portraitNight)}" alt="夜景黑白人像">`;
     const finalRightBody = `<img src="${html(album.assets.portraitSign)}" alt="黑白人像手势照"><img src="${html(album.assets.portraitPose)}" alt="黑白人像姿态照">`;
     const pages = [
       `<article class="flip-page album-contents-page album-pdf-contents">${contentsBody}</article>`,
       `<article class="flip-page album-video-page">${videoBody}</article>`,
-      `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花"><span>烟花 · 我如何观察世界</span></article>`,
-      `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕"></article>`,
+      `<article class="flip-page album-firework-left-page"><img src="${html(album.assets.fireworkMain)}" alt="彩铅烟花">${fireworkLeftCopy}</article>`,
+      `<article class="flip-page album-firework-right-page"><img class="firework-scatter" src="${html(album.assets.fireworkScatter)}" alt="散开的烟花"><img class="firework-haze" src="${html(album.assets.fireworkHaze)}" alt="淡色烟花光晕">${fireworkRightCopy}</article>`,
       `<article class="flip-page album-leaves-page"><img src="${html(album.assets.leafNotes)}" alt="写着随笔的三片树叶"></article>`,
-      `<article class="flip-page album-bare-tree-page"><img src="${html(album.assets.bareTree)}" alt="枯树与飞鸟"></article>`,
-      `<article class="flip-page album-blank-page" aria-label="留白页"></article>`,
+      `<article class="flip-page album-bare-tree-page"><img src="${html(album.assets.bareTree)}" alt="枯树与飞鸟">${treeCopy}</article>`,
+      `<article class="flip-page album-blank-page album-growth-page">${growthCopy}</article>`,
       `<article class="flip-page album-photo-pair-page"><div><img src="${html(album.assets.seaSilhouette)}" alt="海边张开双臂的人物剪影"><img src="${html(album.assets.groupSilhouette)}" alt="举起手的人群剪影"></div></article>`,
       `<article class="flip-page album-portrait-page">${finalLeftBody}</article>`,
       `<article class="flip-page album-portraits-page">${finalRightBody}</article>`
@@ -231,7 +240,7 @@
         coverLayer.setAttribute('aria-hidden', 'true');
         coverLayer.innerHTML = `
           <div class="book-cover-preview book-front-preview">
-            <section class="book-preview-page book-preview-right album-video-page"><div class="album-video-frame" aria-hidden="true"><img class="album-intro-video" src="${html(album.assets.introVideoPoster)}" alt=""><span class="album-video-play">▶</span></div></section>
+            <section class="book-preview-page book-preview-right album-video-page">${videoPreviewBody}</section>
             <section class="book-preview-page book-preview-mobile album-contents-page album-pdf-contents">${contentsBody}</section>
           </div>
           <div class="book-cover-preview book-back-preview">
