@@ -1,14 +1,1 @@
-/*
- * P3 第三、第四栏的图片配置。
- * 后续换图时，只需替换 assets/images 中的文件，或修改这里的路径与说明。
- */
-window.p3WorkMedia = {
-  2: {
-    src: 'assets/images/p3-work-03.png',
-    alt: '校园志愿者陪伴轮椅学生前行'
-  },
-  3: {
-    src: 'assets/images/p3-work-04.png',
-    alt: '三下乡实践团队开展夜间助农直播'
-  }
-};
+window.p3WorkMedia={2:{src:"assets/images/p3-work-03.webp",alt:"\u6821\u56ED\u5FD7\u613F\u8005\u966A\u4F34\u8F6E\u6905\u5B66\u751F\u524D\u884C"},3:{src:"assets/images/p3-work-04.webp",alt:"\u4E09\u4E0B\u4E61\u5B9E\u8DF5\u56E2\u961F\u5F00\u5C55\u591C\u95F4\u52A9\u519C\u76F4\u64AD"}};
